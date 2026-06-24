@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ tay Thuốc Điện Tử - Mùa Hè Xanh 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f9ff;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .page-transition {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-slate-100">
+
+    <!-- Container giả lập giao diện di động trên PC, tự động responsive trên Mobile/Tablet -->
+    <div class="w-full max-w-md h-[92vh] sm:h-[85vh] md:h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden relative flex flex-col border-4 border-white">
+        
+        <!-- ================= MÀN HÌNH 1: TRANG CHỦ / COVER ================= -->
+        <div id="screen-home" class="page-transition w-full h-full flex flex-col justify-between p-6 text-center relative overflow-y-auto" style="background: linear-gradient(to bottom, #7dd3fc, #38bdf8, #bae6fd);">
+            <!-- Ông mặt trời & Mây trang trí -->
+            <div class="absolute top-4 right-4 text-5xl animate-bounce" style="animation-duration: 3s;">☀️</div>
+            <div class="absolute top-12 left-6 text-3xl opacity-60">☁️</div>
+            
+            <div class="mt-8 z-10">
+                <p class="text-xs font-bold text-sky-800 uppercase tracking-widest bg-sky-100/80 inline-block px-3 py-1 rounded-full shadow-sm">Một bộ phim của Ban Hoạt Động</p>
+                <h1 class="text-3xl font-extrabold text-white drop-shadow-md mt-6 leading-tight">
+                    Sổ tay <br>
+                    <span class="text-4xl text-yellow-300 tracking-wide font-black block mt-1 drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">THUỐC ĐIỆN TỬ</span>
+                </h1>
+                
+                <!-- Ribbon Mùa Hè Xanh -->
+                <div class="inline-block bg-yellow-400 text-sky-950 font-black text-sm px-6 py-2 rounded-full shadow-md transform -rotate-2 mt-4 border-2 border-white">
+                    MÙA HÈ XANH 2026
+                </div>
+                
+                <p class="text-xs text-sky-900 font-bold mt-6 leading-relaxed">
+                    Tra cứu nhanh – Sử dụng đúng <br>
+                    <span class="bg-white/60 px-2 py-0.5 rounded text-sky-950">An toàn cho chiến sĩ</span>
+                </p>
+            </div>
+
+            <!-- Minh họa tình nguyện viên và hộp cứu thương -->
+            <div class="my-auto py-4 flex flex-col items-center justify-center z-10">
+                <!-- Thay bằng emoji hoặc SVG đồ họa dễ thương để tăng tính tương tác -->
+                <div class="flex gap-4 items-end mb-4">
+                    <div class="text-6xl animate-pulse">🧑‍⚕️</div>
+                    <div class="text-6xl animate-pulse" style="animation-delay: 0.5s;">👩‍⚕️</div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-sky-100 max-w-xs">
+                    <p class="text-xs font-bold text-sky-800">💼 Mang theo tủ thuốc, vững bước hành trình!</p>
+                </div>
+            </div>
+
+            <!-- Button Bắt đầu -->
+            <div class="mb-4 z-10">
+                <button onclick="navigateTo('screen-menu')" class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 transition text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-lg flex items-center justify-center gap-2 text-base">
+                    Bắt đầu tra cứu
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= MÀN HÌNH 2: MỤC LỤC ================= -->
+        <div id="screen-menu" class="page-transition w-full h-full hidden flex flex-col bg-sky-50" style="background-image: linear-gradient(to bottom, #bae6fd, #f0f9ff);">
+            <!-- Header Mục Lục -->
+            <div class="p-5 text-center relative">
+                <button onclick="navigateTo('screen-home')" class="absolute left-4 top-5 bg-white/80 p-2 rounded-full shadow text-sky-700 hover:bg-white active:scale-90 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h2 class="text-2xl font-black text-sky-900 tracking-wide mt-1">MỤC LỤC ✨</h2>
+                <p class="text-xs text-sky-700 font-semibold">Chọn nhóm thuốc cần tra cứu bên dưới</p>
+            </div>
+
+            <!-- Danh sách danh mục (Scrollable) -->
+            <div class="flex-1 overflow-y-auto px-5 pb-6 space-y-3" id="category-list">
+                <!-- Sẽ được render tự động bằng Javascript -->
+            </div>
+        </div>
+
+        <!-- ================= MÀN HÌNH 3: DANH SÁCH THUỐC THEO NHÓM ================= -->
+        <div id="screen-category" class="page-transition w-full h-full hidden flex flex-col bg-emerald-50" style="background-image: linear-gradient(to bottom, #dcfce7, #f0fdf4);">
+            <!-- Header Nhóm Thuốc -->
+            <div class="p-5 text-center relative border-b border-emerald-100 bg-white/70 backdrop-blur-sm">
+                <button onclick="navigateTo('screen-menu')" class="absolute left-4 top-5 bg-emerald-100 text-emerald-800 p-2 rounded-full shadow hover:bg-emerald-200 active:scale-90 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <div class="inline-block text-3xl mb-1" id="cat-header-icon">胃</div>
+                <h2 class="text-xl font-extrabold text-emerald-900 uppercase tracking-wide" id="cat-header-title">NHÓM TIÊU HOÁ</h2>
+                <p class="text-xs text-emerald-700 font-medium px-6 mt-1" id="cat-header-desc">Hỗ trợ điều trị các vấn đề về tiêu hoá...</p>
+            </div>
+
+            <!-- Lưới thuốc (Scrollable) -->
+            <div class="flex-1 overflow-y-auto p-5">
+                <div class="grid grid-cols-2 gap-4" id="medicine-grid">
+                    <!-- Sẽ được render tự động bằng Javascript -->
+                </div>
+            </div>
+
+            <!-- Banner Nhắc nhở dưới cùng -->
+            <div class="p-4 bg-emerald-600 text-white text-center text-xs font-bold rounded-t-2xl shadow-inner">
+                🌿 Mang theo đúng thuốc, hành trình thêm trọn vẹn!
+            </div>
+        </div>
+
+        <!-- ================= MÀN HÌNH 4: CHI TIẾT THUỐC ================= -->
+        <div id="screen-detail" class="page-transition w-full h-full hidden flex flex-col bg-white">
+            <!-- Header Chi Tiết -->
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                <button onclick="goBackToCategory()" class="bg-slate-100 text-slate-700 p-2 rounded-full shadow hover:bg-slate-200 active:scale-90 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full">Chi tiết thuốc</span>
+                <div class="w-9 h-9"></div> <!-- Empty spacer to balance layout -->
+            </div>
+
+            <!-- Chi tiết (Scrollable) -->
+            <div class="flex-1 overflow-y-auto p-5 space-y-5" id="detail-content">
+                <!-- Sẽ được render tự động bằng Javascript -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT XỬ LÝ DỮ LIỆU & CHUYỂN TRANG ================= -->
+    <script>
+        // Cơ sở dữ liệu của ứng dụng
+        const database = [
+            {
+                id: "giam-dau-ha-sot",
+                title: "Giảm đau, hạ sốt",
+                desc: "Hạ sốt, giảm đau đầu, đau răng, đau mỏi cơ xương khớp do vận động mạnh.",
+                icon: "💊",
+                medicines: [
+                    {
+                        name: "Paracetamol 500mg",
+                        subtitle: "Hạ sốt, giảm đau nhanh chóng",
+                        img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Hạ sốt, giảm đau nhẹ đến vừa như đau đầu, đau răng, đau bụng kinh, đau cơ khớp.",
+                        lieuDung: "Người lớn và trẻ em > 12 tuổi: 1 viên/lần. Cách mỗi 4 - 6 giờ nếu cần thiết. Không dùng quá 8 viên/ngày.",
+                        luuY: [
+                            "Không dùng quá liều quy định để tránh ngộ độc gan.",
+                            "Thận trọng ở người có bệnh lý gan, suy thận nặng.",
+                            "Tuyệt đối không sử dụng chung với rượu bia."
+                        ],
+                        chongChiDinh: "Người mẫn cảm với Paracetamol. Người suy gan nặng."
+                    },
+                    {
+                        name: "Ibuprofen 400mg",
+                        subtitle: "Kháng viêm, giảm đau cơ khớp",
+                        img: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Giảm đau nhức xương khớp do đi hành quân, bong gân, viêm đau cơ nặng.",
+                        lieuDung: "Uống 1 viên/lần sau khi ăn no, ngày 2-3 lần.",
+                        luuY: [
+                            "Bắt buộc phải uống lúc no bụng.",
+                            "Theo dõi sát nếu có tiền sử đau dạ dày."
+                        ],
+                        chongChiDinh: "Loét dạ dày tá tràng tiến triển, người suy gan hoặc suy thận nặng."
+                    }
+                ]
+            },
+            {
+                id: "tieu-hoa",
+                title: "Tiêu hoá",
+                desc: "Hỗ trợ điều trị các vấn đề về tiêu hoá như đau bụng, đầy hơi, tiêu chảy...",
+                icon: "🧪",
+                medicines: [
+                    {
+                        name: "Berberin 10mg",
+                        subtitle: "Rối loạn tiêu hóa, kiết lỵ",
+                        img: "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Điều trị rối loạn tiêu hóa, tiêu chảy do ăn uống thực phẩm lạ, lỵ trực khuẩn.",
+                        lieuDung: "Uống 4-6 viên/lần, ngày 2 lần vào buổi sáng và tối.",
+                        luuY: [
+                            "Uống bằng nước ấm để hấp thu hiệu quả nhất.",
+                            "Cần bổ sung nước (Oresol) song song nếu tiêu chảy nhiều."
+                        ],
+                        chongChiDinh: "Không sử dụng cho phụ nữ có thai."
+                    },
+                    {
+                        name: "Smecta",
+                        subtitle: "Điều trị tiêu chảy cấp",
+                        img: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Bảo vệ niêm mạc đường tiêu hóa, điều trị tiêu chảy cấp và mãn tính.",
+                        lieuDung: "Hòa tan 1 gói với nửa ly nước ấm. Uống 2-3 gói/ngày.",
+                        luuY: [
+                            "Uống cách xa các thuốc khác ít nhất 1.5 - 2 tiếng.",
+                            "Nên kết hợp chế độ ăn nhẹ, giảm dầu mỡ."
+                        ],
+                        chongChiDinh: "Người không dung nạp đường fructose."
+                    },
+                    {
+                        name: "Gellux",
+                        subtitle: "Hỗ trợ giảm đau dạ dày, trào ngược",
+                        img: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Trung hòa acid dịch vị, giảm đau thượng vị dạ dày do trào ngược, loét nhẹ.",
+                        lieuDung: "Uống trực tiếp 1 gói khi đau hoặc trước bữa ăn 30 phút.",
+                        luuY: [
+                            "Không uống chung với nước ngọt có ga."
+                        ],
+                        chongChiDinh: "Mẫn cảm với các hoạt chất kháng acid."
+                    },
+                    {
+                        name: "Casbogasmango",
+                        subtitle: "Giảm co thắt, đầy hơi",
+                        img: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Giảm co thắt cơ trơn đường ruột, giảm đầy trướng bụng, khó tiêu.",
+                        lieuDung: "Người lớn uống 1-2 viên/lần, ngày 3 lần.",
+                        luuY: [
+                            "Nên duy trì uống sau khi ăn."
+                        ],
+                        chongChiDinh: "Bệnh nhân có hiện tượng tắc nghẽn cơ học đường tiêu hóa."
+                    }
+                ]
+            },
+            {
+                id: "sat-trung",
+                title: "Sát trùng",
+                desc: "Sát khuẩn vết thương ngoài da, rửa mắt mũi khi đi bụi bẩn ngoài trời.",
+                icon: "🧼",
+                medicines: [
+                    {
+                        name: "Cồn Đỏ (Povidine)",
+                        subtitle: "Sát trùng vết thương hở",
+                        img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Diệt khuẩn các vết thương nông, trầy xước rách da do ngã, gai cào.",
+                        lieuDung: "Dùng tăm bông sạch thấm dung dịch bôi trực tiếp lên vùng da tổn thương.",
+                        luuY: [
+                            "Không bôi diện rộng hoặc bôi quá sâu vào các ổ loét nặng."
+                        ],
+                        chongChiDinh: "Người mẫn cảm với iod, trẻ em dưới 2 tuổi."
+                    },
+                    {
+                        name: "Nước muối sinh lý 0.9%",
+                        subtitle: "Vệ sinh mắt, mũi, vết bẩn",
+                        img: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Rửa trôi bụi bẩn ở mắt, mũi, làm sạch nhẹ nhàng bề mặt vết thương trước khi băng bó.",
+                        lieuDung: "Nhỏ mắt/mũi từ 2-4 giọt/lần, có thể dùng nhiều lần trong ngày.",
+                        luuY: [
+                            "Tránh để đầu chai chạm trực tiếp vào mắt hay bề mặt nhiễm bẩn."
+                        ],
+                        chongChiDinh: "Không có chống chỉ định đặc biệt."
+                    }
+                ]
+            },
+            {
+                id: "chong-di-ung",
+                title: "Chống dị ứng",
+                desc: "Giảm ngứa, nổi mề đay do côn trùng đốt, dị ứng thời tiết và thức ăn lạ.",
+                icon: "🛡️",
+                medicines: [
+                    {
+                        name: "Loratadin 10mg",
+                        subtitle: "Dị ứng, mề đay không gây buồn ngủ",
+                        img: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Giảm triệu chứng dị ứng thời tiết, mẩn ngứa do tiếp xúc cây cỏ lạ.",
+                        lieuDung: "Uống 1 viên duy nhất mỗi ngày.",
+                        luuY: [
+                            "Uống sau khi ăn, không gây ngủ nhiều nhưng hạn chế hoạt động quá sức sau khi dùng."
+                        ],
+                        chongChiDinh: "Mẫn cảm với thành phần Loratadin."
+                    }
+                ]
+            },
+            {
+                id: "suc-de-khang",
+                title: "Sức đề kháng",
+                desc: "Bổ sung vitamin, nâng cao sức bền thể lực cho chuỗi ngày hoạt động cường độ cao.",
+                icon: "🍊",
+                medicines: [
+                    {
+                        name: "Vitamin C 500mg (Sủi)",
+                        subtitle: "Tăng sức bền, thanh nhiệt",
+                        img: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Bổ sung Vitamin C, tăng hệ miễn dịch, giảm mệt mỏi khi đi nắng.",
+                        lieuDung: "Hòa tan 1 viên sủi vào 200ml nước lọc, uống vào buổi sáng hoặc trưa.",
+                        luuY: [
+                            "Tuyệt đối tránh uống vào buổi tối vì có thể gây mất ngủ và sỏi thận."
+                        ],
+                        chongChiDinh: "Người có tiền sử sỏi thận, tăng oxalate niệu."
+                    }
+                ]
+            },
+            {
+                id: "dieu-tri-trieu-chung",
+                title: "Điều trị triệu chứng",
+                desc: "Điều trị các cơn ho khan, ho có đờm, đau họng, sổ mũi nhẹ.",
+                icon: "🚗",
+                medicines: [
+                    {
+                        name: "Bổ Phế Nam Hà",
+                        subtitle: "Trừ ho, tiêu đờm thảo dược",
+                        img: "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Giảm ho khan, ho gió, rát họng khi hát tập thể hoặc dầm mưa.",
+                        lieuDung: "Người lớn ngày ngậm hoặc uống 3 lần, mỗi lần 15ml.",
+                        luuY: [
+                            "Lắc kỹ chai siro trước khi rót uống."
+                        ],
+                        chongChiDinh: "Người mẫn cảm với bất cứ thảo dược nào trong thành phần."
+                    }
+                ]
+            },
+            {
+                id: "boi-ngoai-da",
+                title: "Bôi ngoài da",
+                desc: "Thuốc bôi muỗi đốt, côn trùng cắn, dị ứng mẩn ngứa bề mặt.",
+                icon: "🧴",
+                medicines: [
+                    {
+                        name: "Kem bôi Remos",
+                        subtitle: "Trị ngứa, côn trùng cắn",
+                        img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Giảm sưng ngứa tức thì do muỗi, vắt rừng, côn trùng đốt.",
+                        lieuDung: "Thoa một lớp mỏng lên vết cắn, mát-xa nhẹ nhàng.",
+                        luuY: [
+                            "Không bôi trực tiếp lên vết thương đang chảy máu, nhiễm trùng sâu."
+                        ],
+                        chongChiDinh: "Mẫn cảm với các chất kháng histamin bôi ngoài da."
+                    }
+                ]
+            },
+            {
+                id: "vat-tu-y-te",
+                title: "Vật tư y tế",
+                desc: "Băng cá nhân, gạc vô trùng, băng thun cố định khớp.",
+                icon: "🩹",
+                medicines: [
+                    {
+                        name: "Băng cá nhân URGO",
+                        subtitle: "Bảo vệ vết xước nhỏ",
+                        img: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&q=80&w=300",
+                        congDung: "Bao phủ vết xước tránh nhiễm bẩn, bụi bặm trong lúc sinh hoạt.",
+                        lieuDung: "Rửa sạch vết thương, bóc băng và dán trực tiếp.",
+                        luuY: [
+                            "Nên thay băng ít nhất 1 lần/ngày hoặc khi băng bị ướt nước."
+                        ],
+                        chongChiDinh: "Không dùng cho vết thương nhiễm trùng nặng, hoại tử."
+                    }
+                ]
+            }
+        ];
+
+        let currentCategoryId = null;
+
+        // Hàm chuyển trang mượt mà
+        function navigateTo(screenId) {
+            // Ẩn tất cả màn hình
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-menu').classList.add('hidden');
+            document.getElementById('screen-category').classList.add('hidden');
+            document.getElementById('screen-detail').classList.add('hidden');
+
+            // Hiện màn hình mong muốn
+            const targetScreen = document.getElementById(screenId);
+            targetScreen.classList.remove('hidden');
+            
+            // Cuộn lên đầu trang tự động
+            targetScreen.scrollTop = 0;
+        }
+
+        // Tạo danh mục lục tự động
+        function initMenu() {
+            const listContainer = document.getElementById('category-list');
+            listContainer.innerHTML = '';
+
+            database.forEach((cat, index) => {
+                const number = String(index + 1).padStart(2, '0');
+                const catHtml = `
+                    <div onclick="showCategory('${cat.id}')" class="flex items-center justify-between p-4 bg-white hover:bg-emerald-50 active:scale-[0.98] transition rounded-2xl shadow-sm border border-sky-100 cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm font-black text-sky-500 bg-sky-50 px-2.5 py-1 rounded-lg">${number}</span>
+                            <div class="text-2xl">${cat.icon}</div>
+                            <div class="text-left">
+                                <span class="text-xs text-slate-400 block font-semibold">Nhóm thuốc</span>
+                                <span class="text-sm font-extrabold text-slate-700 leading-tight">${cat.title}</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', catHtml);
+            });
+        }
+
+        // Hiển thị danh sách thuốc theo Nhóm
+        function showCategory(catId) {
+            currentCategoryId = catId;
+            const cat = database.find(item => item.id === catId);
+            if (!cat) return;
+
+            document.getElementById('cat-header-icon').textContent = cat.icon;
+            document.getElementById('cat-header-title').textContent = "NHÓM " + cat.title;
+            document.getElementById('cat-header-desc').textContent = cat.desc;
+
+            const gridContainer = document.getElementById('medicine-grid');
+            gridContainer.innerHTML = '';
+
+            cat.medicines.forEach((med, index) => {
+                const medHtml = `
+                    <div class="bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex flex-col justify-between">
+                        <div class="text-center">
+                            <img src="${med.img}" alt="${med.name}" class="w-full h-24 object-cover rounded-xl mb-2.5 bg-slate-50">
+                            <h3 class="text-xs font-black text-slate-800 leading-snug line-clamp-1">${med.name}</h3>
+                            <p class="text-[10px] text-slate-400 leading-tight mt-1 line-clamp-2">${med.subtitle}</p>
+                        </div>
+                        <button onclick="showDetail('${catId}', ${index})" class="mt-3 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-1.5 px-2 rounded-xl text-[10px] transition active:scale-95 flex items-center justify-center gap-1">
+                            Xem chi tiết
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                `;
+                gridContainer.insertAdjacentHTML('beforeend', medHtml);
+            });
+
+            navigateTo('screen-category');
+        }
+
+        // Quay lại nhóm từ trang chi tiết
+        function goBackToCategory() {
+            if (currentCategoryId) {
+                showCategory(currentCategoryId);
+            } else {
+                navigateTo('screen-menu');
+            }
+        }
+
+        // Hiển thị Chi Tiết Thuốc
+        function showDetail(catId, medIndex) {
+            const cat = database.find(item => item.id === catId);
+            if (!cat) return;
+            const med = cat.medicines[medIndex];
+            if (!med) return;
+
+            const contentContainer = document.getElementById('detail-content');
+            
+            // Xây dựng danh sách lưu ý dạng list
+            let luuYList = "";
+            med.luuY.forEach(note => {
+                luuYList += `<li class="text-xs text-amber-900 leading-relaxed">• ${note}</li>`;
+            });
+
+            contentContainer.innerHTML = `
+                <!-- Ảnh & Tên thuốc -->
+                <div class="flex flex-col items-center text-center">
+                    <img src="${med.img}" alt="${med.name}" class="w-44 h-32 object-cover rounded-2xl shadow-md mb-3 bg-slate-100">
+                    <h3 class="text-xl font-black text-slate-800">${med.name}</h3>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">${med.subtitle}</p>
+                </div>
+
+                <!-- Chi tiết công dụng -->
+                <div class="space-y-4">
+                    <!-- Công dụng -->
+                    <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 flex gap-3">
+                        <div class="text-xl">💚</div>
+                        <div>
+                            <span class="text-xs font-black text-emerald-800 block uppercase mb-1">CÔNG DỤNG</span>
+                            <p class="text-xs text-emerald-950 leading-relaxed font-semibold">${med.congDung}</p>
+                        </div>
+                    </div>
+
+                    <!-- Liều dùng -->
+                    <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100 flex gap-3">
+                        <div class="text-xl">🕒</div>
+                        <div>
+                            <span class="text-xs font-black text-blue-800 block uppercase mb-1">LIỀU DÙNG</span>
+                            <p class="text-xs text-blue-950 leading-relaxed font-semibold">${med.lieuDung}</p>
+                        </div>
+                    </div>
+
+                    <!-- Lưu ý -->
+                    <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100 flex gap-3">
+                        <div class="text-xl">⚠️</div>
+                        <div>
+                            <span class="text-xs font-black text-amber-800 block uppercase mb-1">LƯU Ý</span>
+                            <ul class="space-y-1 font-semibold">
+                                ${luuYList}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Chống chỉ định -->
+                    <div class="bg-rose-50/50 p-4 rounded-2xl border border-rose-100 flex gap-3">
+                        <div class="text-xl">❌</div>
+                        <div>
+                            <span class="text-xs font-black text-rose-800 block uppercase mb-1">CHỐNG CHỈ ĐỊNH</span>
+                            <p class="text-xs text-rose-950 leading-relaxed font-semibold">${med.chongChiDinh}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ghi nhớ nhanh -->
+                <div class="bg-yellow-100 rounded-2xl p-4 border border-yellow-200 shadow-sm relative overflow-hidden mt-6">
+                    <div class="absolute -right-3 -bottom-3 text-5xl opacity-20">✏️</div>
+                    <span class="text-xs font-black text-yellow-800 block uppercase mb-1">💡 GHI NHỚ NHANH</span>
+                    <p class="text-xs text-yellow-950 leading-relaxed font-semibold">
+                        Hãy đọc kỹ hướng dẫn này trước khi phát thuốc. Nếu triệu chứng không thuyên giảm, hãy liên hệ ngay với cán bộ y tế trong đội để được xử lý kịp thời!
+                    </p>
+                </div>
+            `;
+
+            navigateTo('screen-detail');
+        }
+
+        // Khởi tạo ứng dụng ban đầu
+        window.onload = function() {
+            initMenu();
+        };
+    </script>
+</body>
+</html>
