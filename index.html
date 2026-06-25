@@ -11,133 +11,118 @@
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            background: #e0f2fe;
-            background-image: radial-gradient(#bae6fd 1px, transparent 1px);
+            background: #bae6fd;
+            background-image: radial-gradient(#7dd3fc 1px, transparent 1px);
             background-size: 24px 24px;
         }
-        /* Tối ưu hóa scrollbar */
+        /* Hiệu ứng chuyển cảnh mịn */
+        .fade-slide-in {
+            animation: fadeSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         ::-webkit-scrollbar {
             width: 6px;
-            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #93c5fd;
             border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-0 md:p-4 overflow-x-hidden">
+<body class="min-h-screen flex items-center justify-center p-0 md:p-6 overflow-x-hidden">
 
-    <!-- KHUNG ĐIỀU HƯỚNG CHÍNH ĐA THIẾT BỊ -->
-    <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/90 backdrop-blur-md md:rounded-3xl md:shadow-2xl overflow-hidden flex flex-col border-0 md:border-4 border-white transition-all duration-300">
+    <!-- CONTAINER CHÍNH TOÀN MÀN HÌNH -->
+    <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-300">
         
-        <!-- HEADER CHUNG CHO TOÀN TRANG (PC & MOBILE) -->
-        <header class="bg-gradient-to-r from-sky-400 via-sky-500 to-blue-500 p-4 text-white flex justify-between items-center relative shadow-md">
-            <div class="flex items-center gap-3">
-                <div class="bg-white/20 p-2 rounded-xl text-2xl">⚡</div>
-                <div>
-                    <h1 class="text-base md:text-xl font-black tracking-wide drop-shadow-sm">CẨM NANG Y TẾ</h1>
-                    <p class="text-[10px] md:text-xs text-sky-100 font-bold">MÙA HÈ XANH 2026 • Tra cứu nhanh - Sử dụng đúng</p>
-                </div>
+        <!-- ================= CỘT TRÁI: TRANG BÌA CỐ ĐỊNH (PC) / PHẦN ĐẦU (MOBILE) ================= -->
+        <div class="w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex flex-col justify-between relative shrink-0 overflow-y-auto min-h-[340px] md:min-h-0 border-b md:border-b-0 md:border-r border-white/40">
+            <!-- Mặt trời vẽ tay bằng SVG -->
+            <div class="absolute top-4 right-4 w-14 h-14 animate-pulse">
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <circle cx="50" cy="50" r="25" fill="#fcd34d" />
+                    <path d="M50 15 L50 5 M50 85 L50 95 M15 50 L5 50 M85 50 L95 50 M25 25 L18 18 M75 75 L82 82 M25 75 L18 82 M75 25 L82 18" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" />
+                    <circle cx="42" cy="45" r="3" fill="#1e293b" />
+                    <circle cx="58" cy="45" r="3" fill="#1e293b" />
+                    <path d="M44 56 Q50 62 56 56" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round" />
+                </svg>
             </div>
-            <div class="hidden md:flex gap-2 items-center bg-white/10 px-4 py-1.5 rounded-full text-xs font-black border border-white/20">
-                <span id="admin-status-badge">🛡️ Chế độ chiến sĩ (Xem)</span>
-            </div>
-            <!-- Nút quay lại chỉ hiển thị trên di động -->
-            <button id="mobile-back-btn" onclick="handleMobileBack()" class="md:hidden bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg text-sm font-bold transition">
-                ← Quay lại
-            </button>
-        </header>
 
-        <!-- KHU VỰC HIỂN THỊ CHÍNH -->
-        <div class="flex-1 flex overflow-hidden relative">
-
-            <!-- CỘT 1: MỤC LỤC -->
-            <div id="col-menu" class="w-full md:w-80 bg-slate-50 border-r border-slate-100 flex flex-col overflow-y-auto shrink-0 transition-all duration-300">
-                <div class="p-4 bg-slate-100/50 border-b border-slate-200/60 flex items-center justify-between">
-                    <span class="text-xs font-black text-slate-500 uppercase tracking-wider">Mục lục danh mục</span>
-                    <span class="text-[10px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full font-bold">8 Nhóm</span>
-                </div>
-                <div class="p-3 space-y-2.5" id="menu-container">
-                    <!-- Javascript tự động điền danh mục ở đây -->
-                </div>
+            <!-- Header bìa sách -->
+            <div class="text-center md:text-left mt-2 z-10">
+                <p class="text-[9px] font-black text-sky-900 uppercase tracking-widest bg-white/40 inline-block px-3 py-1 rounded-full border border-white/40">HCMUS • BAN HOẠT ĐỘNG</p>
+                <h1 class="text-2xl md:text-3.5xl font-black text-white mt-4 leading-none tracking-tight drop-shadow-[0_2px_2px_rgba(3,105,161,0.4)]">
+                    CẨM NANG <br class="hidden md:block">
+                    <span class="text-3xl md:text-4xl text-yellow-300 font-extrabold tracking-wide drop-shadow-[0_3px_0_#d97706] block mt-1">Y TẾ ĐIỆN TỬ</span>
+                </h1>
                 
-                <!-- Khu vực chân trang Cột 1 tích hợp nút khóa/mở quyền hạn quản trị -->
-                <div class="mt-auto p-4 bg-sky-50 border-t border-sky-100 flex items-center justify-between gap-2">
-                    <div class="text-left text-[11px] font-bold text-sky-800">
-                        🤝 BAN HOẠT ĐỘNG - HCMUS
-                    </div>
-                    <!-- Nút bảo mật ẩn/hiện quyền quản trị viên -->
-                    <button id="admin-lock-btn" onclick="toggleAdminPanel()" class="p-1.5 rounded-lg bg-white border border-sky-200 text-xs shadow-sm hover:bg-sky-100 transition active:scale-95" title="Quyền quản trị viên">
+                <div class="inline-block bg-yellow-400 text-sky-950 font-black text-[10px] md:text-xs px-5 py-2 rounded-full shadow-md transform -rotate-1 mt-4 border border-white">
+                    MÙA HÈ XANH 2026
+                </div>
+            </div>
+
+            <!-- Hình ảnh Chiến sĩ tình nguyện vẽ tay bằng SVG -->
+            <div class="flex justify-center items-end my-4 z-10">
+                <div class="relative w-56 h-36 flex items-end justify-center">
+                    <svg viewBox="0 0 200 150" class="w-full h-full">
+                        <!-- Tình nguyện viên nam -->
+                        <path d="M30 150 C30 110 50 100 70 100 L70 150 Z" fill="#2563eb" />
+                        <circle cx="50" cy="80" r="18" fill="#fecdd3" />
+                        <path d="M30 75 Q50 55 70 75 Z" fill="#1e293b" />
+                        <path d="M25 72 Q50 65 75 72" stroke="#15803d" stroke-width="6" stroke-linecap="round" />
+                        <!-- Tình nguyện viên nữ -->
+                        <path d="M130 150 C130 110 150 100 170 100 L170 150 Z" fill="#2563eb" />
+                        <circle cx="150" cy="80" r="18" fill="#fecdd3" />
+                        <path d="M132 75 Q150 58 168 75 Z" fill="#1e293b" />
+                        <path d="M130 85 Q150 90 170 85" stroke="#be123c" stroke-width="4" fill="none" />
+                        <!-- Hòm thuốc sơ cứu -->
+                        <rect x="75" y="95" width="50" height="40" rx="8" fill="white" stroke="#94a3b8" stroke-width="2" />
+                        <rect x="75" y="95" width="50" height="12" rx="4" fill="#cbd5e1" />
+                        <rect x="95" y="110" width="10" height="20" fill="#ef4444" />
+                        <rect x="90" y="115" width="20" height="10" fill="#ef4444" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Khẩu hiệu & Bản quyền, tích hợp Khóa Admin -->
+            <div class="text-center md:text-left z-10">
+                <p class="text-[10px] text-sky-950/80 font-extrabold leading-relaxed bg-white/30 p-2.5 rounded-xl border border-white/20 mb-3 text-center">
+                    🌿 TRANG BỊ CHO CHIẾN SĨ <br>
+                    <span class="text-[9px] uppercase tracking-wider text-sky-900 block">Đoàn kết - Tình nguyện - An toàn - Hiệu quả</span>
+                </p>
+                <div class="flex items-center justify-between gap-2 border-t border-white/20 pt-2.5">
+                    <span class="text-[10px] font-black text-sky-950/70">BAN HOẠT ĐỘNG - HCMUS</span>
+                    <button id="admin-lock-btn" onclick="toggleAdminPanel()" class="p-1 rounded-lg bg-white/50 border border-white/40 text-xs shadow-sm hover:bg-white transition active:scale-95">
                         🔓
                     </button>
                 </div>
             </div>
-
-            <!-- CỘT 2: DANH SÁCH THUỐC -->
-            <div id="col-medicines" class="hidden md:flex flex-1 flex-col bg-white border-r border-slate-100 overflow-y-auto shrink-0 md:max-w-md transition-all duration-300">
-                <div id="category-header-banner" class="p-4 text-white relative">
-                    <!-- Banner đổi màu theo nhóm thuốc -->
-                    <span id="cat-num-badge" class="text-[10px] bg-white/20 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Nhóm 01</span>
-                    <h2 id="cat-title-text" class="text-lg font-black mt-1">HẠ SỐT, GIẢM ĐAU</h2>
-                    <p id="cat-desc-text" class="text-xs opacity-90 mt-1 leading-snug">Các thuốc giảm đau hạ sốt an toàn...</p>
-                    <div id="cat-count-badge" class="absolute right-4 bottom-4 bg-white text-slate-800 px-3 py-1 rounded-full text-[10px] font-black shadow-sm">
-                        Số lượng: 2 loại
-                    </div>
-                </div>
-
-                <div class="p-4 flex-1 overflow-y-auto flex flex-col justify-between">
-                    <!-- Danh sách thẻ thuốc -->
-                    <div class="space-y-3" id="medicines-container"></div>
-                    
-                    <!-- Nút thêm thuốc mới vào nhóm (Chỉ hiển thị cho quản trị viên) -->
-                    <button id="add-med-btn" onclick="enableAddMode()" class="hidden w-full mt-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold py-3 px-4 rounded-2xl text-xs transition active:scale-95 border-2 border-dashed border-emerald-300 items-center justify-center gap-1.5 shadow-sm">
-                        <span>➕</span> Thêm thuốc mới vào nhóm
-                    </button>
-                </div>
-            </div>
-
-            <!-- CỘT 3: CHI TIẾT THUỐC HOẶC GIAO DIỆN CHỈNH SỬA -->
-            <div id="col-details" class="hidden md:flex flex-1 flex-col bg-slate-50/50 overflow-y-auto p-4 md:p-6 transition-all duration-300">
-                <!-- Nội dung chi tiết thuốc hiển thị động -->
-                <div id="details-placeholder" class="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
-                    <div class="text-5xl mb-3">📋</div>
-                    <p class="text-sm font-bold">Vui lòng chọn một loại thuốc để xem hướng dẫn sử dụng chi tiết, liều lượng và khuyến cáo an toàn.</p>
-                </div>
-                <div id="details-content" class="hidden space-y-5">
-                    <!-- Javascript tự động đổ thông tin thuốc hoặc form sửa đổi -->
-                </div>
-            </div>
-
         </div>
 
-        <!-- FOOTER ĐIỀU HƯỚNG TIỆN ÍCH -->
-        <footer class="bg-slate-100 border-t border-slate-200 px-4 py-2.5 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-600 font-semibold shrink-0">
-            <div class="flex items-center gap-1.5 text-sky-700">
-                <span>📚</span> <span>Đọc kỹ hướng dẫn trước khi sử dụng thuốc.</span>
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (PC VÀ MOBILE) ================= -->
+        <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
+            <!-- Sẽ được quản lý trạng thái hiển thị thông qua JS -->
+            <div id="dynamic-content-wrapper" class="flex-1 flex flex-col overflow-y-auto p-4 md:p-6">
+                <!-- Nội dung vẽ tự động tại đây -->
             </div>
-            <div class="flex items-center gap-2">
-                <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">🚑 BAN HOẠT ĐỘNG - HCMUS</span>
-            </div>
-        </footer>
+        </div>
 
     </div>
 
-    <!-- HỘP THOẠI NHẬP MẬT MÃ BẢO MẬT (MODAL DIỄN HỌA) -->
+    <!-- HỘP THOẠI NHẬP MẬT MÃ QUẢN TRỊ -->
     <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl border border-slate-100 space-y-4 animate-[fadeIn_0.2s_ease-out]">
             <div class="text-center">
                 <span class="text-3xl">🔐</span>
                 <h3 class="text-sm font-black text-slate-800 mt-2 uppercase tracking-wider">XÁC THỰC QUẢN TRỊ VIÊN</h3>
-                <p class="text-[10px] text-slate-400 font-bold mt-1">Vui lòng điền mật mã của Ban Hoạt Động để mở khóa quyền chỉnh sửa.</p>
+                <p class="text-[10px] text-slate-400 font-bold mt-1">Mở khóa quyền chỉnh sửa các loại thuốc trên hệ thống.</p>
             </div>
-            <input id="admin-pass-input" type="password" placeholder="Mật mã chỉnh sửa..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-center font-bold text-slate-850 focus:ring-2 focus:ring-sky-400 focus:outline-none text-xs">
+            <input id="admin-pass-input" type="password" placeholder="Nhập mã chỉnh sửa..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-center font-bold text-slate-850 focus:ring-2 focus:ring-sky-400 focus:outline-none text-xs">
             <div class="flex gap-2">
                 <button onclick="verifyAdminCode()" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-black py-2 rounded-xl text-xs transition active:scale-95 shadow-sm">Xác nhận</button>
                 <button onclick="closeLoginModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-4 rounded-xl text-xs transition">Hủy</button>
@@ -147,13 +132,13 @@
 
     <!-- CƠ SỞ DỮ LIỆU ĐẦY ĐỦ -->
     <script>
-        // Mật mã mở quyền chỉnh sửa (Có thể tự đổi mã này tại đây)
+        // Mật mã truy cập chỉnh sửa
         const ADMIN_PASSCODE = "HCMUS2026";
 
         const DEFAULT_DATABASE = [
             {
                 id: "01",
-                title: "Hạ sốt, giảm đau",
+                title: "Họ sốt, giảm đau",
                 desc: "Hạ sốt, giảm đau nhẹ đến vừa (đau đầu, đau răng, đau mỏi cơ, sốt do cảm cúm...).",
                 icon: "💊",
                 color: "from-amber-400 to-orange-500",
@@ -207,7 +192,7 @@
                         lieuLuong: "4 - 6 viên/lần, ngày uống 2 lần.",
                         khuyenCao: [
                             "<b>Phân đen:</b> Đi ngoài phân đen là hoàn toàn bình thường do màu của than hoạt tính, tự hết sau khi ngưng thuốc 1-2 ngày.",
-                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
+                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác ít nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
                         ]
                     },
                     {
@@ -467,75 +452,444 @@
         // Đọc cơ sở dữ liệu
         let database = JSON.parse(localStorage.getItem('hcmus_medical_handbook_db')) || DEFAULT_DATABASE;
 
+        // Trạng thái ứng dụng
         let activeCategoryId = "01";
         let activeMedicineIndex = 0;
         let isEditMode = false;
         let isAddMode = false;
+        let searchQuery = "";
 
-        // Trạng thái Quản trị (mặc định ban đầu là false - chỉ đọc cho chiến sĩ)
+        // Trạng thái điều hướng màn hình bên phải: 'home' (mục lục + tìm kiếm), 'category' (danh sách thuốc), 'detail' (chi tiết thuốc)
+        let rightPanelState = "home";
+
+        // Trạng thái quản trị viên
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
-        // KHỞI TẠO MENU DANH MỤC (CỘT 1)
-        function renderMenu() {
-            const container = document.getElementById("menu-container");
-            container.innerHTML = "";
-            
-            database.forEach((cat) => {
-                const isActive = cat.id === activeCategoryId;
-                const activeClasses = isActive 
-                    ? "bg-sky-500 text-white shadow-md transform scale-[1.02]" 
-                    : "bg-white hover:bg-slate-100 text-slate-700 shadow-sm";
-                
-                const badgeColor = isActive 
-                    ? "bg-white/25 text-white" 
-                    : `${cat.textBg} ${cat.textColor} border ${cat.badgeBorder}`;
+        // CHUYỂN ĐỔI PANEL TRẠNG THÁI BÊN PHẢI KÈM HIỆU ỨNG
+        function setRightPanelState(state) {
+            rightPanelState = state;
+            renderDynamicRightPanel();
+        }
 
-                const itemHtml = `
-                    <div onclick="selectCategory('${cat.id}')" class="p-3 rounded-2xl cursor-pointer transition-all duration-200 flex items-center justify-between group ${activeClasses}">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs font-black px-2 py-0.5 rounded-lg ${badgeColor}">${cat.id}</span>
-                            <div class="text-2xl">${cat.icon}</div>
-                            <div class="text-left">
-                                <h3 class="text-xs font-bold leading-tight group-hover:text-sky-900 ${isActive ? 'text-white' : ''}">${cat.title}</h3>
+        // HÀM QUYẾT ĐỊNH VẼ GIAO DIỆN CỘT PHẢI THEO TRẠNG THÁI (CORE RENDER)
+        function renderDynamicRightPanel() {
+            const wrapper = document.getElementById("dynamic-content-wrapper");
+            wrapper.innerHTML = "";
+
+            if (rightPanelState === "home") {
+                // ================= TRẠNG THÁI 1: TRANG CHỦ (TÌM KIẾM + 8 DANH MỤC) =================
+                let filteredHtml = "";
+                
+                if (searchQuery.trim() !== "") {
+                    // Chế độ đang tìm kiếm thuốc
+                    let matches = [];
+                    database.forEach(cat => {
+                        cat.medicines.forEach((med, mIdx) => {
+                            if (med.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                med.congDung.toLowerCase().includes(searchQuery.toLowerCase())) {
+                                matches.push({ cat, med, mIdx });
+                            }
+                        });
+                    });
+
+                    let matchCards = "";
+                    if (matches.length > 0) {
+                        matches.forEach(item => {
+                            const imgHtml = item.med.image 
+                                ? `<img src="${item.med.image}" alt="${item.med.name}" class="w-12 h-12 rounded-xl object-cover shadow-sm shrink-0">`
+                                : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0">💊</div>`;
+
+                            matchCards += `
+                                <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer">
+                                    ${imgHtml}
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-sm font-black text-slate-800 truncate">${item.med.name}</h4>
+                                            <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">${item.cat.title}</span>
+                                        </div>
+                                        <p class="text-[11px] text-slate-400 font-bold line-clamp-1 mt-0.5">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        matchCards = `
+                            <div class="text-center p-8 text-slate-400 font-bold">
+                                🔍 Không tìm thấy loại thuốc khớp với từ khóa "${searchQuery}" nhe!
+                            </div>
+                        `;
+                    }
+
+                    filteredHtml = `
+                        <div class="space-y-3.5 fade-slide-in">
+                            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                                <h3 class="text-xs font-black text-slate-500 uppercase tracking-wider">Kết quả tìm kiếm toàn hệ thống</h3>
+                                <button onclick="clearSearch()" class="text-xs text-red-500 font-black bg-red-50 px-2.5 py-1 rounded-lg">Xóa tìm kiếm</button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                ${matchCards}
                             </div>
                         </div>
-                        <span class="text-xs opacity-40 group-hover:translate-x-1 transition-transform">→</span>
+                    `;
+                } else {
+                    // Chế độ hiển thị 8 Danh Mục thông thường
+                    let categoryCards = "";
+                    database.forEach(cat => {
+                        categoryCards += `
+                            <div onclick="selectCategory('${cat.id}')" class="p-4 bg-white hover:bg-slate-50 active:scale-[0.98] transition-all duration-200 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between cursor-pointer relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${cat.color} opacity-[0.03] rounded-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform"></div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-7 h-7 rounded-full flex items-center justify-center font-black text-[10px] bg-gradient-to-r ${cat.color} text-white shadow-sm">${cat.id}</span>
+                                    <div class="text-2xl">${cat.icon}</div>
+                                </div>
+                                <div class="mt-4">
+                                    <span class="text-[9px] font-black tracking-wider text-slate-400 uppercase">Nhóm danh mục</span>
+                                    <h3 class="text-sm font-black text-slate-800 leading-tight group-hover:text-sky-600 transition-colors mt-0.5">${cat.title}</h3>
+                                    <p class="text-[10px] text-slate-400 font-semibold mt-1 line-clamp-2">${cat.desc}</p>
+                                </div>
+                                <div class="mt-3 pt-2.5 border-t border-dashed border-slate-100 flex justify-between items-center text-[10px] font-black text-slate-500">
+                                    <span>💊 Số lượng thuốc:</span>
+                                    <span class="text-slate-800 bg-slate-100 px-2 py-0.5 rounded-full">${cat.medicines.length} loại</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    filteredHtml = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 fade-slide-in">
+                            ${categoryCards}
+                        </div>
+                    `;
+                }
+
+                wrapper.innerHTML = `
+                    <div class="space-y-5 fade-slide-in">
+                        <!-- Thanh tìm kiếm thuốc thông minh -->
+                        <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-3 relative">
+                            <span class="text-xl shrink-0">🔍</span>
+                            <input id="search-input" type="text" oninput="handleSearch(this.value)" placeholder="Tìm nhanh tên thuốc, công dụng..." class="w-full bg-transparent focus:outline-none text-slate-800 text-sm font-bold" value="${searchQuery}">
+                        </div>
+
+                        <!-- Khu vực Danh mục hoặc Kết quả -->
+                        ${filteredHtml}
                     </div>
                 `;
-                container.insertAdjacentHTML("beforeend", itemHtml);
-            });
+            } else if (rightPanelState === "category") {
+                // ================= TRẠNG THÁI 2: TRONG DANH MỤC THUỐC =================
+                const cat = database.find(c => c.id === activeCategoryId);
+                if (!cat) return;
 
-            // Cập nhật biểu tượng nút khóa admin dưới chân trang
-            const lockBtn = document.getElementById("admin-lock-btn");
-            if (isAdmin) {
-                lockBtn.textContent = "🔒";
-                lockBtn.title = "Đang mở khóa quyền quản trị (Bấm để khóa lại)";
-                lockBtn.className = "p-1.5 rounded-lg bg-emerald-100 border border-emerald-300 text-xs shadow-sm hover:bg-red-100 transition active:scale-95";
-            } else {
-                lockBtn.textContent = "🔓";
-                lockBtn.title = "Đang khóa quyền sửa (Bấm để mở)";
-                lockBtn.className = "p-1.5 rounded-lg bg-white border border-sky-200 text-xs shadow-sm hover:bg-sky-100 transition active:scale-95";
+                let medicinesCards = "";
+                if (cat.medicines.length > 0) {
+                    cat.medicines.forEach((med, index) => {
+                        const imgHtml = med.image 
+                            ? `<img src="${med.image}" alt="${med.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-100 shadow-sm shrink-0">`
+                            : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
+
+                        medicinesCards += `
+                            <div onclick="selectMedicine(${index})" class="p-3.5 bg-white hover:bg-slate-50 active:scale-98 transition rounded-2xl border border-slate-150 shadow-sm flex gap-3 items-center cursor-pointer">
+                                ${imgHtml}
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-start gap-1">
+                                        <h3 class="text-sm font-black text-slate-800 truncate leading-snug">${med.name}</h3>
+                                        <span class="text-[9px] font-black text-sky-600 bg-sky-100/60 px-1.5 py-0.5 rounded shrink-0">Xem</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-400 font-bold mt-0.5 line-clamp-1">${med.congDung.replace(/<[^>]*>/g, '')}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    medicinesCards = `
+                        <div class="text-center p-8 text-slate-400 font-bold">
+                            📦 Chưa có thuốc trong danh mục này!
+                        </div>
+                    `;
+                }
+
+                // Nút thêm thuốc chỉ hiển thị nếu là Admin
+                const addBtnHtml = isAdmin 
+                    ? `
+                    <button onclick="enableAddMode()" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold py-3 px-4 rounded-2xl text-xs transition active:scale-95 border-2 border-dashed border-emerald-300 flex items-center justify-center gap-1.5 shadow-sm">
+                        <span>➕</span> Thêm thuốc mới vào nhóm
+                    </button>
+                    `
+                    : "";
+
+                wrapper.innerHTML = `
+                    <div class="space-y-5 fade-slide-in">
+                        <!-- Header Danh mục thuốc -->
+                        <div class="p-4 md:p-5 text-white relative bg-gradient-to-br ${cat.color} rounded-3xl shadow-sm">
+                            <button onclick="goBackToHome()" class="absolute left-4 top-4 bg-white/20 hover:bg-white/35 text-white py-1 px-3.5 rounded-full text-xs font-bold transition">
+                                ← Quay lại
+                            </button>
+                            <div class="text-center">
+                                <div class="text-4xl mb-1">${cat.icon}</div>
+                                <span class="text-[10px] bg-white/25 px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider inline-block">Nhóm ${cat.id}</span>
+                                <h2 class="text-lg font-black mt-1.5">${cat.title.toUpperCase()}</h2>
+                                <p class="text-[11px] opacity-90 px-6 mt-1.5 leading-relaxed">${cat.desc}</p>
+                            </div>
+                        </div>
+
+                        <!-- Danh sách thuốc cuộn -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            ${medicinesCards}
+                        </div>
+
+                        ${addBtnHtml}
+                    </div>
+                `;
+            } else if (rightPanelState === "detail") {
+                // ================= TRẠNG THÁI 3: CHI TIẾT THUỐC HOẶC EDIT FORM =================
+                const cat = database.find(c => c.id === activeCategoryId);
+                if (!cat) return;
+
+                if (isEditMode || isAddMode) {
+                    // ======= CHẾ ĐỘ FORM CHỈNH SỬA / THÊM MỚI THUỐC =======
+                    let name = "";
+                    let image = "";
+                    let congDung = "";
+                    let lieuLuong = "";
+                    let truongHopStr = "";
+                    let khuyenCaoStr = "";
+
+                    if (isEditMode) {
+                        const med = cat.medicines[activeMedicineIndex];
+                        if (!med) return;
+                        name = med.name;
+                        image = med.image || "";
+                        congDung = med.congDung;
+                        lieuLuong = med.lieuLuong;
+                        truongHopStr = med.truongHop.join(', ');
+                        khuyenCaoStr = med.khuyenCao.join('\n');
+                    }
+
+                    const titleForm = isAddMode 
+                        ? `<span>➕</span> THÊM THUỐC MỚI VÀO NHÓM ${cat.title.toUpperCase()}` 
+                        : `<span>✏️</span> CHỈNH SỬA THÔNG TIN: ${name.toUpperCase()}`;
+
+                    wrapper.innerHTML = `
+                        <div class="space-y-4 fade-slide-in pb-6">
+                            <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl">
+                                <h2 class="text-sm font-black text-amber-800 uppercase tracking-wide flex items-center gap-2">
+                                    ${titleForm}
+                                </h2>
+                                <p class="text-[10px] text-amber-700 font-bold mt-1 leading-snug">
+                                    Bôi đen văn bản và nhấn các nút định dạng B hoặc I để in đậm, in nghiêng dễ dàng.
+                                </p>
+                            </div>
+
+                            <!-- Tên thuốc -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Tên thuốc (Bắt buộc)</label>
+                                <input id="edit-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-bold text-slate-800 text-sm" value="${name}" placeholder="Ví dụ: Decolgen ND">
+                            </div>
+
+                            <!-- Đường dẫn hình ảnh thuốc (URL) -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Đường dẫn hình ảnh thuốc (URL)</label>
+                                <input id="edit-image" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs" value="${image}" placeholder="Dán link ảnh từ web (Ví dụ: https://...)">
+                            </div>
+
+                            <!-- Trường hợp sử dụng -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Trường hợp chỉ định (Mỗi chỉ định phân cách bằng dấu phẩy ",")</label>
+                                <input id="edit-truonghop" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-bold text-slate-800 text-xs" value="${truongHopStr}" placeholder="Ví dụ: Đau họng, Sổ mũi, Cảm cúm">
+                            </div>
+
+                            <!-- Công dụng -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Công dụng chính (Bắt buộc)</label>
+                                ${getToolbarHtml('edit-congdung')}
+                                <textarea id="edit-congdung" rows="3" class="w-full px-4 py-2 bg-white rounded-b-xl border-b border-x border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Thuốc đặc trị các cơn ho khan, long đờm...">${congDung}</textarea>
+                            </div>
+
+                            <!-- Liều dùng -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Liều lượng & Cách dùng (Bắt buộc)</label>
+                                ${getToolbarHtml('edit-lieuluong')}
+                                <textarea id="edit-lieuluong" rows="3" class="w-full px-4 py-2 bg-white rounded-b-xl border-b border-x border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Uống ngày 2 lần, mỗi lần 1 viên sau ăn no...">${lieuLuong}</textarea>
+                            </div>
+
+                            <!-- Khuyến cáo -->
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Khuyến cáo an toàn (Nhấn Enter xuống dòng để phân biệt các dòng)</label>
+                                <textarea id="edit-khuyencao" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Không dùng cho người có tiền sử loét dạ dày&#10;Tránh dùng kéo dài quá 5 ngày">${khuyenCaoStr}</textarea>
+                            </div>
+
+                            <!-- Nút hành động -->
+                            <div class="flex gap-3 pt-2">
+                                <button onclick="saveMedicineData()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 transition text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md">
+                                    <span>💾</span> Lưu thông tin
+                                </button>
+                                <button onclick="disableEditMode()" class="bg-slate-200 hover:bg-slate-300 active:scale-95 transition text-slate-700 font-black py-3 px-6 rounded-xl text-xs">
+                                    Hủy bỏ
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // ======= CHẾ ĐỘ XEM CHI TIẾT THUỐC =======
+                    const med = cat.medicines[activeMedicineIndex];
+                    if (!med) return;
+
+                    const detailImageHtml = med.image
+                        ? `
+                        <div class="flex justify-center bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
+                            <img src="${med.image}" alt="${med.name}" class="w-full max-w-[200px] h-32 object-cover rounded-xl shadow-md border border-slate-200/40 animate-pulse" style="animation-duration: 4s;">
+                        </div>
+                        `
+                        : "";
+
+                    let truongHopHtml = "";
+                    med.truongHop.forEach(th => {
+                        truongHopHtml += `<span class="bg-slate-100 text-slate-700 font-bold text-[10px] px-2.5 py-1 rounded-full border border-slate-200">${th}</span>`;
+                    });
+
+                    let khuyenCaoHtml = "";
+                    med.khuyenCao.forEach(kc => {
+                        khuyenCaoHtml += `<li class="text-xs text-amber-900 leading-relaxed font-semibold mb-1.5">• ${kc}</li>`;
+                    });
+
+                    const adminActionsHtml = isAdmin 
+                        ? `
+                        <div class="flex gap-2">
+                            <button onclick="enableEditMode()" class="bg-sky-100 hover:bg-sky-200 active:scale-95 transition text-sky-700 font-extrabold text-[10px] py-1.5 px-3 rounded-xl flex items-center gap-1 border border-sky-200 shadow-sm">
+                                ✏️ Sửa
+                            </button>
+                            <button onclick="deleteMedicine()" class="bg-red-50 hover:bg-red-100 active:scale-95 transition text-red-600 font-extrabold text-[10px] py-1.5 px-3 rounded-xl flex items-center gap-1 border border-red-200 shadow-sm">
+                                🗑️ Xóa
+                            </button>
+                        </div>
+                        `
+                        : "";
+
+                    wrapper.innerHTML = `
+                        <div class="space-y-4 fade-slide-in">
+                            <!-- Header Chi Tiết Thuốc -->
+                            <div class="bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex flex-wrap justify-between items-center gap-3">
+                                <div class="flex items-center gap-3">
+                                    <button onclick="goBackToCategory()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-xl text-xs font-bold transition">
+                                        ← Trở về
+                                    </button>
+                                    <div class="text-left">
+                                        <span class="text-[9px] font-black tracking-widest text-slate-400 block uppercase">Danh mục thuốc</span>
+                                        <h2 class="text-base md:text-lg font-black text-slate-800 leading-tight mt-0.5">${med.name}</h2>
+                                    </div>
+                                </div>
+                                ${adminActionsHtml}
+                            </div>
+
+                            <!-- Khối hiển thị hình ảnh lớn -->
+                            ${detailImageHtml}
+
+                            <!-- Các trường hợp sử dụng cụ thể -->
+                            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                                <span class="text-xs font-black text-slate-400 uppercase tracking-wide block">🎯 Trường hợp sử dụng điển hình</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    ${truongHopHtml || '<span class="text-xs text-slate-400">Chưa nhập trường hợp sử dụng cụ thể</span>'}
+                                </div>
+                            </div>
+
+                            <!-- Các block Công dụng & Liều dùng chính -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl space-y-1">
+                                    <span class="text-[9px] font-black text-emerald-800 tracking-wider block">💚 CÔNG DỤNG CHÍNH</span>
+                                    <p class="text-xs text-emerald-950 font-bold leading-relaxed">${med.congDung}</p>
+                                </div>
+                                <div class="bg-sky-50 border border-sky-100 p-4 rounded-2xl space-y-1">
+                                    <span class="text-[9px] font-black text-sky-800 tracking-wider block">🕒 LIỀU LƯỢNG SỬ DỤNG</span>
+                                    <p class="text-xs text-sky-950 font-bold leading-relaxed">${med.lieuLuong}</p>
+                                </div>
+                            </div>
+
+                            <!-- Khuyến cáo quan trọng cho Chiến sĩ -->
+                            <div class="bg-amber-50/70 border border-amber-200/80 p-4 rounded-2xl space-y-2">
+                                <span class="text-[9px] font-black text-amber-800 tracking-wider block">⚠️ KHUYẾN CÁO AN TOÀN & KIÊNG KHEM</span>
+                                <ul class="list-none pl-0">
+                                    ${khuyenCaoHtml || '<li class="text-xs text-slate-400">Chưa có khuyến cáo cụ thể</li>'}
+                                </ul>
+                            </div>
+
+                            <!-- Ghi nhớ tiện ích của đội -->
+                            <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl text-xs text-blue-900 font-semibold leading-relaxed flex gap-2">
+                                <span class="text-base">💡</span>
+                                <span><strong>Mẹo chiến sĩ:</strong> Luôn kiểm tra lại số lô, hạn sử dụng trên vỉ thuốc trước khi phát cho đồng bào hoặc đồng đội. Ghi chép nhật ký phát thuốc rõ ràng để quản lý cơ số thuốc tồn của đội.</span>
+                            </div>
+                        </div>
+                    `;
+                }
             }
+        }
+
+        // ĐIỀU HƯỚNG QUAY LẠI TRANG CHỦ
+        function goBackToHome() {
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("home");
+        }
+
+        // ĐIỀU HƯỚNG QUAY LẠI DANH MỤC THUỐC
+        function goBackToCategory() {
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("category");
+        }
+
+        // LỌC TÌM KIẾM THỜI GIAN THỰC
+        function handleSearch(val) {
+            searchQuery = val;
+            setRightPanelState("home");
+        }
+
+        function clearSearch() {
+            searchQuery = "";
+            const searchInput = document.getElementById("search-input");
+            if (searchInput) searchInput.value = "";
+            setRightPanelState("home");
+        }
+
+        // LỰA CHỌN DANH MỤC TRÊN MỤC LỤC
+        function selectCategory(catId) {
+            activeCategoryId = catId;
+            activeMedicineIndex = 0;
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("category");
+        }
+
+        // LỰA CHỌN THUỐC
+        function selectMedicine(index) {
+            activeMedicineIndex = index;
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("detail");
+        }
+
+        // LỰA CHỌN THUỐC TRỰC TIẾP TỪ DÒNG TÌM KIẾM
+        function selectMedicineFromSearch(catId, medIndex) {
+            activeCategoryId = catId;
+            activeMedicineIndex = medIndex;
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("detail");
         }
 
         // ĐÓNG MỞ QUẢN TRỊ VIÊN BẰNG PASSCODE TĨNH
         function toggleAdminPanel() {
             if (isAdmin) {
-                // Đang là admin -> Khóa lại
+                // Khóa lại
                 isAdmin = false;
                 localStorage.setItem('hcmus_admin_active', 'false');
                 isEditMode = false;
                 isAddMode = false;
-                alert("Đã thoát chế độ Quản trị viên. Đưa về chế độ tra cứu Xem thường của chiến sĩ.");
+                alert("Đã thoát chế độ Quản trị viên. Đưa về chế độ Xem thường của chiến sĩ.");
                 
                 document.getElementById("admin-status-badge").textContent = "🛡️ Chế độ chiến sĩ (Xem)";
-                document.getElementById("add-med-btn").style.display = "none";
-                
                 renderMenu();
-                renderMedicinesList();
-                renderMedicineDetail();
+                renderDynamicRightPanel();
             } else {
-                // Đang khóa -> Hiển thị hộp thoại mật mã
+                // Hiển thị hộp thoại mật mã
                 document.getElementById("admin-login-modal").classList.remove("hidden");
                 document.getElementById("admin-pass-input").value = "";
                 document.getElementById("admin-pass-input").focus();
@@ -552,11 +906,8 @@
                 alert("Mở khóa thành công! Bạn hiện có quyền Thêm, Sửa và Xóa các loại thuốc.");
                 
                 document.getElementById("admin-status-badge").textContent = "⚙️ Chế độ Quản trị viên (Chỉnh sửa)";
-                document.getElementById("add-med-btn").style.display = "flex";
-                
                 renderMenu();
-                renderMedicinesList();
-                renderMedicineDetail();
+                renderDynamicRightPanel();
             } else {
                 alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mã xác thực.");
             }
@@ -564,149 +915,6 @@
 
         function closeLoginModal() {
             document.getElementById("admin-login-modal").classList.add("hidden");
-        }
-
-        // LỰA CHỌN DANH MỤC
-        function selectCategory(catId) {
-            activeCategoryId = catId;
-            activeMedicineIndex = 0;
-            isEditMode = false;
-            isAddMode = false;
-            renderMenu();
-            renderMedicinesList();
-
-            // Responsive di động
-            if (window.innerWidth < 768) {
-                document.getElementById("col-menu").classList.add("hidden");
-                document.getElementById("col-medicines").classList.remove("hidden");
-                document.getElementById("col-details").classList.add("hidden");
-                document.getElementById("mobile-back-btn").classList.remove("hidden");
-            }
-        }
-
-        // HIỂN THỊ DANH SÁCH THUỐC TRONG DANH MỤC (CỘT 2)
-        function renderMedicinesList() {
-            const cat = database.find(c => c.id === activeCategoryId);
-            if (!cat) return;
-
-            const banner = document.getElementById("category-header-banner");
-            banner.className = `p-5 text-white relative bg-gradient-to-br ${cat.color}`;
-            document.getElementById("cat-num-badge").textContent = `Nhóm ${cat.id}`;
-            document.getElementById("cat-title-text").textContent = cat.title.toUpperCase();
-            document.getElementById("cat-desc-text").textContent = cat.desc;
-            document.getElementById("cat-count-badge").innerHTML = `Số lượng: <b>${cat.medicines.length}</b> loại`;
-
-            const listContainer = document.getElementById("medicines-container");
-            listContainer.innerHTML = "";
-
-            cat.medicines.forEach((med, index) => {
-                const isActive = (index === activeMedicineIndex) && !isAddMode;
-                const borderClass = isActive ? "border-sky-500 bg-sky-50/50 shadow-md scale-[1.01]" : "border-slate-100 hover:border-slate-200 bg-white shadow-sm";
-                
-                // Thumbnail ảnh đại diện hoặc placeholder viên thuốc
-                const imgHtml = med.image 
-                    ? `<img src="${med.image}" alt="${med.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-100 shadow-sm shrink-0">`
-                    : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
-
-                const medHtml = `
-                    <div onclick="selectMedicine(${index})" class="p-3 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex gap-3 items-center ${borderClass}">
-                        ${imgHtml}
-                        <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-start gap-1">
-                                <h3 class="text-sm font-black text-slate-800 leading-snug truncate">${med.name}</h3>
-                                <span class="text-[10px] font-bold text-sky-600 bg-sky-100/60 px-1.5 py-0.5 rounded-md shrink-0">Xem</span>
-                            </div>
-                            <p class="text-[11px] text-slate-400 font-bold mt-0.5 line-clamp-1">${med.congDung.replace(/<[^>]*>/g, '')}</p>
-                        </div>
-                    </div>
-                `;
-                listContainer.insertAdjacentHTML("beforeend", medHtml);
-            });
-
-            // Chỉ hiển thị nút thêm thuốc nếu là Admin
-            const addBtn = document.getElementById("add-med-btn");
-            if (isAdmin) {
-                addBtn.style.display = "flex";
-            } else {
-                addBtn.style.display = "none";
-            }
-
-            if (window.innerWidth >= 768 && !isAddMode) {
-                renderMedicineDetail();
-            }
-        }
-
-        // LỰA CHỌN CHI TIẾT THUỐC
-        function selectMedicine(index) {
-            activeMedicineIndex = index;
-            isEditMode = false;
-            isAddMode = false;
-            renderMedicinesList();
-            renderMedicineDetail();
-
-            if (window.innerWidth < 768) {
-                document.getElementById("col-menu").classList.add("hidden");
-                document.getElementById("col-medicines").classList.add("hidden");
-                document.getElementById("col-details").classList.remove("hidden");
-                document.getElementById("mobile-back-btn").classList.remove("hidden");
-            }
-        }
-
-        // CHUYỂN SANG CHẾ ĐỘ THÊM THUỐC MỚI
-        function enableAddMode() {
-            if (!isAdmin) return;
-            isAddMode = true;
-            isEditMode = false;
-            renderMedicinesList(); 
-            renderMedicineDetail();
-
-            if (window.innerWidth < 768) {
-                document.getElementById("col-menu").classList.add("hidden");
-                document.getElementById("col-medicines").classList.add("hidden");
-                document.getElementById("col-details").classList.remove("hidden");
-                document.getElementById("mobile-back-btn").classList.remove("hidden");
-            }
-        }
-
-        // CHUYỂN SANG CHẾ ĐỘ SỬA
-        function enableEditMode() {
-            if (!isAdmin) return;
-            isEditMode = true;
-            isAddMode = false;
-            renderMedicineDetail();
-        }
-
-        // THOÁT CHẾ ĐỘ SỬA/THÊM VỀ CHẾ ĐỘ XEM THƯỜNG
-        function disableEditMode() {
-            isEditMode = false;
-            isAddMode = false;
-            renderMedicinesList();
-            renderMedicineDetail();
-        }
-
-        // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH
-        function deleteMedicine() {
-            if (!isAdmin) return;
-            const catIndex = database.findIndex(c => c.id === activeCategoryId);
-            if (catIndex === -1) return;
-            const cat = database[catIndex];
-            const med = cat.medicines[activeMedicineIndex];
-            if (!med) return;
-
-            if (confirm(`Bạn có chắc chắn muốn xóa thuốc "${med.name}" khỏi hệ thống không?`)) {
-                cat.medicines.splice(activeMedicineIndex, 1);
-                
-                // Lưu vào LocalStorage
-                localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
-                
-                activeMedicineIndex = 0;
-                isEditMode = false;
-                isAddMode = false;
-                
-                alert("Đã xóa thuốc thành công!");
-                renderMedicinesList();
-                renderMedicineDetail();
-            }
         }
 
         // HÀM CHÈN KHUÔN ĐỊNH DẠNG TEXT (B, I, XUỐNG DÒNG)
@@ -769,7 +977,6 @@
             }
 
             if (isAddMode) {
-                // Thêm thuốc mới
                 const newMedicine = {
                     name: name,
                     image: image,
@@ -782,7 +989,6 @@
                 activeMedicineIndex = database[catIndex].medicines.length - 1; // Chọn thuốc vừa tạo
                 alert("Đã thêm thuốc mới thành công!");
             } else {
-                // Sửa đổi thuốc hiện tại
                 const med = database[catIndex].medicines[activeMedicineIndex];
                 if (!med) return;
 
@@ -795,251 +1001,82 @@
                 alert("Đã lưu chỉnh sửa thông tin thành công!");
             }
 
-            // Đồng bộ ghi vào localStorage
+            // Ghi vào localStorage
             localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
 
             isEditMode = false;
             isAddMode = false;
-            renderMedicinesList();
-            renderMedicineDetail();
+            setRightPanelState("category");
         }
 
-        // HIỂN THỊ CHI TIẾT CỦA THUỐC HOẶC HIỂN THỊ FORM CHỈNH SỬA / THÊM MỚI (CỘT 3)
-        function renderMedicineDetail() {
-            const cat = database.find(c => c.id === activeCategoryId);
-            if (!cat) return;
+        // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH
+        function deleteMedicine() {
+            if (!isAdmin) return;
+            const catIndex = database.findIndex(c => c.id === activeCategoryId);
+            if (catIndex === -1) return;
+            const cat = database[catIndex];
+            const med = cat.medicines[activeMedicineIndex];
+            if (!med) return;
 
-            document.getElementById("details-placeholder").classList.add("hidden");
-            const detailsContent = document.getElementById("details-content");
-            detailsContent.classList.remove("hidden");
-
-            if (isEditMode || isAddMode) {
-                // ======= GIAO DIỆN FORM CHỈNH SỬA / THÊM MỚI =======
-                let name = "";
-                let image = "";
-                let congDung = "";
-                let lieuLuong = "";
-                let truongHopStr = "";
-                let khuyenCaoStr = "";
-
-                if (isEditMode) {
-                    const med = cat.medicines[activeMedicineIndex];
-                    if (!med) return;
-                    name = med.name;
-                    image = med.image || "";
-                    congDung = med.congDung;
-                    lieuLuong = med.lieuLuong;
-                    truongHopStr = med.truongHop.join(', ');
-                    khuyenCaoStr = med.khuyenCao.join('\n');
-                }
-
-                const titleForm = isAddMode 
-                    ? `<span>➕</span> THÊM THUỐC MỚI VÀO NHÓM ${cat.title.toUpperCase()}` 
-                    : `<span>✏️</span> CHỈNH SỬA THÔNG TIN: ${name.toUpperCase()}`;
-
-                detailsContent.innerHTML = `
-                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl">
-                        <h2 class="text-sm font-black text-amber-800 uppercase tracking-wide flex items-center gap-2">
-                            ${titleForm}
-                        </h2>
-                        <p class="text-[11px] text-amber-700 font-bold mt-1 leading-snug">
-                            Sử dụng các nút công cụ nhanh phía trên các ô nhập để tự động định dạng <b>In đậm</b>, <i>In nghiêng</i> hoặc xuống hàng nhanh chóng.
-                        </p>
-                    </div>
-
-                    <!-- Tên thuốc -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Tên thuốc (Bắt buộc)</label>
-                        <input id="edit-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-bold text-slate-800 text-sm" value="${name}" placeholder="Ví dụ: Decolgen ND">
-                    </div>
-
-                    <!-- Đường dẫn hình ảnh thuốc (URL) -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Đường dẫn hình ảnh thuốc (URL)</label>
-                        <input id="edit-image" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs" value="${image}" placeholder="Dán link ảnh từ web (Ví dụ: https://...)">
-                    </div>
-
-                    <!-- Trường hợp sử dụng -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Trường hợp chỉ định (Mỗi chỉ định phân cách bằng dấu phẩy ",")</label>
-                        <input id="edit-truonghop" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-bold text-slate-800 text-xs" value="${truongHopStr}" placeholder="Ví dụ: Đau họng, Sổ mũi, Cảm cúm">
-                    </div>
-
-                    <!-- Công dụng -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Công dụng chính (Bắt buộc)</label>
-                        ${getToolbarHtml('edit-congdung')}
-                        <textarea id="edit-congdung" rows="3" class="w-full px-4 py-2 bg-white rounded-b-xl border-b border-x border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Thuốc đặc trị các cơn ho khan, long đờm...">${congDung}</textarea>
-                    </div>
-
-                    <!-- Liều dùng -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Liều lượng & Cách dùng (Bắt buộc)</label>
-                        ${getToolbarHtml('edit-lieuluong')}
-                        <textarea id="edit-lieuluong" rows="3" class="w-full px-4 py-2 bg-white rounded-b-xl border-b border-x border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Uống ngày 2 lần, mỗi lần 1 viên sau ăn no...">${lieuLuong}</textarea>
-                    </div>
-
-                    <!-- Khuyến cáo -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Khuyến cáo an toàn / Kiêng khem (Nhấn Enter xuống dòng để phân biệt các dòng)</label>
-                        <textarea id="edit-khuyencao" rows="4" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs shadow-inner" placeholder="Không dùng cho người có tiền sử loét dạ dày&#10;Tránh dùng kéo dài quá 5 ngày">${khuyenCaoStr}</textarea>
-                    </div>
-
-                    <!-- Nút hành động -->
-                    <div class="flex gap-3 pt-2">
-                        <button onclick="saveMedicineData()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 transition text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md">
-                            <span>💾</span> Lưu thông tin
-                        </button>
-                        <button onclick="disableEditMode()" class="bg-slate-200 hover:bg-slate-300 active:scale-95 transition text-slate-700 font-black py-3 px-6 rounded-xl text-xs">
-                            Hủy bỏ
-                        </button>
-                    </div>
-                `;
-            } else {
-                // ======= GIAO DIỆN XEM CHI TIẾT THUỐC =======
-                const med = cat.medicines[activeMedicineIndex];
-                if (!med) {
-                    detailsContent.innerHTML = `
-                        <div class="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
-                            <div class="text-5xl mb-3">📦</div>
-                            <p class="text-sm font-bold">Chưa có loại thuốc nào trong nhóm này. Hãy bấm nút "Thêm thuốc mới vào nhóm" ở cột giữa để tạo loại thuốc đầu tiên.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Cấu trúc khối hình ảnh của thuốc (nếu có ảnh sẽ hiển thị khung nổi bật)
-                const detailImageHtml = med.image
-                    ? `
-                    <div class="flex justify-center my-2 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
-                        <img src="${med.image}" alt="${med.name}" class="w-full max-w-[220px] h-36 object-cover rounded-xl shadow-md border border-slate-200/40">
-                    </div>
-                    `
-                    : "";
-
-                let truongHopHtml = "";
-                med.truongHop.forEach(th => {
-                    truongHopHtml += `<span class="bg-slate-100 text-slate-700 font-bold text-[11px] px-2.5 py-1 rounded-full border border-slate-200">${th}</span>`;
-                });
-
-                let khuyenCaoHtml = "";
-                med.khuyenCao.forEach(kc => {
-                    khuyenCaoHtml += `<li class="text-xs text-amber-900 leading-relaxed font-semibold mb-1.5">• ${kc}</li>`;
-                });
-
-                // Chỉ hiển thị cụm nút Sửa/Xóa nếu đang đăng nhập Admin
-                const adminActionsHtml = isAdmin 
-                    ? `
-                    <div class="flex gap-2">
-                        <button onclick="enableEditMode()" class="bg-sky-100 hover:bg-sky-200 active:scale-95 transition text-sky-700 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-sky-200 shadow-sm">
-                            <span>✏️</span> Sửa
-                        </button>
-                        <button onclick="deleteMedicine()" class="bg-red-50 hover:bg-red-100 active:scale-95 transition text-red-600 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-red-200 shadow-sm">
-                            <span>🗑️</span> Xóa
-                        </button>
-                    </div>
-                    `
-                    : "";
-
-                detailsContent.innerHTML = `
-                    <!-- Header Tên thuốc & Nút bấm sửa/xóa (Sửa/Xóa chỉ hiện khi đăng nhập Admin) -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-wrap justify-between items-center gap-3">
-                        <div class="flex items-center gap-4">
-                            <div class="text-4xl bg-gradient-to-br ${cat.color} p-3.5 rounded-2xl text-white shadow-md">${cat.icon}</div>
-                            <div class="text-left">
-                                <span class="text-[10px] font-black tracking-widest text-slate-400 block uppercase">Thông tin chỉ định</span>
-                                <h2 class="text-lg md:text-xl font-black text-slate-800 leading-tight mt-0.5">${med.name}</h2>
-                            </div>
-                        </div>
-                        ${adminActionsHtml}
-                    </div>
-
-                    <!-- Khối hiển thị hình ảnh lớn -->
-                    ${detailImageHtml}
-
-                    <!-- Các trường hợp sử dụng cụ thể -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
-                        <span class="text-xs font-black text-slate-400 uppercase tracking-wide block">🎯 Trường hợp sử dụng điển hình</span>
-                        <div class="flex flex-wrap gap-1.5">
-                            ${truongHopHtml || '<span class="text-xs text-slate-400">Chưa nhập trường hợp sử dụng cụ thể</span>'}
-                        </div>
-                    </div>
-
-                    <!-- Các block Công dụng & Liều dùng chính -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl space-y-1">
-                            <span class="text-[10px] font-black text-emerald-800 tracking-wider block">💚 CÔNG DỤNG CHÍNH</span>
-                            <p class="text-xs text-emerald-950 font-bold leading-relaxed">${med.congDung}</p>
-                        </div>
-                        <div class="bg-sky-50 border border-sky-100 p-4 rounded-2xl space-y-1">
-                            <span class="text-[10px] font-black text-sky-800 tracking-wider block">🕒 LIỀU LƯỢNG SỬ DỤNG</span>
-                            <p class="text-xs text-sky-950 font-bold leading-relaxed">${med.lieuLuong}</p>
-                        </div>
-                    </div>
-
-                    <!-- Khuyến cáo quan trọng cho Chiến sĩ -->
-                    <div class="bg-amber-50/70 border border-amber-200/80 p-4 rounded-2xl space-y-2">
-                        <span class="text-[10px] font-black text-amber-800 tracking-wider block">⚠️ KHUYẾN CÁO AN TOÀN & KIÊNG KHEM</span>
-                        <ul class="list-none pl-0">
-                            ${khuyenCaoHtml || '<li class="text-xs text-slate-400">Chưa có khuyến cáo cụ thể</li>'}
-                        </ul>
-                    </div>
-
-                    <!-- Ghi nhớ tiện ích của đội -->
-                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl text-xs text-blue-900 font-semibold leading-relaxed flex gap-2">
-                        <span class="text-base">💡</span>
-                        <span><strong>Mẹo chiến sĩ:</strong> Luôn kiểm tra lại số lô, hạn sử dụng trên vỉ thuốc trước khi phát cho đồng bào hoặc đồng đội. Ghi chép nhật ký phát thuốc rõ ràng để quản lý cơ số thuốc tồn của đội.</span>
-                    </div>
-                `;
+            if (confirm(`Bạn có chắc chắn muốn xóa thuốc "${med.name}" khỏi hệ thống không?`)) {
+                cat.medicines.splice(activeMedicineIndex, 1);
+                
+                // Lưu vào LocalStorage
+                localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
+                
+                activeMedicineIndex = 0;
+                isEditMode = false;
+                isAddMode = false;
+                
+                alert("Đã xóa thuốc thành công!");
+                setRightPanelState("category");
             }
         }
 
         // XỬ LÝ QUAY LẠI TRÊN DI ĐỘNG (MOBILE BACK)
         function handleMobileBack() {
-            const isDetailsOpen = !document.getElementById("col-details").classList.contains("hidden");
-            const isMedicinesOpen = !document.getElementById("col-medicines").classList.contains("hidden");
-
-            if (isDetailsOpen) {
-                document.getElementById("col-menu").classList.add("hidden");
-                document.getElementById("col-medicines").classList.remove("hidden");
-                document.getElementById("col-details").classList.add("hidden");
-                isEditMode = false;
-                isAddMode = false;
-                renderMedicinesList();
-            } else if (isMedicinesOpen) {
-                document.getElementById("col-menu").classList.remove("hidden");
-                document.getElementById("col-medicines").classList.add("hidden");
-                document.getElementById("col-details").classList.add("hidden");
-                document.getElementById("mobile-back-btn").classList.add("hidden");
+            if (rightPanelState === "detail") {
+                setRightPanelState("category");
+            } else if (rightPanelState === "category") {
+                setRightPanelState("home");
             }
         }
 
-        // KIỂM TRA PHÂN GIẢI MÀN HÌNH ĐỂ THIẾT LẬP GIAO DIỆN
+        // THIẾT LẬP BỐ CỤC CHẠY BAN ĐẦU
+        function renderMenu() {
+            // Cập nhật biểu tượng nút khóa admin dưới chân trang
+            const lockBtn = document.getElementById("admin-lock-btn");
+            if (isAdmin) {
+                lockBtn.textContent = "🔒";
+                lockBtn.title = "Đang mở khóa quyền quản trị (Bấm để khóa lại)";
+                lockBtn.className = "p-1.5 rounded-lg bg-emerald-100 border border-emerald-300 text-xs shadow-sm hover:bg-red-100 transition active:scale-95";
+            } else {
+                lockBtn.textContent = "🔓";
+                lockBtn.title = "Đang khóa quyền sửa (Bấm để mở)";
+                lockBtn.className = "p-1.5 rounded-lg bg-white border border-sky-200 text-xs shadow-sm hover:bg-sky-100 transition active:scale-95";
+            }
+        }
+
         function setupResponsiveLayout() {
             if (window.innerWidth >= 768) {
-                document.getElementById("col-menu").classList.remove("hidden");
-                document.getElementById("col-medicines").classList.remove("hidden");
-                document.getElementById("col-details").classList.remove("hidden");
                 document.getElementById("mobile-back-btn").classList.add("hidden");
-                
-                // Đồng bộ cập nhật badge trạng thái trên PC khi khởi động
                 document.getElementById("admin-status-badge").textContent = isAdmin 
                     ? "⚙️ Chế độ Quản trị viên (Chỉnh sửa)" 
                     : "🛡️ Chế độ chiến sĩ (Xem)";
-                
-                renderMedicinesList();
             } else {
-                document.getElementById("col-menu").classList.remove("hidden");
-                document.getElementById("col-medicines").classList.add("hidden");
-                document.getElementById("col-details").classList.add("hidden");
-                document.getElementById("mobile-back-btn").classList.add("hidden");
+                if (rightPanelState !== "home") {
+                    document.getElementById("mobile-back-btn").classList.remove("hidden");
+                } else {
+                    document.getElementById("mobile-back-btn").classList.add("hidden");
+                }
             }
+            renderMenu();
+            renderDynamicRightPanel();
         }
 
         // KHỞI CHẠY KHI TẢI TRANG HOÀN TẤT
         window.addEventListener('resize', setupResponsiveLayout);
         window.onload = function() {
-            renderMenu();
             setupResponsiveLayout();
         };
     </script>
