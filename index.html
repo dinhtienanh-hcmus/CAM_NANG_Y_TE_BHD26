@@ -50,7 +50,7 @@
     <!-- CONTAINER CHÍNH -->
     <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-500">
         
-        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH ================= -->
+        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH (ẨN TRÊN DI ĐỘNG) ================= -->
         <div class="hidden md:flex w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex-col justify-between relative shrink-0 overflow-y-auto border-r border-white/40">
             <!-- Mặt trời vẽ tay SVG -->
             <div class="absolute top-4 right-4 w-14 h-14 animate-pulse">
@@ -75,7 +75,7 @@
                     MÙA HÈ XANH 2026
                 </div>
 
-                <!-- ================= THANH TÌM KIẾM THÔNG MINH + GỢI Ý ================= -->
+                <!-- THANH TÌM KIẾM TRÊN BÌA (PC) -->
                 <div class="mt-4 bg-white text-slate-800 p-3 rounded-2xl shadow-md flex flex-col gap-2 relative border border-sky-100 z-35">
                     <div class="flex items-center gap-2.5">
                         <span class="text-base shrink-0">🔍</span>
@@ -130,18 +130,46 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (LẤP ĐẦY TRÊN DI ĐỘNG) ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
-            <!-- Header có nút quay lại chỉ hiển thị trên di động -->
+            
+            <!-- HEADER BAR PHỤ CHỈ HIỂN THỊ TRÊN DI ĐỘNG KHI DUYỆT TRANG SỬA/CHI TIẾT -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
                 <button id="mobile-back-btn" onclick="handleMobileBack()" class="bg-slate-100 text-slate-700 py-1.5 px-3 rounded-xl text-xs font-bold transition">
                     ← Quay lại
                 </button>
-                <span class="text-[10px] font-black text-slate-400 tracking-wider uppercase">CẨM NANG Y TẾ</span>
-                <div class="w-16"></div>
+                <span class="text-[10px] font-black text-slate-400 tracking-wider uppercase">Cẩm Nang Y Tế MHX</span>
+                <!-- Nút khóa Quản trị viên trên di động -->
+                <button id="admin-lock-btn-mobile" onclick="toggleAdminPanel()" class="p-1 px-2 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold transition">
+                    🔓
+                </button>
             </div>
 
-            <!-- Wrapper cuộn động chứa nội dung chính -->
+            <!-- ================= BANNER & Ô TÌM KIẾM CỐ ĐỊNH CHUYÊN BIỆT CHO MOBILE ================= -->
+            <div id="mobile-home-header" class="block md:hidden p-4 pb-0 shrink-0">
+                <!-- Banner di động dễ thương -->
+                <div class="bg-gradient-to-r from-sky-400 to-sky-500 p-4 rounded-2xl text-white relative shadow-sm mb-3">
+                    <!-- Mặt trời nhỏ vẽ tay -->
+                    <div class="absolute top-3 right-4 w-10 h-10">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="25" fill="#fcd34d" />
+                            <path d="M50 15 L50 5 M50 85 L50 95 M15 50 L5 50 M85 50 L95 50" stroke="#f59e0b" stroke-width="8" />
+                        </svg>
+                    </div>
+                    <span class="text-[8px] font-black bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">HCMUS • BAN HOẠT ĐỘNG</span>
+                    <h2 class="text-base font-black mt-1 leading-tight">CẨM NANG Y TẾ ĐIỆN TỬ</h2>
+                    <p class="text-[9px] opacity-95">Mùa Hè Xanh 2026 • Tra cứu nhanh - Sử dụng đúng</p>
+                </div>
+
+                <!-- Ô tìm kiếm di động thông minh (Gõ không bị mất Focus) -->
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-150 flex items-center gap-2.5 relative z-30">
+                    <span class="text-sm shrink-0">🔍</span>
+                    <input id="mobile-search-input" type="text" oninput="handleMobileSearch(this.value)" placeholder="Tìm nhanh tên thuốc, công dụng..." class="w-full bg-transparent focus:outline-none text-slate-700 text-xs font-bold placeholder-slate-400">
+                    <button id="mobile-clear-btn" onclick="clearMobileSearch()" class="hidden text-[9px] text-red-500 font-black bg-red-50 px-2 py-0.5 rounded-md shrink-0">Xóa</button>
+                </div>
+            </div>
+
+            <!-- Wrapper cuộn động chứa nội dung chính (8 Ô vuông hoặc Chi tiết) -->
             <div id="dynamic-content-wrapper" class="flex-1 flex flex-col p-4 md:p-6 overflow-y-auto">
                 <!-- Hiển thị Loading Skeleton khi tải -->
                 <div class="w-full h-full flex flex-col justify-between space-y-4 m-auto">
@@ -178,14 +206,13 @@
     <script>
         const ADMIN_PASSCODE = "HCMUS2026";
         
-        // ================= CHỈ CẦN DÁN LINK FIREBASE CỦA BẠN VÀO ĐÂY =================
-        // Nhớ dán đúng link có đuôi ".json" ở cuối đường dẫn
+        // Link cơ sở dữ liệu Firebase Realtime Database
         const CLOUD_STORAGE_URL = "https://cam-nang-y-te-mhx-default-rtdb.asia-southeast1.firebasedatabase.app/handbook_db.json";
 
         const DEFAULT_DATABASE = [
             {
                 id: "01",
-                title: "Hạ sốt, giảm đau",
+                title: "Họ sốt, giảm đau",
                 desc: "Hạ sốt, giảm đau nhẹ đến vừa (đau đầu, đau răng, đau mỏi cơ, sốt do cảm cúm...).",
                 icon: "💊",
                 color: "from-amber-400 to-orange-500",
@@ -239,7 +266,7 @@
                         lieuLuong: "4 - 6 viên/lần, ngày uống 2 lần.",
                         khuyenCao: [
                             "<b>Phân đen:</b> Đi ngoài phân đen là hoàn toàn bình thường do màu của than hoạt tính, tự hết sau khi ngưng thuốc 1-2 ngày.",
-                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác ít nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
+                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
                         ]
                     },
                     {
@@ -509,28 +536,16 @@
 
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
-        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (KÈM KHÓA CUỘN THÔNG MINH CHO TRANG CHỦ)
+        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (PC & MOBILE)
         function setRightPanelState(state) {
             rightPanelState = state;
-            
-            const backBtn = document.getElementById("mobile-back-btn");
-            if (window.innerWidth < 768) {
-                if (state !== "home") {
-                    if (backBtn) backBtn.classList.remove("hidden");
-                } else {
-                    if (backBtn) backBtn.classList.add("hidden");
-                }
-            } else {
-                if (backBtn) backBtn.classList.add("hidden");
-            }
-
+            updateMobileHeaderVisibility(); // Cập nhật ẩn hiện Header cố định của Mobile trước khi vẽ
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (CHỐNG CACHE VÀ PHỤ THUỘC TRỰC TIẾP VÀO FIREBASE)
+        // TỰ ĐỘNG TẢI DỮ LIỆU TỪ CLOUD HOẶC FALLBACK LOCAL
         async function fetchDatabaseFromCloud() {
             try {
-                // Tải dữ liệu từ Firebase Realtime Database
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
                     cache: "no-store",
                     headers: {
@@ -540,7 +555,6 @@
                 });
                 if (response.ok) {
                     const cloudData = await response.json();
-                    // Firebase trả về null nếu dữ liệu trống, chỉ gán khi có dữ liệu thật
                     if (cloudData && Array.isArray(cloudData) && cloudData.length >= 8) {
                         database = cloudData;
                         localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
@@ -553,12 +567,12 @@
             }
         }
 
-        // ĐỒNG BỘ LÊN CLOUD VỚI PHƯƠNG THỨC PUT CHUẨN CỦA FIREBASE REST API
+        // ĐỒNG BỘ LÊN CLOUD VỚI PHƯƠNG THỨC PUT CHUẨN CỦA FIREBASE
         async function syncDatabaseToCloud() {
             localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
             try {
                 const response = await fetch(CLOUD_STORAGE_URL, {
-                    method: 'PUT', // Firebase REST API sử dụng PUT để ghi đè toàn bộ JSON
+                    method: 'PUT',
                     headers: { 
                         'Content-Type': 'application/json',
                         'Cache-Control': 'no-cache'
@@ -660,17 +674,35 @@
             }
         }
 
-        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI THEO TRẠNG THÁI MỚI (TỐI ƯU HÓA KHÍT MÀN HÌNH DI ĐỘNG & PC)
+        // ẨN HIỆN HEADER & Ô TÌM KIẾM CỐ ĐỊNH CỦA MOBILE ĐỂ TRÁNH MẤT FOCUS KHI NHẬP CHỮ
+        function updateMobileHeaderVisibility() {
+            const mobHeader = document.getElementById("mobile-home-header");
+            const backBtn = document.getElementById("mobile-back-btn");
+            if (!mobHeader) return;
+
+            if (rightPanelState === "home") {
+                mobHeader.classList.remove("hidden");
+                if (window.innerWidth < 768 && backBtn) {
+                    backBtn.classList.add("hidden");
+                }
+            } else {
+                mobHeader.classList.add("hidden");
+                if (window.innerWidth < 768 && backBtn) {
+                    backBtn.classList.remove("hidden");
+                }
+            }
+        }
+
+        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI THEO TRẠNG THÁI MỚI (LƯỚI 8 Ô VUÔNG KHÍT MÀN HÌNH)
         function renderDynamicRightPanel() {
             const wrapper = document.getElementById("dynamic-content-wrapper");
             if (!wrapper) return;
             wrapper.innerHTML = "";
 
             if (rightPanelState === "home") {
-                // Khóa hoàn toàn cuộn dọc trên PC và di động để vừa khít màn hình, loại bỏ thanh cuộn
+                // Khóa hoàn toàn cuộn dọc trên PC và di động để 8 danh mục hiển thị khít màn hình
                 wrapper.className = "flex-1 flex flex-col p-3 md:p-4 justify-between overflow-y-hidden";
             } else {
-                // Trang danh sách/chi tiết cho phép cuộn tự do
                 wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
             }
 
@@ -679,7 +711,9 @@
                 let filteredHtml = "";
                 
                 if (searchQuery.trim() !== "") {
-                    // Chế độ hiển thị kết quả tìm kiếm
+                    // Đang hiển thị kết quả tìm kiếm (Mở lại cuộn cho kết quả tìm kiếm dài)
+                    wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
+
                     let matches = [];
                     database.forEach(cat => {
                         cat.medicines.forEach((med, mIdx) => {
@@ -698,12 +732,12 @@
                                 : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0">💊</div>`;
 
                             matchCards += `
-                                <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer">
+                                <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer w-full">
                                     ${imgHtml}
                                     <div class="flex-1 min-w-0">
                                         <div class="flex justify-between items-center">
-                                            <h4 class="text-sm font-black text-slate-800 truncate">${item.med.name}</h4>
-                                            <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">${item.cat.title}</span>
+                                            <h4 class="text-sm font-black text-slate-800 truncate leading-snug">${item.med.name}</h4>
+                                            <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full shrink-0">${item.cat.title}</span>
                                         </div>
                                         <p class="text-[11px] text-slate-400 font-bold line-clamp-1 mt-0.5">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
                                     </div>
@@ -718,9 +752,6 @@
                         `;
                     }
 
-                    // Tạm thời mở lại cuộn ở đây nếu kết quả tìm kiếm quá dài
-                    wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
-
                     filteredHtml = `
                         <div class="space-y-3 fade-slide-in w-full">
                             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
@@ -733,7 +764,7 @@
                         </div>
                     `;
                 } else {
-                    // Lưới 8 danh mục ô vuông thiết kế siêu khít, loại bỏ hoàn toàn thanh cuộn trên PC & Điện thoại
+                    // Hiển thị 8 ô vuông danh mục khít màn hình, không bị thừa khoảng cách
                     let categoryCards = "";
                     database.forEach(cat => {
                         let glowColor = "rgba(14, 165, 233, 0.15)"; 
@@ -770,7 +801,6 @@
                         `;
                     });
 
-                    // Layout 8 Ô vuông khít màn hình, không bị thừa khoảng cách
                     filteredHtml = `
                         <div class="grid grid-cols-2 gap-2 md:gap-3 h-full w-full fade-slide-in">
                             ${categoryCards}
@@ -1132,7 +1162,7 @@
             setRightPanelState("category");
         }
 
-        // LỌC TÌM KIẾM THỜI GIAN THỰC + GỢI Ý DROP DOWN
+        // LỌC TÌM KIẾM THỜI GIAN THỰC + GỢI Ý DROP DOWN (PC)
         function handleGlobalSearch(val) {
             searchQuery = val.trim();
             const suggestionsDiv = document.getElementById("search-suggestions");
@@ -1181,6 +1211,32 @@
             }
 
             setRightPanelState("home");
+        }
+
+        // LỌC TÌM KIẾM CHO MOBILE (ĐỒNG BỘ SANG PC ĐỂ TRÁNH LỆCH TRẠNG THÁI)
+        function handleMobileSearch(val) {
+            searchQuery = val.trim();
+            const clearBtn = document.getElementById("mobile-clear-btn");
+            if (clearBtn) {
+                if (searchQuery !== "") clearBtn.classList.remove("hidden");
+                else clearBtn.classList.add("hidden");
+            }
+            // Đồng bộ sang ô PC chìm
+            const pcInput = document.getElementById("global-search-input");
+            if (pcInput) pcInput.value = val;
+
+            setRightPanelState("home");
+        }
+
+        // XÓA TÌM KIẾM CHO MOBILE
+        function clearMobileSearch() {
+            searchQuery = "";
+            const mobInput = document.getElementById("mobile-search-input");
+            if (mobInput) mobInput.value = "";
+            const clearBtn = document.getElementById("mobile-clear-btn");
+            if (clearBtn) clearBtn.classList.add("hidden");
+            
+            clearGlobalSearch();
         }
 
         // XỬ LÝ CLICK GỢI Ý TÌM KIẾM
@@ -1294,7 +1350,7 @@
                 renderMenu();
                 renderDynamicRightPanel();
             } else {
-                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt ĐỘng để nhận mật mã xác thực.");
+                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mật mã xác thực.");
             }
         }
 
