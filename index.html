@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="hidden md:flex gap-2 items-center bg-white/10 px-4 py-1.5 rounded-full text-xs font-black border border-white/20">
-                <span>🛡️ An toàn là trên hết</span>
+                <span id="admin-status-badge">🛡️ Chế độ chiến sĩ (Xem)</span>
             </div>
             <!-- Nút quay lại chỉ hiển thị trên di động -->
             <button id="mobile-back-btn" onclick="handleMobileBack()" class="md:hidden bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg text-sm font-bold transition">
@@ -68,10 +68,15 @@
                     <!-- Javascript tự động điền danh mục ở đây -->
                 </div>
                 
-                <div class="mt-auto p-4 bg-sky-50 border-t border-sky-100">
-                    <div class="text-center text-[11px] font-bold text-sky-800">
+                <!-- Khu vực chân trang Cột 1 tích hợp nút khóa/mở quyền hạn quản trị -->
+                <div class="mt-auto p-4 bg-sky-50 border-t border-sky-100 flex items-center justify-between gap-2">
+                    <div class="text-left text-[11px] font-bold text-sky-800">
                         🤝 BAN HOẠT ĐỘNG - HCMUS
                     </div>
+                    <!-- Nút bảo mật ẩn/hiện quyền quản trị viên -->
+                    <button id="admin-lock-btn" onclick="toggleAdminPanel()" class="p-1.5 rounded-lg bg-white border border-sky-200 text-xs shadow-sm hover:bg-sky-100 transition active:scale-95" title="Quyền quản trị viên">
+                        🔓
+                    </button>
                 </div>
             </div>
 
@@ -87,12 +92,12 @@
                     </div>
                 </div>
 
-                <div class="p-4 flex-1 overflow-y-auto">
+                <div class="p-4 flex-1 overflow-y-auto flex flex-col justify-between">
                     <!-- Danh sách thẻ thuốc -->
                     <div class="space-y-3" id="medicines-container"></div>
                     
-                    <!-- Nút thêm thuốc mới vào nhóm -->
-                    <button onclick="enableAddMode()" class="w-full mt-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold py-3 px-4 rounded-2xl text-xs transition active:scale-95 border-2 border-dashed border-emerald-300 flex items-center justify-center gap-1.5 shadow-sm">
+                    <!-- Nút thêm thuốc mới vào nhóm (Chỉ hiển thị cho quản trị viên) -->
+                    <button id="add-med-btn" onclick="enableAddMode()" class="hidden w-full mt-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold py-3 px-4 rounded-2xl text-xs transition active:scale-95 border-2 border-dashed border-emerald-300 items-center justify-center gap-1.5 shadow-sm">
                         <span>➕</span> Thêm thuốc mới vào nhóm
                     </button>
                 </div>
@@ -124,8 +129,27 @@
 
     </div>
 
+    <!-- HỘP THOẠI NHẬP MẬT MÃ BẢO MẬT (MODAL DIỄN HỌA) -->
+    <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl border border-slate-100 space-y-4 animate-[fadeIn_0.2s_ease-out]">
+            <div class="text-center">
+                <span class="text-3xl">🔐</span>
+                <h3 class="text-sm font-black text-slate-800 mt-2 uppercase tracking-wider">XÁC THỰC QUẢN TRỊ VIÊN</h3>
+                <p class="text-[10px] text-slate-400 font-bold mt-1">Vui lòng điền mật mã của Ban Hoạt Động để mở khóa quyền chỉnh sửa.</p>
+            </div>
+            <input id="admin-pass-input" type="password" placeholder="Mật mã chỉnh sửa..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-center font-bold text-slate-850 focus:ring-2 focus:ring-sky-400 focus:outline-none text-xs">
+            <div class="flex gap-2">
+                <button onclick="verifyAdminCode()" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-black py-2 rounded-xl text-xs transition active:scale-95 shadow-sm">Xác nhận</button>
+                <button onclick="closeLoginModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-4 rounded-xl text-xs transition">Hủy</button>
+            </div>
+        </div>
+    </div>
+
     <!-- CƠ SỞ DỮ LIỆU ĐẦY ĐỦ -->
     <script>
+        // Mật mã mở quyền chỉnh sửa (Có thể tự đổi mã này tại đây)
+        const ADMIN_PASSCODE = "HCMUS2026";
+
         const DEFAULT_DATABASE = [
             {
                 id: "01",
@@ -183,7 +207,7 @@
                         lieuLuong: "4 - 6 viên/lần, ngày uống 2 lần.",
                         khuyenCao: [
                             "<b>Phân đen:</b> Đi ngoài phân đen là hoàn toàn bình thường do màu của than hoạt tính, tự hết sau khi ngưng thuốc 1-2 ngày.",
-                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác ít nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
+                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
                         ]
                     },
                     {
@@ -440,13 +464,16 @@
             }
         ];
 
-        // Đọc dữ liệu từ localStorage, ngược lại nạp dữ liệu mặc định
+        // Đọc cơ sở dữ liệu
         let database = JSON.parse(localStorage.getItem('hcmus_medical_handbook_db')) || DEFAULT_DATABASE;
 
         let activeCategoryId = "01";
         let activeMedicineIndex = 0;
         let isEditMode = false;
         let isAddMode = false;
+
+        // Trạng thái Quản trị (mặc định ban đầu là false - chỉ đọc cho chiến sĩ)
+        let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
         // KHỞI TẠO MENU DANH MỤC (CỘT 1)
         function renderMenu() {
@@ -477,6 +504,66 @@
                 `;
                 container.insertAdjacentHTML("beforeend", itemHtml);
             });
+
+            // Cập nhật biểu tượng nút khóa admin dưới chân trang
+            const lockBtn = document.getElementById("admin-lock-btn");
+            if (isAdmin) {
+                lockBtn.textContent = "🔒";
+                lockBtn.title = "Đang mở khóa quyền quản trị (Bấm để khóa lại)";
+                lockBtn.className = "p-1.5 rounded-lg bg-emerald-100 border border-emerald-300 text-xs shadow-sm hover:bg-red-100 transition active:scale-95";
+            } else {
+                lockBtn.textContent = "🔓";
+                lockBtn.title = "Đang khóa quyền sửa (Bấm để mở)";
+                lockBtn.className = "p-1.5 rounded-lg bg-white border border-sky-200 text-xs shadow-sm hover:bg-sky-100 transition active:scale-95";
+            }
+        }
+
+        // ĐÓNG MỞ QUẢN TRỊ VIÊN BẰNG PASSCODE TĨNH
+        function toggleAdminPanel() {
+            if (isAdmin) {
+                // Đang là admin -> Khóa lại
+                isAdmin = false;
+                localStorage.setItem('hcmus_admin_active', 'false');
+                isEditMode = false;
+                isAddMode = false;
+                alert("Đã thoát chế độ Quản trị viên. Đưa về chế độ tra cứu Xem thường của chiến sĩ.");
+                
+                document.getElementById("admin-status-badge").textContent = "🛡️ Chế độ chiến sĩ (Xem)";
+                document.getElementById("add-med-btn").style.display = "none";
+                
+                renderMenu();
+                renderMedicinesList();
+                renderMedicineDetail();
+            } else {
+                // Đang khóa -> Hiển thị hộp thoại mật mã
+                document.getElementById("admin-login-modal").classList.remove("hidden");
+                document.getElementById("admin-pass-input").value = "";
+                document.getElementById("admin-pass-input").focus();
+            }
+        }
+
+        // XÁC THỰC MẬT MÃ ADMIN
+        function verifyAdminCode() {
+            const passInput = document.getElementById("admin-pass-input").value.trim();
+            if (passInput === ADMIN_PASSCODE) {
+                isAdmin = true;
+                localStorage.setItem('hcmus_admin_active', 'true');
+                closeLoginModal();
+                alert("Mở khóa thành công! Bạn hiện có quyền Thêm, Sửa và Xóa các loại thuốc.");
+                
+                document.getElementById("admin-status-badge").textContent = "⚙️ Chế độ Quản trị viên (Chỉnh sửa)";
+                document.getElementById("add-med-btn").style.display = "flex";
+                
+                renderMenu();
+                renderMedicinesList();
+                renderMedicineDetail();
+            } else {
+                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mã xác thực.");
+            }
+        }
+
+        function closeLoginModal() {
+            document.getElementById("admin-login-modal").classList.add("hidden");
         }
 
         // LỰA CHỌN DANH MỤC
@@ -516,7 +603,7 @@
                 const isActive = (index === activeMedicineIndex) && !isAddMode;
                 const borderClass = isActive ? "border-sky-500 bg-sky-50/50 shadow-md scale-[1.01]" : "border-slate-100 hover:border-slate-200 bg-white shadow-sm";
                 
-                // Độc lập icon hình ảnh hoặc placeholder
+                // Thumbnail ảnh đại diện hoặc placeholder viên thuốc
                 const imgHtml = med.image 
                     ? `<img src="${med.image}" alt="${med.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-100 shadow-sm shrink-0">`
                     : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
@@ -535,6 +622,14 @@
                 `;
                 listContainer.insertAdjacentHTML("beforeend", medHtml);
             });
+
+            // Chỉ hiển thị nút thêm thuốc nếu là Admin
+            const addBtn = document.getElementById("add-med-btn");
+            if (isAdmin) {
+                addBtn.style.display = "flex";
+            } else {
+                addBtn.style.display = "none";
+            }
 
             if (window.innerWidth >= 768 && !isAddMode) {
                 renderMedicineDetail();
@@ -559,6 +654,7 @@
 
         // CHUYỂN SANG CHẾ ĐỘ THÊM THUỐC MỚI
         function enableAddMode() {
+            if (!isAdmin) return;
             isAddMode = true;
             isEditMode = false;
             renderMedicinesList(); 
@@ -574,6 +670,7 @@
 
         // CHUYỂN SANG CHẾ ĐỘ SỬA
         function enableEditMode() {
+            if (!isAdmin) return;
             isEditMode = true;
             isAddMode = false;
             renderMedicineDetail();
@@ -589,6 +686,7 @@
 
         // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH
         function deleteMedicine() {
+            if (!isAdmin) return;
             const catIndex = database.findIndex(c => c.id === activeCategoryId);
             if (catIndex === -1) return;
             const cat = database[catIndex];
@@ -829,8 +927,22 @@
                     khuyenCaoHtml += `<li class="text-xs text-amber-900 leading-relaxed font-semibold mb-1.5">• ${kc}</li>`;
                 });
 
+                // Chỉ hiển thị cụm nút Sửa/Xóa nếu đang đăng nhập Admin
+                const adminActionsHtml = isAdmin 
+                    ? `
+                    <div class="flex gap-2">
+                        <button onclick="enableEditMode()" class="bg-sky-100 hover:bg-sky-200 active:scale-95 transition text-sky-700 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-sky-200 shadow-sm">
+                            <span>✏️</span> Sửa
+                        </button>
+                        <button onclick="deleteMedicine()" class="bg-red-50 hover:bg-red-100 active:scale-95 transition text-red-600 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-red-200 shadow-sm">
+                            <span>🗑️</span> Xóa
+                        </button>
+                    </div>
+                    `
+                    : "";
+
                 detailsContent.innerHTML = `
-                    <!-- Header Tên thuốc & Nút bấm sửa/xóa -->
+                    <!-- Header Tên thuốc & Nút bấm sửa/xóa (Sửa/Xóa chỉ hiện khi đăng nhập Admin) -->
                     <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-wrap justify-between items-center gap-3">
                         <div class="flex items-center gap-4">
                             <div class="text-4xl bg-gradient-to-br ${cat.color} p-3.5 rounded-2xl text-white shadow-md">${cat.icon}</div>
@@ -839,14 +951,7 @@
                                 <h2 class="text-lg md:text-xl font-black text-slate-800 leading-tight mt-0.5">${med.name}</h2>
                             </div>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="enableEditMode()" class="bg-sky-100 hover:bg-sky-200 active:scale-95 transition text-sky-700 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-sky-200 shadow-sm">
-                                <span>✏️</span> Sửa
-                            </button>
-                            <button onclick="deleteMedicine()" class="bg-red-50 hover:bg-red-100 active:scale-95 transition text-red-600 font-extrabold text-[11px] py-2 px-3.5 rounded-xl flex items-center gap-1 border border-red-200 shadow-sm">
-                                <span>🗑️</span> Xóa
-                            </button>
-                        </div>
+                        ${adminActionsHtml}
                     </div>
 
                     <!-- Khối hiển thị hình ảnh lớn -->
@@ -916,6 +1021,12 @@
                 document.getElementById("col-medicines").classList.remove("hidden");
                 document.getElementById("col-details").classList.remove("hidden");
                 document.getElementById("mobile-back-btn").classList.add("hidden");
+                
+                // Đồng bộ cập nhật badge trạng thái trên PC khi khởi động
+                document.getElementById("admin-status-badge").textContent = isAdmin 
+                    ? "⚙️ Chế độ Quản trị viên (Chỉnh sửa)" 
+                    : "🛡️ Chế độ chiến sĩ (Xem)";
+                
                 renderMedicinesList();
             } else {
                 document.getElementById("col-menu").classList.remove("hidden");
