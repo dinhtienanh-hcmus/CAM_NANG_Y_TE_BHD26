@@ -35,9 +35,9 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-0 md:p-6 overflow-x-hidden">
+<body class="min-h-screen flex items-center justify-center p-0 md:p-4 overflow-x-hidden">
 
-    <!-- CONTAINER CHÍNH CHUYÊN BIỆT CHO TRẢI NGHIỆM ĐA THIẾT BỊ -->
+    <!-- CONTAINER CHÍNH -->
     <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-300">
         
         <!-- ================= CỘT TRÁI: BÌA SỔ TAY VẼ TAY CỐ ĐỊNH ================= -->
@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <!-- Khẩu hiệu & Bản quyền, tích hợp Khóa Quyền Quản trị viên -->
+            <!-- Khẩu hiệu & Bản quyền -->
             <div class="text-center md:text-left z-10">
                 <p class="text-[10px] text-sky-950/80 font-extrabold leading-relaxed bg-white/30 p-2.5 rounded-xl border border-white/20 mb-3 text-center">
                     🌿 TRANG BỊ CHO CHIẾN SĨ <br>
@@ -104,9 +104,9 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG HIỂN THỊ CHI TIẾT & TƯƠNG TÁC ĐỘNG ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
-            <!-- Header có nút quay lại chỉ hiển thị trên di động -->
+            <!-- Header trên di động -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
                 <button id="mobile-back-btn" onclick="handleMobileBack()" class="bg-slate-100 text-slate-700 py-1.5 px-3 rounded-xl text-xs font-bold transition">
                     ← Quay lại
@@ -115,21 +115,25 @@
                 <div class="w-16"></div>
             </div>
 
-            <!-- Wrapper cuộn động chứa nội dung chính -->
-            <div id="dynamic-content-wrapper" class="flex-1 flex flex-col overflow-y-auto p-4 md:p-6">
-                <!-- Mã JavaScript sẽ vẽ giao diện động tùy trạng thái (home, category, detail) tại đây -->
+            <!-- Vùng hiển thị nội dung -->
+            <div id="dynamic-content-wrapper" class="flex-1 flex flex-col overflow-y-auto p-4 md:p-6 justify-center items-center">
+                <!-- Vòng xoay tải dữ liệu (Loading) khi lần đầu truy cập -->
+                <div id="cloud-loader" class="text-center space-y-3 font-bold text-slate-400 text-xs">
+                    <div class="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p>Đang tải dữ liệu y tế từ đám mây...</p>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- HỘP THOẠI ĐĂNG NHẬP PASSCODE QUẢN TRỊ -->
+    <!-- DIỄN HỌA MODAL ĐĂNG NHẬP -->
     <div id="admin-login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl border border-slate-100 space-y-4">
             <div class="text-center">
                 <span class="text-3xl">🔐</span>
                 <h3 class="text-sm font-black text-slate-800 mt-2 uppercase tracking-wider">XÁC THỰC QUẢN TRỊ VIÊN</h3>
-                <p class="text-[10px] text-slate-400 font-bold mt-1">Mở khóa quyền chỉnh sửa cơ sở dữ liệu.</p>
+                <p class="text-[10px] text-slate-400 font-bold mt-1">Mở khóa quyền chỉnh sửa trên mọi thiết bị.</p>
             </div>
             <input id="admin-pass-input" type="password" placeholder="Mật mã..." class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-center font-bold text-slate-850 focus:ring-2 focus:ring-sky-400 focus:outline-none text-xs">
             <div class="flex gap-2">
@@ -139,10 +143,10 @@
         </div>
     </div>
 
-    <!-- HỆ THỐNG XỬ LÝ DỮ LIỆU ĐỘNG -->
     <script>
-        // Mật mã mở khóa quyền sửa đổi
-        const ADMIN_PASSCODE = "HCMUS2026";
+        // Đường dẫn kho dữ liệu đám mây KVDB (Hoàn toàn miễn phí, chạy trên Cloudflare)
+        // Chúng tôi sử dụng một mã kho riêng biệt hcmus_mhx2026 cho đội của bạn
+        const CLOUD_STORAGE_URL = "https://kvdb.io/A8oR29i9N6Yn3tN4vY781f/hcmus_mhx2026_db";
 
         const DEFAULT_DATABASE = [
             {
@@ -458,7 +462,6 @@
             }
         ];
 
-        // Đọc database từ localStorage
         let database = JSON.parse(localStorage.getItem('hcmus_medical_handbook_db')) || DEFAULT_DATABASE;
 
         let activeCategoryId = "01";
@@ -468,29 +471,64 @@
         let searchQuery = "";
         let rightPanelState = "home";
 
-        // Đồng bộ trạng thái Quản trị
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
+
+        // TỰ ĐỘNG TẢI DỮ LIỆU TỪ ĐÁM MÂY KHI MỞ TRANG (KHÔNG CÒN BỊ LỖI CHẠY KHÔNG HIỂN THỊ)
+        async function fetchDatabaseFromCloud() {
+            try {
+                // Tải dữ liệu kèm theo tham số chống cache thời gian thực
+                const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`);
+                if (response.ok) {
+                    const cloudData = await response.json();
+                    if (cloudData && Array.isArray(cloudData)) {
+                        database = cloudData;
+                        localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
+                    }
+                }
+            } catch (error) {
+                console.warn("Không kết nối được đám mây, sử dụng dữ liệu cục bộ.", error);
+            } finally {
+                // Sau khi hoàn thành nạp dữ liệu (Kể cả khi lỗi mạng), chuyển sang giao diện chính
+                setupResponsiveLayout();
+            }
+        }
+
+        // LƯU DỮ LIỆU VÀ ĐỒNG BỘ ĐÁM MÂY TỰ ĐỘNG TỨC THÌ
+        async function syncDatabaseToCloud() {
+            // Lưu bộ nhớ đệm thiết bị
+            localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
+            
+            // Gửi ghi đè lên máy chủ đám mây KVDB
+            try {
+                await fetch(CLOUD_STORAGE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(database)
+                });
+            } catch (err) {
+                console.error("Lỗi đồng bộ đám mây:", err);
+            }
+        }
 
         // CHUYỂN ĐỔI PANEL TRẠNG THÁI BÊN PHẢI (CORE TRANSITION)
         function setRightPanelState(state) {
             rightPanelState = state;
             
-            // Xử lý nút quay lại hiển thị trên di động
             const backBtn = document.getElementById("mobile-back-btn");
             if (window.innerWidth < 768) {
                 if (state !== "home") {
-                    backBtn.classList.remove("hidden");
+                    if (backBtn) backBtn.classList.remove("hidden");
                 } else {
-                    backBtn.classList.add("hidden");
+                    if (backBtn) backBtn.classList.add("hidden");
                 }
             } else {
-                backBtn.classList.add("hidden");
+                if (backBtn) backBtn.classList.add("hidden");
             }
 
             renderDynamicRightPanel();
         }
 
-        // VẼ DỮ LIỆU ĐỘNG CHO CỘT BÊN PHẢI (KHÔNG CÒN BỊ LỖI THỪA PHẦN TỬ)
+        // VẼ DỮ LIỆU ĐỘNG CHO CỘT BÊN PHẢI
         function renderDynamicRightPanel() {
             const wrapper = document.getElementById("dynamic-content-wrapper");
             if (!wrapper) return;
@@ -501,7 +539,6 @@
                 let filteredHtml = "";
                 
                 if (searchQuery.trim() !== "") {
-                    // Đang tìm kiếm thuốc toàn bộ database
                     let matches = [];
                     database.forEach(cat => {
                         cat.medicines.forEach((med, mIdx) => {
@@ -552,7 +589,6 @@
                         </div>
                     `;
                 } else {
-                    // Hiển thị 8 Danh Mục (Nhóm 01 đến 08) thông thường
                     let categoryCards = "";
                     database.forEach(cat => {
                         categoryCards += `
@@ -740,7 +776,7 @@
                             <div class="flex gap-3 pt-2">
                                 <button onclick="saveMedicineData()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 transition text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md">
                                     <span>💾</span> Lưu thông tin
-                        </button>
+                                </button>
                                 <button onclick="disableEditMode()" class="bg-slate-200 hover:bg-slate-300 active:scale-95 transition text-slate-700 font-black py-3 px-6 rounded-xl text-xs">
                                     Hủy bỏ
                                 </button>
@@ -922,7 +958,7 @@
                 closeLoginModal();
                 alert("Mở khóa thành công! Bạn hiện có quyền Thêm, Sửa và Xóa các loại thuốc.");
                 
-                document.getElementById("admin-status-badge").textContent = "⚙️ CHẾ ĐỘ QUẢN TRỊ VIÊN";
+                document.getElementById("admin-status-badge").textContent = "⚙️ CHẾ ĐỘ QUẢN TRỊ";
                 renderMenu();
                 renderDynamicRightPanel();
             } else {
@@ -993,7 +1029,8 @@
         // KHỞI CHẠY KHI TẢI TRANG HOÀN TẤT
         window.addEventListener('resize', setupResponsiveLayout);
         window.onload = function() {
-            setupResponsiveLayout();
+            // Tải dữ liệu từ cloud trước, sau khi tải xong sẽ tự vẽ giao diện lên màn hình
+            fetchDatabaseFromCloud();
         };
     </script>
 </body>
