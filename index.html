@@ -45,12 +45,12 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-0 md:p-6 overflow-x-hidden">
+<body class="min-h-screen flex items-center justify-center p-0 md:p-4 overflow-x-hidden">
 
     <!-- CONTAINER CHÍNH -->
     <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-500">
         
-        <!-- ================= CỘT TRÁI: BÌA SỔ TAY CỐ ĐỊNH (ẨN TRÊN DI ĐỘNG ĐỂ TRÁNH NÉN MÀN HÌNH) ================= -->
+        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH ================= -->
         <div class="hidden md:flex w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex-col justify-between relative shrink-0 overflow-y-auto border-r border-white/40">
             <!-- Mặt trời vẽ tay SVG -->
             <div class="absolute top-4 right-4 w-14 h-14 animate-pulse">
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (LẤP ĐẦY TRÊN DI ĐỘNG) ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
             <!-- Header có nút quay lại chỉ hiển thị trên di động -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
@@ -367,7 +367,7 @@
                         image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
                         congDung: "Bổ sung canxi khẩn cấp, chống hiện tượng co rút cơ tay chân do hạ canxi đường huyết.",
                         truongHop: ["Chuột rút nặng khi hành quân", "Tê buồn tay chân, co quắp ngón tay, vã mồ hôi lạnh"],
-                        lieuLuong: "Hòa tan 1 viên vào nước ấm, uống ngay khi bắt đầu xuất hiện triệu chứng. Ngày dùng 1-2 viên.",
+                        lieuLuong: "Hòa tan 1 viên vào nước ấm, uống ngay khi bắt văn đầu xuất hiện triệu chứng. Ngày dùng 1-2 viên.",
                         khuyenCao: [
                             "Uống nhiều nước lọc sau khi dùng thuốc.",
                             "Không lạm dụng dùng liên tục kéo dài nếu không có chỉ định y tế."
@@ -509,7 +509,7 @@
 
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
-        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (KÈM KHÓA CUỘN THÔNG MINH CHO TRANG CHỦ)
+        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (PC & MOBILE)
         function setRightPanelState(state) {
             rightPanelState = state;
             
@@ -527,10 +527,16 @@
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG
+        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (ĐÃ THÊM HEADER CHỐNG CACHE VÀ AWAIT ĐỂ ĐỒNG BỘ CHUẨN)
         async function fetchDatabaseFromCloud() {
             try {
-                const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`);
+                const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
+                    cache: "no-store",
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
                 if (response.ok) {
                     const cloudData = await response.json();
                     if (cloudData && Array.isArray(cloudData) && cloudData.length >= 8) {
@@ -545,17 +551,26 @@
             }
         }
 
-        // ĐỒNG BỘ ĐÁM MÂY TỰ ĐỘNG
+        // ĐỒNG BỘ ĐÁM MÂY VÀ CHỜ PHẢN HỒI THỰC TẾ (BẬT TRẠNG THÁI CHỜ LƯU THẬT SỰ)
         async function syncDatabaseToCloud() {
             localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
             try {
-                await fetch(CLOUD_STORAGE_URL, {
+                const response = await fetch(CLOUD_STORAGE_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
                     body: JSON.stringify(database)
                 });
+                if (response.ok) {
+                    console.log("Đồng bộ đám mây thành công.");
+                    return true;
+                }
+                return false;
             } catch (err) {
                 console.error("Lỗi đồng bộ đám mây:", err);
+                return false;
             }
         }
 
@@ -1059,14 +1074,14 @@
         }
 
         // BẬT TẮT CHẾ ĐỘ SỬA DANH MỤC
-        function toggleCategoryEditMode(status) {
+        async function toggleCategoryEditMode(status) {
             if (!isAdmin) return;
             isCategoryEditMode = status;
             renderDynamicRightPanel();
         }
 
-        // LƯU SỬA ĐỒNG BỘ DANH MỤC
-        function saveCategoryEdits() {
+        // LƯU SỬA ĐỒNG BỘ DANH MỤC LÊN ĐÁM MÂY (CHỜ PHẢN HỒI THẬT SỰ CỦA SERVER)
+        async function saveCategoryEdits() {
             const cat = database.find(c => c.id === activeCategoryId);
             if (!cat) return;
 
@@ -1078,14 +1093,26 @@
                 return;
             }
 
+            // Đổi trạng thái nút bấm
+            const saveBtn = document.querySelector("button[onclick='saveCategoryEdits()']");
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "⏳ Đang lưu...";
+            }
+
             cat.title = newTitle;
             cat.desc = newDesc;
 
-            syncDatabaseToCloud();
+            // Chờ tiến trình sync đám mây trả về kết quả
+            const syncSuccess = await syncDatabaseToCloud();
             isCategoryEditMode = false;
-            
             setupResponsiveLayout();
-            alert("Đã lưu chỉnh sửa danh mục thành công!");
+
+            if (syncSuccess) {
+                alert("Đã lưu và đồng bộ danh mục lên hệ thống đám mây thành công!");
+            } else {
+                alert("Lưu cục bộ thành công nhưng đồng bộ lên đám mây thất bại. Hãy kiểm tra kết nối mạng!");
+            }
         }
 
         // ĐIỀU HƯỚNG QUAY LẠI TRANG CHỦ
@@ -1282,6 +1309,99 @@
                     <button type="button" onclick="insertFormat('${textareaId}', 'br')" class="px-2.5 py-1 bg-white hover:bg-slate-50 rounded border border-slate-300 text-[10px] shadow-sm active:scale-95 transition">↵ Xuống dòng</button>
                 </div>
             `;
+        }
+
+        // LƯU SỬA ĐỔI HOẶC THÊM MỚI THUỐC (CHỜ PHẢN HỒI THỰC TẾ)
+        async function saveMedicineData() {
+            const catIndex = database.findIndex(c => c.id === activeCategoryId);
+            if (catIndex === -1) return;
+
+            const name = document.getElementById("edit-name").value.trim();
+            const image = document.getElementById("edit-image-url-hidden").value.trim();
+            const congDung = document.getElementById("edit-congdung").value.trim();
+            const lieuLuong = document.getElementById("edit-lieuluong").value.trim();
+            
+            const truongHopRaw = document.getElementById("edit-truonghop").value;
+            const truongHop = truongHopRaw.split(',').map(s => s.trim()).filter(s => s !== "");
+
+            const khuyenCaoRaw = document.getElementById("edit-khuyencao").value;
+            const khuyenCao = khuyenCaoRaw.split('\n').map(s => s.trim()).filter(s => s !== "");
+
+            if (!name || !congDung || !lieuLuong) {
+                alert("Vui lòng điền các thông tin cơ bản bắt buộc: Tên thuốc, Công dụng chính và Liều lượng sử dụng!");
+                return;
+            }
+
+            // Đổi trạng thái nút bấm thành chờ
+            const saveBtn = document.querySelector("button[onclick='saveMedicineData()']");
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "⏳ Đang đồng bộ đám mây...";
+            }
+
+            if (isAddMode) {
+                const newMedicine = {
+                    name: name,
+                    image: image,
+                    congDung: congDung,
+                    lieuLuong: lieuLuong,
+                    truongHop: truongHop,
+                    khuyenCao: khuyenCao
+                };
+                database[catIndex].medicines.push(newMedicine);
+                activeMedicineIndex = database[catIndex].medicines.length - 1;
+            } else {
+                const med = database[catIndex].medicines[activeMedicineIndex];
+                if (!med) return;
+
+                med.name = name;
+                med.image = image;
+                med.congDung = congDung;
+                med.lieuLuong = lieuLuong;
+                med.truongHop = truongHop;
+                med.khuyenCao = khuyenCao;
+            }
+
+            // Đồng bộ và chờ phản hồi thực tế
+            const syncSuccess = await syncDatabaseToCloud();
+
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("category");
+
+            if (syncSuccess) {
+                alert("Đã lưu thông tin thuốc và đồng bộ lên đám mây thành công!");
+            } else {
+                alert("Lưu cục bộ thành công nhưng đồng bộ lên đám mây thất bại. Hãy kiểm tra kết nối mạng!");
+            }
+        }
+
+        // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH (CHỜ PHẢN HỒI THỰC TẾ)
+        async function deleteMedicine() {
+            if (!isAdmin) return;
+            const catIndex = database.findIndex(c => c.id === activeCategoryId);
+            if (catIndex === -1) return;
+            const cat = database[catIndex];
+            const med = cat.medicines[activeMedicineIndex];
+            if (!med) return;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa thuốc "${med.name}" khỏi hệ thống không?`)) {
+                cat.medicines.splice(activeMedicineIndex, 1);
+                
+                // Lưu vào LocalStorage và chờ đồng bộ đám mây thành công
+                const syncSuccess = await syncDatabaseToCloud();
+                
+                activeMedicineIndex = 0;
+                isEditMode = false;
+                isAddMode = false;
+                
+                if (syncSuccess) {
+                    alert("Đã xóa thuốc khỏi hệ thống đám mây thành công!");
+                } else {
+                    alert("Xóa cục bộ thành công nhưng đồng bộ xóa trên đám mây thất bại. Hãy kiểm tra kết nối mạng!");
+                }
+                setRightPanelState("category");
+            }
         }
 
         // XỬ LÝ QUAY LẠI TRÊN DI ĐỘNG (MOBILE BACK)
