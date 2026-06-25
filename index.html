@@ -50,8 +50,8 @@
     <!-- CONTAINER CHÍNH -->
     <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-500">
         
-        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH ================= -->
-        <div class="w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex flex-col justify-between relative shrink-0 overflow-y-auto min-h-[440px] md:min-h-0 border-b md:border-b-0 md:border-r border-white/40">
+        <!-- ================= CỘT TRÁI: BÌA SỔ TAY CỐ ĐỊNH (ẨN TRÊN DI ĐỘNG ĐỂ TRÁNH NÉN MÀN HÌNH) ================= -->
+        <div class="hidden md:flex w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex-col justify-between relative shrink-0 overflow-y-auto border-r border-white/40">
             <!-- Mặt trời vẽ tay SVG -->
             <div class="absolute top-4 right-4 w-14 h-14 animate-pulse">
                 <svg viewBox="0 0 100 100" class="w-full h-full">
@@ -64,7 +64,7 @@
             </div>
 
             <!-- Tiêu đề bìa -->
-            <div class="text-center md:text-left mt-2 z-10">
+            <div class="text-left mt-2 z-10">
                 <p class="text-[9px] font-black text-sky-900 uppercase tracking-widest bg-white/40 inline-block px-3 py-1 rounded-full border border-white/40">HCMUS • BAN HOẠT ĐỘNG</p>
                 <h1 class="text-2xl md:text-3.5xl font-black text-white mt-3 leading-none tracking-tight drop-shadow-[0_2px_2px_rgba(3,105,161,0.4)]">
                     CẨM NANG <br class="hidden md:block">
@@ -75,7 +75,7 @@
                     MÙA HÈ XANH 2026
                 </div>
 
-                <!-- ================= THANH TÌM KIẾM THÔNG MINH + GỢI Ý ================= -->
+                <!-- ================= THANH TÌM KIẾM TRÊN BÌA (PC) ================= -->
                 <div class="mt-4 bg-white text-slate-800 p-3 rounded-2xl shadow-md flex flex-col gap-2 relative border border-sky-100 z-35">
                     <div class="flex items-center gap-2.5">
                         <span class="text-base shrink-0">🔍</span>
@@ -116,7 +116,7 @@
             </div>
 
             <!-- Khẩu hiệu & Bản quyền -->
-            <div class="text-center md:text-left z-10">
+            <div class="text-left z-10">
                 <p class="text-[9px] text-sky-950/80 font-extrabold leading-relaxed bg-white/30 p-2 rounded-xl border border-white/20 mb-3 text-center">
                     🌿 TRANG BỊ CHO CHIẾN SĨ <br>
                     <span class="text-[8px] uppercase tracking-wider text-sky-900 block">Đoàn kết - Tình nguyện - An toàn - Hiệu quả</span>
@@ -130,20 +130,23 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (LẤP ĐẦY TRÊN DI ĐỘNG) ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
             <!-- Header có nút quay lại chỉ hiển thị trên di động -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
                 <button id="mobile-back-btn" onclick="handleMobileBack()" class="bg-slate-100 text-slate-700 py-1.5 px-3 rounded-xl text-xs font-bold transition">
                     ← Quay lại
                 </button>
-                <span class="text-[10px] font-black text-slate-400 tracking-wider">CẨM NANG Y TẾ</span>
-                <div class="w-16"></div>
+                <span class="text-[10px] font-black text-slate-400 tracking-wider uppercase">Cẩm Nang Y Tế MHX</span>
+                <!-- Nút khóa Quản trị viên trên di động -->
+                <button id="admin-lock-btn-mobile" onclick="toggleAdminPanel()" class="p-1 px-2 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold transition">
+                    🔓
+                </button>
             </div>
 
             <!-- Wrapper cuộn động chứa nội dung chính -->
             <div id="dynamic-content-wrapper" class="flex-1 flex flex-col p-4 md:p-6 overflow-y-auto">
-                <!-- Hiển thị Loading xương cá quét mờ (Skeleton) khi tải từ đám mây -->
+                <!-- Hiển thị Loading Skeleton khi tải -->
                 <div class="w-full h-full flex flex-col justify-between space-y-4 m-auto">
                     <div class="shimmer h-12 rounded-3xl w-full"></div>
                     <div class="grid grid-cols-2 gap-4 flex-1">
@@ -493,7 +496,6 @@
             }
         ];
 
-        // Đọc database từ localStorage, fallback về DEFAULT_DATABASE (giữ nguyên vẹn 8 nhóm)
         let database = JSON.parse(localStorage.getItem('hcmus_medical_handbook_db')) || DEFAULT_DATABASE;
 
         let activeCategoryId = "01";
@@ -641,15 +643,17 @@
             }
         }
 
-        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI THEO TRẠNG THÁI MỚI (TÍCH HỢP HIỆU ỨNG GLOW CAO CẤP)
+        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI THEO TRẠNG THÁI MỚI (TỐI ƯU HÓA KHÍT MÀN HÌNH DI ĐỘNG & PC)
         function renderDynamicRightPanel() {
             const wrapper = document.getElementById("dynamic-content-wrapper");
             if (!wrapper) return;
             wrapper.innerHTML = "";
 
             if (rightPanelState === "home") {
-                wrapper.className = "flex-1 flex flex-col p-3 md:p-4 justify-between md:overflow-y-hidden overflow-y-auto";
+                // Khóa hoàn toàn cuộn dọc trên PC và di động để vừa khít màn hình, loại bỏ thanh cuộn
+                wrapper.className = "flex-1 flex flex-col p-3 md:p-4 justify-between overflow-y-hidden";
             } else {
+                // Trang danh sách/chi tiết cho phép cuộn tự do
                 wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
             }
 
@@ -658,6 +662,7 @@
                 let filteredHtml = "";
                 
                 if (searchQuery.trim() !== "") {
+                    // Chế độ hiển thị kết quả tìm kiếm
                     let matches = [];
                     database.forEach(cat => {
                         cat.medicines.forEach((med, mIdx) => {
@@ -696,6 +701,9 @@
                         `;
                     }
 
+                    // Tạm thời mở lại cuộn ở đây nếu kết quả tìm kiếm quá dài
+                    wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
+
                     filteredHtml = `
                         <div class="space-y-3 fade-slide-in w-full">
                             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
@@ -708,6 +716,7 @@
                         </div>
                     `;
                 } else {
+                    // Lưới 8 danh mục ô vuông thiết kế siêu khít, loại bỏ hoàn toàn thanh cuộn trên PC & Điện thoại
                     let categoryCards = "";
                     database.forEach(cat => {
                         let glowColor = "rgba(14, 165, 233, 0.15)"; 
@@ -719,33 +728,34 @@
                         categoryCards += `
                             <div onclick="selectCategory('${cat.id}')" 
                                  style="--glow-color: ${glowColor};"
-                                 class="p-3.5 bg-white hover:bg-slate-50 active:scale-[0.97] transition-all duration-300 rounded-[1.8rem] border border-slate-150 flex flex-col justify-between cursor-pointer relative overflow-hidden group h-full shadow-sm hover:shadow-[0_12px_24px_var(--glow-color)] hover:-translate-y-1">
-                                <div class="absolute top-0 right-0 w-20 h-24 bg-gradient-to-br ${cat.color} opacity-[0.03] rounded-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform"></div>
+                                 class="p-2 md:p-3.5 bg-white hover:bg-slate-50 active:scale-[0.97] transition-all duration-300 rounded-2xl md:rounded-[1.8rem] border border-slate-150 flex flex-col justify-between cursor-pointer relative overflow-hidden group h-full shadow-sm hover:shadow-[0_12px_24px_var(--glow-color)] hover:-translate-y-0.5">
+                                <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${cat.color} opacity-[0.03] rounded-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform"></div>
                                 
                                 <div class="flex items-center justify-between shrink-0">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-full flex items-center justify-center font-black text-[9px] bg-gradient-to-r ${cat.color} text-white shadow-sm">${cat.id}</span>
-                                        <div class="text-xl group-hover:scale-115 transition-transform">${cat.icon}</div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center font-black text-[8px] md:text-[9px] bg-gradient-to-r ${cat.color} text-white shadow-sm">${cat.id}</span>
+                                        <div class="text-lg md:text-xl group-hover:scale-115 transition-transform">${cat.icon}</div>
                                     </div>
-                                    <span class="text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:text-slate-400">Xem ➔</span>
+                                    <span class="text-[7px] md:text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:text-slate-400 hidden xs:inline">Xem ➔</span>
                                 </div>
                                 
-                                <div class="mt-2.5 flex-1 flex flex-col justify-center">
-                                    <span class="text-[8px] font-black tracking-wider text-slate-400 uppercase">Nhóm danh mục</span>
-                                    <h3 class="text-xs font-black text-slate-800 leading-tight group-hover:text-sky-600 transition-colors mt-0.5">${cat.title}</h3>
-                                    <p class="text-[10px] text-slate-400 font-semibold mt-0.5 line-clamp-2 leading-relaxed">${cat.desc}</p>
+                                <div class="mt-1 md:mt-2.5 flex-1 flex flex-col justify-center">
+                                    <span class="text-[7px] md:text-[8px] font-black tracking-wider text-slate-400 uppercase leading-none">Nhóm danh mục</span>
+                                    <h3 class="text-[10px] md:text-xs font-black text-slate-800 leading-tight group-hover:text-sky-600 transition-colors mt-0.5 truncate">${cat.title}</h3>
+                                    <p class="text-[9px] md:text-[10px] text-slate-400 font-semibold mt-0.5 line-clamp-1 md:line-clamp-2 leading-tight">${cat.desc}</p>
                                 </div>
                                 
-                                <div class="mt-2.5 pt-2.5 border-t border-dashed border-slate-150 flex justify-between items-center text-[9px] font-black text-slate-500 shrink-0">
-                                    <span>💊 Số lượng thuốc:</span>
-                                    <span class="text-slate-800 bg-slate-100 px-2 py-0.5 rounded-full">${cat.medicines.length} loại</span>
+                                <div class="mt-1.5 md:mt-2.5 pt-1.5 md:pt-2.5 border-t border-dashed border-slate-100 flex justify-between items-center text-[8px] md:text-[9px] font-black text-slate-500 shrink-0">
+                                    <span class="hidden xs:inline">💊 Số lượng:</span>
+                                    <span class="text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded-full font-bold ml-auto md:ml-0 scale-90 md:scale-100">${cat.medicines.length} loại</span>
                                 </div>
                             </div>
                         `;
                     });
 
+                    // Layout 8 Ô vuông khít màn hình, không bị thừa khoảng cách
                     filteredHtml = `
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full w-full fade-slide-in">
+                        <div class="grid grid-cols-2 gap-2 md:gap-3 h-full w-full fade-slide-in">
                             ${categoryCards}
                         </div>
                     `;
@@ -888,7 +898,7 @@
                                     ${titleForm}
                                 </h2>
                                 <p class="text-[10px] text-amber-700 font-bold mt-1 leading-snug">
-                                    Bôi đen văn bản và nhấn các nút định dạng B hoặc I để in đậm, in nghiêng dễ dàng.
+                                    Sử dụng các nút định dạng nhanh phía trên để soạn thảo thuận tiện.
                                 </p>
                             </div>
 
@@ -981,10 +991,10 @@
                         ? `
                         <div class="flex gap-2">
                             <button onclick="enableEditMode()" class="bg-sky-100 hover:bg-sky-200 active:scale-95 transition text-sky-700 font-extrabold text-[10px] py-1.5 px-3 rounded-xl flex items-center gap-1 border border-sky-200 shadow-sm">
-                                ✏️ Sửa
+                                <span>✏️</span> Sửa
                             </button>
                             <button onclick="deleteMedicine()" class="bg-red-50 hover:bg-red-100 active:scale-95 transition text-red-600 font-extrabold text-[10px] py-1.5 px-3 rounded-xl flex items-center gap-1 border border-red-200 shadow-sm">
-                                🗑️ Xóa
+                                <span>🗑️</span> Xóa
                             </button>
                         </div>
                         `
@@ -1255,7 +1265,7 @@
                 renderMenu();
                 renderDynamicRightPanel();
             } else {
-                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt ĐỘng để nhận mã xác thực.");
+                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mật mã xác thực.");
             }
         }
 
@@ -1274,84 +1284,6 @@
             `;
         }
 
-        // LƯU SỬA ĐỔI HOẶC THÊM MỚI THUỐC
-        function saveMedicineData() {
-            const catIndex = database.findIndex(c => c.id === activeCategoryId);
-            if (catIndex === -1) return;
-
-            const name = document.getElementById("edit-name").value.trim();
-            const image = document.getElementById("edit-image-url-hidden").value.trim();
-            const congDung = document.getElementById("edit-congdung").value.trim();
-            const lieuLuong = document.getElementById("edit-lieuluong").value.trim();
-            
-            const truongHopRaw = document.getElementById("edit-truonghop").value;
-            const truongHop = truongHopRaw.split(',').map(s => s.trim()).filter(s => s !== "");
-
-            const khuyenCaoRaw = document.getElementById("edit-khuyencao").value;
-            const khuyenCao = khuyenCaoRaw.split('\n').map(s => s.trim()).filter(s => s !== "");
-
-            if (!name || !congDung || !lieuLuong) {
-                alert("Vui lòng điền các thông tin cơ bản bắt buộc: Tên thuốc, Công dụng chính và Liều lượng sử dụng!");
-                return;
-            }
-
-            if (isAddMode) {
-                const newMedicine = {
-                    name: name,
-                    image: image,
-                    congDung: congDung,
-                    lieuLuong: lieuLuong,
-                    truongHop: truongHop,
-                    khuyenCao: khuyenCao
-                };
-                database[catIndex].medicines.push(newMedicine);
-                activeMedicineIndex = database[catIndex].medicines.length - 1; // Chọn thuốc vừa tạo
-                alert("Đã thêm thuốc mới thành công!");
-            } else {
-                const med = database[catIndex].medicines[activeMedicineIndex];
-                if (!med) return;
-
-                med.name = name;
-                med.image = image;
-                med.congDung = congDung;
-                med.lieuLuong = lieuLuong;
-                med.truongHop = truongHop;
-                med.khuyenCao = khuyenCao;
-                alert("Đã lưu chỉnh sửa thông tin thành công!");
-            }
-
-            // Đồng bộ ghi vào localStorage và đám mây tự động
-            syncDatabaseToCloud();
-
-            isEditMode = false;
-            isAddMode = false;
-            setRightPanelState("category");
-        }
-
-        // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH
-        function deleteMedicine() {
-            if (!isAdmin) return;
-            const catIndex = database.findIndex(c => c.id === activeCategoryId);
-            if (catIndex === -1) return;
-            const cat = database[catIndex];
-            const med = cat.medicines[activeMedicineIndex];
-            if (!med) return;
-
-            if (confirm(`Bạn có chắc chắn muốn xóa thuốc "${med.name}" khỏi hệ thống không?`)) {
-                cat.medicines.splice(activeMedicineIndex, 1);
-                
-                // Lưu vào LocalStorage và đồng bộ đám mây
-                syncDatabaseToCloud();
-                
-                activeMedicineIndex = 0;
-                isEditMode = false;
-                isAddMode = false;
-                
-                alert("Đã xóa thuốc thành công!");
-                setRightPanelState("category");
-            }
-        }
-
         // XỬ LÝ QUAY LẠI TRÊN DI ĐỘNG (MOBILE BACK)
         function handleMobileBack() {
             if (rightPanelState === "detail") {
@@ -1364,16 +1296,23 @@
         // THIẾT LẬP MENU & KHÓA ADMIN
         function renderMenu() {
             const lockBtn = document.getElementById("admin-lock-btn");
-            if (!lockBtn) return;
-            if (isAdmin) {
-                lockBtn.textContent = "🔒";
-                lockBtn.title = "Đang mở quyền quản trị (Bấm để khóa lại)";
-                lockBtn.className = "p-1.5 rounded-lg bg-emerald-100 border border-emerald-300 text-xs shadow-sm hover:bg-red-100 transition active:scale-95";
-            } else {
-                lockBtn.textContent = "🔓";
-                lockBtn.title = "Đang khóa quyền sửa (Bấm để mở)";
-                lockBtn.className = "p-1.5 rounded-lg bg-white/50 border border-white/40 text-xs shadow-sm hover:bg-white transition active:scale-95";
-            }
+            const lockBtnMobile = document.getElementById("admin-lock-btn-mobile");
+            
+            const updateButton = (btn) => {
+                if (!btn) return;
+                if (isAdmin) {
+                    btn.textContent = "🔒";
+                    btn.title = "Bấm để khóa lại quyền quản trị";
+                    btn.className = "p-1.5 rounded-lg bg-emerald-100 border border-emerald-300 text-xs shadow-sm hover:bg-red-100 transition active:scale-95";
+                } else {
+                    btn.textContent = "🔓";
+                    btn.title = "Bấm để mở quyền quản trị";
+                    btn.className = "p-1.5 rounded-lg bg-white/50 border border-white/40 text-xs shadow-sm hover:bg-white transition active:scale-95";
+                }
+            };
+
+            updateButton(lockBtn);
+            updateButton(lockBtnMobile);
         }
 
         // TỰ ĐỘNG ĐIỀU CHỈNH GIAO DIỆN THEO ĐỘ PHÂN GIẢI
