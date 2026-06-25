@@ -143,7 +143,7 @@
 
             <!-- Wrapper cuộn động chứa nội dung chính -->
             <div id="dynamic-content-wrapper" class="flex-1 flex flex-col p-4 md:p-6 overflow-y-auto">
-                <!-- Hiệu ứng xương quét sáng (Skeleton Loading) đẹp mắt lúc tải -->
+                <!-- Hiển thị Loading xương cá quét mờ (Skeleton) khi tải từ đám mây -->
                 <div class="w-full h-full flex flex-col justify-between space-y-4 m-auto">
                     <div class="shimmer h-12 rounded-3xl w-full"></div>
                     <div class="grid grid-cols-2 gap-4 flex-1">
@@ -177,7 +177,7 @@
     <!-- HỆ THỐNG XỬ LÝ DỮ LIỆU ĐỘNG -->
     <script>
         const ADMIN_PASSCODE = "HCMUS2026";
-        const CLOUD_STORAGE_URL = "https://api.jsonbin.io/v3/b/6678da4bacd69e8558abe6ff"; // Backup URL dự phòng cho trường hợp lỗi
+        const CLOUD_STORAGE_URL = "https://kvdb.io/A8oR29i9N6Yn3tN4vY781f/hcmus_mhx2026_db";
 
         const DEFAULT_DATABASE = [
             {
@@ -227,21 +227,283 @@
                             "<b>Tương tác thuốc:</b> Uống cách xa các loại thuốc khác từ 1 - 2 giờ. Không dùng chung với cyclosporine, lovastatin...",
                             "<b>Kiêng khem:</b> Không uống rượu bia, hút thuốc lá trong quá trình dùng thuốc."
                         ]
+                    },
+                    {
+                        name: "Casbogasmango",
+                        image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Đặc trị đau bụng, đầy hơi, no hơi, chướng bụng và tiêu chảy. Hấp phụ các khí thừa và độc tố do vi khuẩn tiết ra.",
+                        truongHop: ["Đầy hơi, chướng bụng", "Ngộ độc thức ăn nhẹ", "Tiêu chảy do nhiễm độc thức ăn"],
+                        lieuLuong: "4 - 6 viên/lần, ngày uống 2 lần.",
+                        khuyenCao: [
+                            "<b>Phân đen:</b> Đi ngoài phân đen là hoàn toàn bình thường do màu của than hoạt tính, tự hết sau khi ngưng thuốc 1-2 ngày.",
+                            "<b>Tránh tương tác:</b> Bắt buộc uống cách xa các loại thuốc khác ít nhất 1-2 giờ để tránh làm giảm tác dụng thuốc khác."
+                        ]
+                    },
+                    {
+                        name: "Smecta",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Đặc trị triệu chứng tiêu chảy cấp và mạn tính. Tạo màng bao phủ bảo vệ niêm mạc đường tiêu hóa, giảm đau rát thực quản và đại tràng.",
+                        truongHop: ["Tiêu chảy cấp và mạn tính", "Đau dạ dày, viêm đại tràng"],
+                        lieuLuong: "Trung bình uống 3 gói/ngày trong vòng 7 ngày.",
+                        khuyenCao: [
+                            "<b>Quan trọng nhất:</b> Bắt buộc bù nước & điện giải (Oresol) đầy đủ song song.",
+                            "<b>Khoảng cách uống:</b> Phải uống Smecta cách xa các loại thuốc khác từ 2-3 giờ do tính chất hấp phụ mạnh.",
+                            "<b>Đi khám ngay:</b> Nếu tiêu chảy kèm sốt, nôn mửa, đau bụng dữ dội hoặc phân nhầy máu."
+                        ]
+                    },
+                    {
+                        name: "Gellux",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Đặc trị viêm dạ dày mạn tính, loét dạ dày lành tính và tá tràng. Làm dịu cơn trào ngược và giảm bỏng rát thượng vị.",
+                        truongHop: ["Viêm loét dạ dày tá tràng", "Trào ngược dạ dày thực quản (GERD)", "Phòng ngừa chảy máu dạ dày do stress", "Viêm loét miệng do hóa trị"],
+                        lieuLuong: "<b>Viêm dạ dày, loét tá tràng:</b> Uống 2 gói/lần x 2 lần/ngày (sáng và trước ngủ) HOẶC 1 gói/lần x 4 lần/ngày (trước ăn 1 tiếng và trước ngủ).<br><b>Trào ngược GERD:</b> 1 gói/lần x 4 lần/ngày.",
+                        khuyenCao: [
+                            "<b>Chống chỉ định:</b> Không dùng cho người mẫn cảm với Sucralfat.",
+                            "<b>Bệnh thận:</b> Thận trọng với người suy thận nặng hoặc đang chạy thận nhân tạo.",
+                            "<b>Khoảng cách thuốc:</b> Uống cách xa các thuốc khác 2 tiếng (đặc biệt là kháng sinh Tetracycline, Ciprofloxacin).",
+                            "<b>Thời gian sử dụng:</b> Không dùng liên tục quá 8 tuần cho một đợt điều trị."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "03",
+                title: "Sát trùng ngoài da",
+                desc: "Sát khuẩn vết thương nông, vết rách trầy xước và làm sạch môi trường tổn thương cơ học.",
+                icon: "🧼",
+                color: "from-sky-400 to-blue-500",
+                textBg: "bg-sky-50",
+                textColor: "text-sky-800",
+                badgeBorder: "border-sky-200",
+                medicines: [
+                    {
+                        name: "Oxy già",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Diệt vi khuẩn, nấm, virus và bào tử thông qua cơ chế giải phóng oxy/iodine tự do làm đông vón protein vi sinh vật.",
+                        truongHop: ["Sát khuẩn vết thương nông, vết bỏng nhẹ, trầy xước", "Sát trùng da trước tiêm chích, phẫu thuật", "Hỗ trợ điều trị nấm da, nước ăn chân"],
+                        lieuLuong: "Thoa trực tiếp lượng vừa đủ bằng tăm bông sạch lên vùng tổn thương 2-3 lần/ngày.",
+                        khuyenCao: [
+                            "Không dùng cho trẻ sơ sinh dưới 6 tháng tuổi.",
+                            "Không dùng diện rộng kéo dài cho người có bệnh lý tuyến giáp (suy giáp, bướu cổ).",
+                            "Tránh để thuốc dính vào vùng mắt."
+                        ]
+                    },
+                    {
+                        name: "Povidine (Cồn Đỏ)",
+                        image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Sát khuẩn mạnh mẽ, làm đông vón protein của nấm, virus và bào tử.",
+                        truongHop: ["Vết cắt, trầy xước, vết bỏng nhỏ", "Sát trùng da trước phẫu thuật", "Nước ăn chân, nấm da"],
+                        lieuLuong: "Lau sạch tổn thương, bôi một lượng nhỏ lên vết thương 1-3 lần/ngày. Đợi khô hoàn toàn mới băng lại.",
+                        khuyenCao: [
+                            "Không dùng liên tục quá 1 tuần, không bôi diện rộng.",
+                            "Chống chỉ định trẻ dưới 6 tháng, phụ nữ mang thai/cho con bú.",
+                            "<b>Cấm dùng chung:</b> Tuyệt đối không dùng chung với Thủy ngân (gây ăn mòn da nguy hiểm)."
+                        ]
+                    },
+                    {
+                        name: "Natri Clorid (NaCl 0.9%)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Làm sạch cơ học vết bụi bẩn, mủ, dịch bẩn bám vào vết thương, tạo môi trường đẳng trương lành tính.",
+                        truongHop: ["Rửa trôi bụi bẩn, máu mủ tại vết thương", "Nhỏ mắt, nhỏ mũi khi bị viêm/bụi bẩn dính vào", "Súc họng hàng ngày"],
+                        lieuLuong: "Dùng xối rửa trực tiếp hoặc thấm bông lau rửa vết thương nhiều lần trong ngày.",
+                        khuyenCao: [
+                            "<b>Phân biệt quan trọng:</b> Không dùng chai lớn rửa vết thương để nhỏ trực tiếp vào mắt. Chỉ dùng loại chai nhỏ 10ml chuyên dụng cho mắt.",
+                            "Sau khi mở nắp chai nhỏ mắt nên sử dụng hết trong vòng 15-30 ngày."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "04",
+                title: "Chống dị ứng",
+                desc: "Ngăn chặn nhanh phản ứng dị ứng do histamin, giảm ngứa ngoài da và viêm mũi.",
+                icon: "🛡️",
+                color: "from-purple-400 to-indigo-500",
+                textBg: "bg-purple-50",
+                textColor: "text-purple-800",
+                badgeBorder: "border-purple-200",
+                medicines: [
+                    {
+                        name: "Certirizin 10mg",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Đối kháng chọn lọc thụ thể H1, ngăn chặn dập tắt nhanh dị ứng. Ít gây buồn ngủ hơn các nhóm thế hệ cũ.",
+                        truongHop: ["Viêm mũi dị ứng thời tiết", "Viêm kết mạc dị ứng (đỏ mắt, chảy nước mắt)", "Mày đay mãn tính, ngứa da do côn trùng đốt"],
+                        lieuLuong: "Uống 1 viên (10mg) một lần duy nhất trong ngày. Có thể uống trước hoặc sau ăn.",
+                        khuyenCao: [
+                            "<b>Thời điểm thích hợp:</b> Nên uống vào buổi tối trước khi đi ngủ.",
+                            "<b>Chống chỉ định:</b> Người mẫn cảm thành phần thuốc, người suy thận giai đoạn cuối.",
+                            "<b>Tác dụng phụ:</b> Gây ngủ gà nhẹ, mệt mỏi, khô miệng. Thận trọng khi lái xe.",
+                            "<b>Cấm kết hợp:</b> Tuyệt đối không uống rượu bia khi đang dùng thuốc."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "05",
+                title: "Tăng cường sức đề kháng",
+                desc: "Bổ sung Vitamin và khoáng chất, nâng cao hệ miễn dịch, giảm mệt mỏi kiệt sức.",
+                icon: "🍊",
+                color: "from-orange-400 to-red-500",
+                textBg: "bg-orange-50",
+                textColor: "text-orange-800",
+                badgeBorder: "border-orange-200",
+                medicines: [
+                    {
+                        name: "Vitamin C (500mg & 1000mg)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Tăng cường hệ miễn dịch, giảm mệt mỏi tức thì khi hành quân nắng nóng, giúp tái tạo collagen mau lành vết thương.",
+                        truongHop: ["Thời tiết thay đổi, hành quân kiệt sức", "Dấu hiệu cảm cúm, chớm ho"],
+                        lieuLuong: "<b>Viên nén 500mg:</b> Uống 1-2 viên/ngày sau ăn.<br><b>Viên sủi 1000mg:</b> Thả 1 viên vào cốc nước lọc 200ml đợi tan hết rồi uống. Ngày 1 viên.",
+                        khuyenCao: [
+                            "<b>Thời gian sử dụng:</b> Tuyệt đối không uống vào buổi tối (gây mất ngủ và nguy cơ lắng đọng sỏi thận).",
+                            "Nên uống sau khi ăn no bụng để bảo vệ niêm mạc dạ dày."
+                        ]
+                    },
+                    {
+                        name: "Canxi Sandoz (500mg)",
+                        image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Bổ sung canxi khẩn cấp, chống hiện tượng co rút cơ tay chân do hạ canxi đường huyết.",
+                        truongHop: ["Chuột rút nặng khi hành quân", "Tê buồn tay chân, co quắp ngón tay, vã mồ hôi lạnh"],
+                        lieuLuong: "Hòa tan 1 viên vào nước ấm, uống ngay khi bắt đầu xuất hiện triệu chứng. Ngày dùng 1-2 viên.",
+                        khuyenCao: [
+                            "Uống nhiều nước lọc sau khi dùng thuốc.",
+                            "Không lạm dụng dùng liên tục kéo dài nếu không có chỉ định y tế."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "06",
+                title: "Điều trị triệu chứng",
+                desc: "Điều trị các triệu chứng ho rát họng, say tàu xe chống buồn nôn và nhức mỏi vận động.",
+                icon: "🚗",
+                color: "from-teal-400 to-cyan-500",
+                textBg: "bg-teal-50",
+                textColor: "text-teal-800",
+                badgeBorder: "border-teal-200",
+                medicines: [
+                    {
+                        name: "Viên ngậm Tyrotab",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Kháng khuẩn tại chỗ niêm mạc họng, giảm đau rát vùng họng, trị khàn tiếng hiệu quả.",
+                        truongHop: ["Nói nhiều dẫn đến khàn tiếng", "Viêm đau họng rát cổ", "Nhiễm khuẩn họng nhẹ"],
+                        lieuLuong: "Ngậm tan từ từ trong miệng (không nhai, không nuốt chửng). Dùng 1 viên/lần, cách 2-3 tiếng. Tối đa 8 viên/ngày.",
+                        khuyenCao: [
+                            "Chỉ ngậm tối đa trong vòng 5-7 ngày.",
+                            "Nếu đau họng kèm sốt cao kéo dài cần chuyển khám bác sĩ."
+                        ]
+                    },
+                    {
+                        name: "Say tàu xe (Dimenhydrinat 50mg)",
+                        image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Ngăn ngừa kích thích tiền đình, giảm chóng mặt và buồn nôn do say tàu xe.",
+                        truongHop: ["Say xe, say tàu, say máy bay khi hành quân xa"],
+                        lieuLuong: "Uống 1-2 viên trước khi lên xe 30 phút. Nếu đi chặng dài có thể uống liều tiếp theo sau 4-6 tiếng (tối đa 8 viên/ngày).",
+                        khuyenCao: [
+                            "<b>Buồn ngủ:</b> Thuốc gây buồn ngủ rất mạnh.",
+                            "<b>Tuyệt đối:</b> Không sử dụng cho người đang trực tiếp vận hành phương tiện, máy móc hoặc đi trực gác."
+                        ]
+                    },
+                    {
+                        name: "Cao dán Salonpas",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Giảm đau mỏi cơ xương khớp cục bộ, kháng viêm tại chỗ vùng khớp tổn thương.",
+                        truongHop: ["Đau lưng, mỏi vai gáy", "Bầm tím cơ, mỏi chân do hành quân đường dài"],
+                        lieuLuong: "Gỡ màng bảo vệ dán trực tiếp lên vết đau. Không dán quá 3-4 lần/ngày tại một vị trí, tối đa 8 tiếng/miếng dán.",
+                        khuyenCao: [
+                            "Tuyệt đối không dán lên vùng vết thương hở, vết rách da đang chảy dịch mủ."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "07",
+                title: "Bôi ngoài da",
+                desc: "Điều trị ghẻ lở, côn trùng cắn và làm ấm cơ thể khi bị nhiễm lạnh.",
+                icon: "🧴",
+                color: "from-pink-400 to-rose-500",
+                textBg: "bg-pink-50",
+                textColor: "text-pink-800",
+                badgeBorder: "border-pink-200",
+                medicines: [
+                    {
+                        name: "Thuốc trị ghẻ, lở loét (DEP)",
+                        image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Diệt cái ghẻ, cắt cơn ngứa cục bộ, sát trùng các vết cắn côn trùng.",
+                        truongHop: ["Bị ghẻ ngứa", "Lở loét da do điều kiện vệ sinh ẩm ướt ở dã ngoại"],
+                        lieuLuong: "Lau sạch vùng tổn thương bằng nước ấm rồi lau khô. Thoa một lớp mỏng 2-3 lần/ngày.",
+                        khuyenCao: [
+                            "Tuyệt đối không bôi vào niêm mạc mắt, miệng hoặc bộ phận nhạy cảm.",
+                            "Rửa sạch tay bằng xà phòng ngay sau khi bôi thuốc."
+                        ]
+                    },
+                    {
+                        name: "Dầu Phật Linh",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Giữ ấm cơ thể, kích thích tuần hoàn máu giảm đau đầu, nghẹt mũi do trúng gió lạnh.",
+                        truongHop: ["Trúng gió, cảm lạnh", "Đau bụng do lạnh bụng", "Nhức đầu, nghẹt mũi", "Vết muỗi đốt nhẹ"],
+                        lieuLuong: "Thoa trực tiếp lên vùng thái dương, mũi, bụng hoặc vùng sưng. Đau bụng do lạnh có thể nhỏ 1-2 giọt vào nước ấm để uống.",
+                        khuyenCao: [
+                            "Không thoa trực tiếp lên các vết thương hở sâu hoặc để dính vào mắt."
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "08",
+                title: "Vật tư y tế",
+                desc: "Sơ cấp cứu cơ học vết thương tại chỗ cho chiến sĩ.",
+                icon: "🩹",
+                color: "from-emerald-500 to-green-600",
+                textBg: "bg-emerald-50",
+                textColor: "text-emerald-800",
+                badgeBorder: "border-emerald-200",
+                medicines: [
+                    {
+                        name: "Băng keo cá nhân (Urgo)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Bao bọc các vết xước nhỏ, vết đứt tay rách da nhỏ tránh bụi bẩn.",
+                        truongHop: ["Trầy xước da nhẹ", "Vết cắt nhỏ chảy máu ít"],
+                        lieuLuong: "Rửa sạch sát trùng vết thương, bóc băng dán trực tiếp. Nên thay hàng ngày hoặc khi bị ướt.",
+                        khuyenCao: [
+                            "Không dùng bọc các vết thương đã có dấu hiệu mưng mủ, nhiễm khuẩn nặng."
+                        ]
+                    },
+                    {
+                        name: "Gạc vô trùng & Gạc cuộn",
+                        image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Đắp trực tiếp bảo vệ bề mặt vết thương lớn, băng thun hỗ trợ ép cầm máu tạm thời.",
+                        truongHop: ["Vết rách da lớn", "Chảy máu nhiều cần băng ép"],
+                        lieuLuong: "Đắp miếng gạc vô trùng lên trước, sau đó dùng gạc cuộn quấn cố định xung quanh.",
+                        khuyenCao: [
+                            "Chiến sĩ cần sát trùng tay bằng cồn trước khi bóc gạc vô trùng ra dùng."
+                        ]
+                    },
+                    {
+                        name: "Bông y tế (Gòn)",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
+                        congDung: "Thấm hút tốt các dung dịch sát trùng để lau rửa làm sạch xung quanh vùng vết thương.",
+                        truongHop: ["Thấm cồn đỏ bôi sát khuẩn quanh vết thương", "Lau rửa dịch mủ bám quanh tổn thương"],
+                        lieuLuong: "Thấm ướt dung dịch rồi lau nhẹ từ trong ra ngoài vết thương.",
+                        khuyenCao: [
+                            "Không đắp bông gòn khô trực tiếp lên vết thương hở vì sợi bông sẽ bám chặt vào sợi tơ huyết khi máu đông gây đau rát khi bóc."
+                        ]
                     }
                 ]
             }
         ];
 
+        // Đọc database từ localStorage, fallback về DEFAULT_DATABASE (giữ nguyên vẹn 8 nhóm)
         let database = JSON.parse(localStorage.getItem('hcmus_medical_handbook_db')) || DEFAULT_DATABASE;
 
         let activeCategoryId = "01";
         let activeMedicineIndex = 0;
         let isEditMode = false;
         let isAddMode = false;
-        let isCategoryEditMode = false; // Trạng thái sửa đổi tên/mô tả nhóm danh mục
+        let isCategoryEditMode = false;
         let searchQuery = "";
         let rightPanelState = "home";
-        let isUploadingImage = false; // Loading tải ảnh
+        let isUploadingImage = false;
 
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
@@ -269,7 +531,7 @@
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`);
                 if (response.ok) {
                     const cloudData = await response.json();
-                    if (cloudData && Array.isArray(cloudData)) {
+                    if (cloudData && Array.isArray(cloudData) && cloudData.length >= 8) {
                         database = cloudData;
                         localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
                     }
@@ -295,7 +557,7 @@
             }
         }
 
-        // HÀM NÉN ẢNH VÀO CANVAS VÀ TẢI LÊN CDN HOẶC CHUYỂN BASE64 CỰC KỲ KHỎE
+        // HÀM NÉN ẢNH VÀ TẢI LÊN CDN HOẶC CHUYỂN BASE64
         async function compressAndUploadImage(file) {
             isUploadingImage = true;
             const progressIndicator = document.getElementById("image-upload-progress");
@@ -308,7 +570,6 @@
                     const img = new Image();
                     img.src = event.target.result;
                     img.onload = async function () {
-                        // Nén ảnh chiều rộng/cao tối đa 450px để tối ưu dung lượng đám mây
                         const canvas = document.createElement("canvas");
                         const max_size = 450;
                         let width = img.width;
@@ -329,7 +590,6 @@
                         const ctx = canvas.getContext("2d");
                         ctx.drawImage(img, 0, 0, width, height);
                         
-                        // Chuyển blob gửi lên máy chủ telegra.ph miễn phí
                         canvas.toBlob(async (blob) => {
                             try {
                                 const formData = new FormData();
@@ -345,13 +605,11 @@
                                 if (result && result[0] && result[0].src) {
                                     resolve("https://telegra.ph" + result[0].src);
                                 } else {
-                                    // Fallback: Nếu lỗi kết nối CDN thì dùng Base64 nén lưu trữ trực tiếp
                                     resolve(canvas.toDataURL("image/jpeg", 0.75));
                                 }
                             } catch (e) {
                                 isUploadingImage = false;
                                 if (progressIndicator) progressIndicator.classList.add("hidden");
-                                // Fallback dùng Base64
                                 resolve(canvas.toDataURL("image/jpeg", 0.75));
                             }
                         }, "image/jpeg", 0.75);
@@ -373,7 +631,6 @@
                 const cloudUrl = await compressAndUploadImage(file);
                 document.getElementById("edit-image-url-hidden").value = cloudUrl;
                 
-                // Hiển thị Preview ảnh vừa tải lên form
                 const previewImg = document.getElementById("edit-image-preview");
                 if (previewImg) {
                     previewImg.src = cloudUrl;
@@ -451,11 +708,9 @@
                         </div>
                     `;
                 } else {
-                    // 8 danh mục nhóm thuốc có hiệu ứng 3D phát quang Glow Shadow cao cấp
                     let categoryCards = "";
                     database.forEach(cat => {
-                        // Tạo biến màu phát quang theo ID của nhóm thuốc
-                        let glowColor = "rgba(14, 165, 233, 0.15)"; // Sky blue mặc định
+                        let glowColor = "rgba(14, 165, 233, 0.15)"; 
                         if (cat.id === "01") glowColor = "rgba(245, 158, 11, 0.2)";
                         else if (cat.id === "02") glowColor = "rgba(16, 185, 129, 0.2)";
                         else if (cat.id === "04") glowColor = "rgba(139, 92, 246, 0.2)";
@@ -531,7 +786,6 @@
                     `;
                 }
 
-                // Nút chỉnh sửa tên & Ghi chú danh mục khi Admin truy cập
                 const adminCategoryActionsHtml = isAdmin
                     ? `
                     <button onclick="toggleCategoryEditMode(true)" class="bg-white/20 hover:bg-white/35 text-white py-1 px-3 rounded-full text-[10px] font-black transition border border-white/30 flex items-center gap-1 shadow-sm">
@@ -550,7 +804,6 @@
 
                 let bannerContentHtml = "";
                 if (isCategoryEditMode && isAdmin) {
-                    // ======= GIAO DIỆN FORM SỬA NHÓM =======
                     bannerContentHtml = `
                         <div class="space-y-3 text-slate-800 text-left fade-slide-in">
                             <span class="text-[9px] font-black text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full inline-block">CHỈNH SỬA DANH MỤC</span>
@@ -569,7 +822,6 @@
                         </div>
                     `;
                 } else {
-                    // GIAO DIỆN XEM BANNER DANH MỤC NHƯ THƯỜNG
                     bannerContentHtml = `
                         <div class="flex justify-between items-start gap-4">
                             <button onclick="goBackToHome()" class="bg-white/20 hover:bg-white/35 text-white py-1 px-3.5 rounded-full text-xs font-bold transition shrink-0">
@@ -636,7 +888,7 @@
                                     ${titleForm}
                                 </h2>
                                 <p class="text-[10px] text-amber-700 font-bold mt-1 leading-snug">
-                                    Sử dụng các nút định dạng nhanh phía trên để soạn thảo thuận tiện.
+                                    Bôi đen văn bản và nhấn các nút định dạng B hoặc I để in đậm, in nghiêng dễ dàng.
                                 </p>
                             </div>
 
@@ -659,7 +911,6 @@
                                         Đang tải và nén ảnh...
                                     </div>
                                 </div>
-                                <!-- Thẻ preview và lưu URL chìm -->
                                 <input id="edit-image-url-hidden" type="hidden" value="${image}">
                                 <div class="mt-2.5 flex justify-center">
                                     <img id="edit-image-preview" src="${image}" alt="Preview" class="${image ? '' : 'hidden'} max-w-[120px] h-20 object-cover rounded-xl border shadow">
@@ -804,7 +1055,7 @@
             renderDynamicRightPanel();
         }
 
-        // LƯU SỬA ĐỔI TÊN/MÔ TẢ DANH MỤC LÊN ĐÁM MÂY
+        // LƯU SỬA ĐỒNG BỘ DANH MỤC
         function saveCategoryEdits() {
             const cat = database.find(c => c.id === activeCategoryId);
             if (!cat) return;
@@ -820,11 +1071,9 @@
             cat.title = newTitle;
             cat.desc = newDesc;
 
-            // Tự động lưu và đồng bộ lên đám mây
             syncDatabaseToCloud();
             isCategoryEditMode = false;
             
-            // Cập nhật lại giao diện
             setupResponsiveLayout();
             alert("Đã lưu chỉnh sửa danh mục thành công!");
         }
@@ -1006,7 +1255,7 @@
                 renderMenu();
                 renderDynamicRightPanel();
             } else {
-                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mã xác thực.");
+                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt ĐỘng để nhận mã xác thực.");
             }
         }
 
@@ -1023,6 +1272,84 @@
                     <button type="button" onclick="insertFormat('${textareaId}', 'br')" class="px-2.5 py-1 bg-white hover:bg-slate-50 rounded border border-slate-300 text-[10px] shadow-sm active:scale-95 transition">↵ Xuống dòng</button>
                 </div>
             `;
+        }
+
+        // LƯU SỬA ĐỔI HOẶC THÊM MỚI THUỐC
+        function saveMedicineData() {
+            const catIndex = database.findIndex(c => c.id === activeCategoryId);
+            if (catIndex === -1) return;
+
+            const name = document.getElementById("edit-name").value.trim();
+            const image = document.getElementById("edit-image-url-hidden").value.trim();
+            const congDung = document.getElementById("edit-congdung").value.trim();
+            const lieuLuong = document.getElementById("edit-lieuluong").value.trim();
+            
+            const truongHopRaw = document.getElementById("edit-truonghop").value;
+            const truongHop = truongHopRaw.split(',').map(s => s.trim()).filter(s => s !== "");
+
+            const khuyenCaoRaw = document.getElementById("edit-khuyencao").value;
+            const khuyenCao = khuyenCaoRaw.split('\n').map(s => s.trim()).filter(s => s !== "");
+
+            if (!name || !congDung || !lieuLuong) {
+                alert("Vui lòng điền các thông tin cơ bản bắt buộc: Tên thuốc, Công dụng chính và Liều lượng sử dụng!");
+                return;
+            }
+
+            if (isAddMode) {
+                const newMedicine = {
+                    name: name,
+                    image: image,
+                    congDung: congDung,
+                    lieuLuong: lieuLuong,
+                    truongHop: truongHop,
+                    khuyenCao: khuyenCao
+                };
+                database[catIndex].medicines.push(newMedicine);
+                activeMedicineIndex = database[catIndex].medicines.length - 1; // Chọn thuốc vừa tạo
+                alert("Đã thêm thuốc mới thành công!");
+            } else {
+                const med = database[catIndex].medicines[activeMedicineIndex];
+                if (!med) return;
+
+                med.name = name;
+                med.image = image;
+                med.congDung = congDung;
+                med.lieuLuong = lieuLuong;
+                med.truongHop = truongHop;
+                med.khuyenCao = khuyenCao;
+                alert("Đã lưu chỉnh sửa thông tin thành công!");
+            }
+
+            // Đồng bộ ghi vào localStorage và đám mây tự động
+            syncDatabaseToCloud();
+
+            isEditMode = false;
+            isAddMode = false;
+            setRightPanelState("category");
+        }
+
+        // XÓA THUỐC HIỆN TẠI KHỎI DANH SÁCH
+        function deleteMedicine() {
+            if (!isAdmin) return;
+            const catIndex = database.findIndex(c => c.id === activeCategoryId);
+            if (catIndex === -1) return;
+            const cat = database[catIndex];
+            const med = cat.medicines[activeMedicineIndex];
+            if (!med) return;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa thuốc "${med.name}" khỏi hệ thống không?`)) {
+                cat.medicines.splice(activeMedicineIndex, 1);
+                
+                // Lưu vào LocalStorage và đồng bộ đám mây
+                syncDatabaseToCloud();
+                
+                activeMedicineIndex = 0;
+                isEditMode = false;
+                isAddMode = false;
+                
+                alert("Đã xóa thuốc thành công!");
+                setRightPanelState("category");
+            }
         }
 
         // XỬ LÝ QUAY LẠI TRÊN DI ĐỘNG (MOBILE BACK)
