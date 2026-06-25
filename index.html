@@ -89,7 +89,7 @@
 
                 <div class="p-4 flex-1 overflow-y-auto">
                     <!-- Danh sách thẻ thuốc -->
-                    <div class="space-y-3.5" id="medicines-container"></div>
+                    <div class="space-y-3" id="medicines-container"></div>
                     
                     <!-- Nút thêm thuốc mới vào nhóm -->
                     <button onclick="enableAddMode()" class="w-full mt-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold py-3 px-4 rounded-2xl text-xs transition active:scale-95 border-2 border-dashed border-emerald-300 flex items-center justify-center gap-1.5 shadow-sm">
@@ -139,6 +139,7 @@
                 medicines: [
                     {
                         name: "Paracetamol (500mg)",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
                         congDung: "Hạ sốt, giảm đau từ nhẹ đến vừa (đau đầu, đau răng, đau cơ, sốt do cảm cúm...).",
                         truongHop: ["Đau đầu, đau nửa đầu", "Đau lưng, đau cơ và thấp khớp", "Đau răng", "Đau bụng chu kỳ kinh nguyệt", "Cảm lạnh, cảm cúm, đau họng", "Sốt cao"],
                         lieuLuong: "1 – 2 viên/lần, cách nhau 4 – 6 giờ nếu cần.",
@@ -163,6 +164,7 @@
                 medicines: [
                     {
                         name: "Berberin (10mg & 50mg)",
+                        image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đặc trị tiêu chảy do vi khuẩn, ký sinh trùng đường ruột, vi khuẩn E.Coli và vi khuẩn tả. Tiêu diệt vi khuẩn có hại nhưng không làm ảnh hưởng đến lợi khuẩn đường ruột.",
                         truongHop: ["Tiêu chảy cấp", "Đau bụng đi ngoài", "Viêm đường ruột, trực khuẩn", "Viêm ống mật"],
                         lieuLuong: "<b>Berberin 10mg:</b> 4 – 6 viên/lần, ngày uống 2 lần.<br><b>Berberin 50mg:</b> 1 – 2 viên/lần, ngày uống 2 lần.",
@@ -175,6 +177,7 @@
                     },
                     {
                         name: "Casbogasmango",
+                        image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đặc trị đau bụng, đầy hơi, no hơi, chướng bụng và tiêu chảy. Hấp phụ các khí thừa và độc tố do vi khuẩn tiết ra.",
                         truongHop: ["Đầy hơi, chướng bụng", "Ngộ độc thức ăn nhẹ", "Tiêu chảy do nhiễm độc thức ăn"],
                         lieuLuong: "4 - 6 viên/lần, ngày uống 2 lần.",
@@ -185,6 +188,7 @@
                     },
                     {
                         name: "Smecta",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đặc trị triệu chứng tiêu chảy cấp và mạn tính. Tạo màng bao phủ bảo vệ niêm mạc đường tiêu hóa, giảm đau rát thực quản và đại tràng.",
                         truongHop: ["Tiêu chảy cấp và mạn tính", "Đau dạ dày, viêm đại tràng"],
                         lieuLuong: "Trung bình uống 3 gói/ngày trong vòng 7 ngày.",
@@ -196,6 +200,7 @@
                     },
                     {
                         name: "Gellux",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đặc trị viêm dạ dày mạn tính, loét dạ dày lành tính và tá tràng. Làm dịu cơn trào ngược và giảm bỏng rát thượng vị.",
                         truongHop: ["Viêm loét dạ dày tá tràng", "Trào ngược dạ dày thực quản (GERD)", "Phòng ngừa chảy máu dạ dày do stress", "Viêm loét miệng do hóa trị"],
                         lieuLuong: "<b>Viêm dạ dày, loét tá tràng:</b> Uống 2 gói/lần x 2 lần/ngày (sáng và trước ngủ) HOẶC 1 gói/lần x 4 lần/ngày (trước ăn 1 tiếng và trước ngủ).<br><b>Trào ngược GERD:</b> 1 gói/lần x 4 lần/ngày.",
@@ -220,6 +225,7 @@
                 medicines: [
                     {
                         name: "Oxy già",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
                         congDung: "Diệt vi khuẩn, nấm, virus và bào tử thông qua cơ chế giải phóng oxy/iodine tự do làm đông vón protein vi sinh vật.",
                         truongHop: ["Sát khuẩn vết thương nông, vết bỏng nhẹ, trầy xước", "Sát trùng da trước tiêm chích, phẫu thuật", "Hỗ trợ điều trị nấm da, nước ăn chân"],
                         lieuLuong: "Thoa trực tiếp lượng vừa đủ bằng tăm bông sạch lên vùng tổn thương 2-3 lần/ngày.",
@@ -231,6 +237,7 @@
                     },
                     {
                         name: "Povidine (Cồn Đỏ)",
+                        image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=300&auto=format&fit=crop&q=80",
                         congDung: "Sát khuẩn mạnh mẽ, làm đông vón protein của nấm, virus và bào tử.",
                         truongHop: ["Vết cắt, trầy xước, vết bỏng nhỏ", "Sát trùng da trước phẫu thuật", "Nước ăn chân, nấm da"],
                         lieuLuong: "Lau sạch tổn thương, bôi một lượng nhỏ lên vết thương 1-3 lần/ngày. Đợi khô hoàn toàn mới băng lại.",
@@ -242,6 +249,7 @@
                     },
                     {
                         name: "Natri Clorid (NaCl 0.9%)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
                         congDung: "Làm sạch cơ học vết bụi bẩn, mủ, dịch bẩn bám vào vết thương, tạo môi trường đẳng trương lành tính.",
                         truongHop: ["Rửa trôi bụi bẩn, máu mủ tại vết thương", "Nhỏ mắt, nhỏ mũi khi bị viêm/bụi bẩn dính vào", "Súc họng hàng ngày"],
                         lieuLuong: "Dùng xối rửa trực tiếp hoặc thấm bông lau rửa vết thương nhiều lần trong ngày.",
@@ -264,6 +272,7 @@
                 medicines: [
                     {
                         name: "Certirizin 10mg",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đối kháng chọn lọc thụ thể H1, ngăn chặn dập tắt nhanh dị ứng. Ít gây buồn ngủ hơn các nhóm thế hệ cũ.",
                         truongHop: ["Viêm mũi dị ứng thời tiết", "Viêm kết mạc dị ứng (đỏ mắt, chảy nước mắt)", "Mày đay mãn tính, ngứa da do côn trùng đốt"],
                         lieuLuong: "Uống 1 viên (10mg) một lần duy nhất trong ngày. Có thể uống trước hoặc sau ăn.",
@@ -288,6 +297,7 @@
                 medicines: [
                     {
                         name: "Vitamin C (500mg & 1000mg)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
                         congDung: "Tăng cường hệ miễn dịch, giảm mệt mỏi tức thì khi hành quân nắng nóng, giúp tái tạo collagen mau lành vết thương.",
                         truongHop: ["Thời tiết thay đổi, hành quân kiệt sức", "Dấu hiệu cảm cúm, chớm ho"],
                         lieuLuong: "<b>Viên nén 500mg:</b> Uống 1-2 viên/ngày sau ăn.<br><b>Viên sủi 1000mg:</b> Thả 1 viên vào cốc nước lọc 200ml đợi tan hết rồi uống. Ngày 1 viên.",
@@ -298,6 +308,7 @@
                     },
                     {
                         name: "Canxi Sandoz (500mg)",
+                        image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
                         congDung: "Bổ sung canxi khẩn cấp, chống hiện tượng co rút cơ tay chân do hạ canxi đường huyết.",
                         truongHop: ["Chuột rút nặng khi hành quân", "Tê buồn tay chân, co quắp ngón tay, vã mồ hôi lạnh"],
                         lieuLuong: "Hòa tan 1 viên vào nước ấm, uống ngay khi bắt đầu xuất hiện triệu chứng. Ngày dùng 1-2 viên.",
@@ -320,6 +331,7 @@
                 medicines: [
                     {
                         name: "Viên ngậm Tyrotab",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
                         congDung: "Kháng khuẩn tại chỗ niêm mạc họng, giảm đau rát vùng họng, trị khàn tiếng hiệu quả.",
                         truongHop: ["Nói nhiều dẫn đến khàn tiếng", "Viêm đau họng rát cổ", "Nhiễm khuẩn họng nhẹ"],
                         lieuLuong: "Ngậm tan từ từ trong miệng (không nhai, không nuốt chửng). Dùng 1 viên/lần, cách 2-3 tiếng. Tối đa 8 viên/ngày.",
@@ -330,9 +342,10 @@
                     },
                     {
                         name: "Say tàu xe (Dimenhydrinat 50mg)",
+                        image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=300&auto=format&fit=crop&q=80",
                         congDung: "Ngăn ngừa kích thích tiền đình, giảm chóng mặt và buồn nôn do say tàu xe.",
                         truongHop: ["Say xe, say tàu, say máy bay khi hành quân xa"],
-                        lieuLuong: "Uống 1-2 viên trước khi lên xe 30 phút. Nếu đi chặng dài có thể dùng liều tiếp theo sau 4-6 tiếng (tối đa 8 viên/ngày).",
+                        lieuLuong: "Uống 1-2 viên trước khi lên xe 30 phút. Nếu đi chặng dài có thể uống liều tiếp theo sau 4-6 tiếng (tối đa 8 viên/ngày).",
                         khuyenCao: [
                             "<b>Buồn ngủ:</b> Thuốc gây buồn ngủ rất mạnh.",
                             "<b>Tuyệt đối:</b> Không sử dụng cho người đang trực tiếp vận hành phương tiện, máy móc hoặc đi trực gác."
@@ -340,6 +353,7 @@
                     },
                     {
                         name: "Cao dán Salonpas",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
                         congDung: "Giảm đau mỏi cơ xương khớp cục bộ, kháng viêm tại chỗ vùng khớp tổn thương.",
                         truongHop: ["Đau lưng, mỏi vai gáy", "Bầm tím cơ, mỏi chân do hành quân đường dài"],
                         lieuLuong: "Gỡ màng bảo vệ dán trực tiếp lên vết đau. Không dán quá 3-4 lần/ngày tại một vị trí, tối đa 8 tiếng/miếng dán.",
@@ -361,6 +375,7 @@
                 medicines: [
                     {
                         name: "Thuốc trị ghẻ, lở loét (DEP)",
+                        image: "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=300&auto=format&fit=crop&q=80",
                         congDung: "Diệt cái ghẻ, cắt cơn ngứa cục bộ, sát trùng các vết cắn côn trùng.",
                         truongHop: ["Bị ghẻ ngứa", "Lở loét da do điều kiện vệ sinh ẩm ướt ở dã ngoại"],
                         lieuLuong: "Lau sạch vùng tổn thương bằng nước ấm rồi lau khô. Thoa một lớp mỏng 2-3 lần/ngày.",
@@ -371,6 +386,7 @@
                     },
                     {
                         name: "Dầu Phật Linh",
+                        image: "https://images.unsplash.com/photo-1607619056574-7b8d304f2c06?w=300&auto=format&fit=crop&q=80",
                         congDung: "Giữ ấm cơ thể, kích thích tuần hoàn máu giảm đau đầu, nghẹt mũi do trúng gió lạnh.",
                         truongHop: ["Trúng gió, cảm lạnh", "Đau bụng do lạnh bụng", "Nhức đầu, nghẹt mũi", "Vết muỗi đốt nhẹ"],
                         lieuLuong: "Thoa trực tiếp lên vùng thái dương, mũi, bụng hoặc vùng sưng. Đau bụng do lạnh có thể nhỏ 1-2 giọt vào nước ấm để uống.",
@@ -392,6 +408,7 @@
                 medicines: [
                     {
                         name: "Băng keo cá nhân (Urgo)",
+                        image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=300&auto=format&fit=crop&q=80",
                         congDung: "Bao bọc các vết xước nhỏ, vết đứt tay rách da nhỏ tránh bụi bẩn.",
                         truongHop: ["Trầy xước da nhẹ", "Vết cắt nhỏ chảy máu ít"],
                         lieuLuong: "Rửa sạch sát trùng vết thương, bóc băng dán trực tiếp. Nên thay hàng ngày hoặc khi bị ướt.",
@@ -401,6 +418,7 @@
                     },
                     {
                         name: "Gạc vô trùng & Gạc cuộn",
+                        image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&auto=format&fit=crop&q=80",
                         congDung: "Đắp trực tiếp bảo vệ bề mặt vết thương lớn, băng thun hỗ trợ ép cầm máu tạm thời.",
                         truongHop: ["Vết rách da lớn", "Chảy máu nhiều cần băng ép"],
                         lieuLuong: "Đắp miếng gạc vô trùng lên trước, sau đó dùng gạc cuộn quấn cố định xung quanh.",
@@ -410,6 +428,7 @@
                     },
                     {
                         name: "Bông y tế (Gòn)",
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80",
                         congDung: "Thấm hút tốt các dung dịch sát trùng để lau rửa làm sạch xung quanh vùng vết thương.",
                         truongHop: ["Thấm cồn đỏ bôi sát khuẩn quanh vết thương", "Lau rửa dịch mủ bám quanh tổn thương"],
                         lieuLuong: "Thấm ướt dung dịch rồi lau nhẹ từ trong ra ngoài vết thương.",
@@ -497,14 +516,20 @@
                 const isActive = (index === activeMedicineIndex) && !isAddMode;
                 const borderClass = isActive ? "border-sky-500 bg-sky-50/50 shadow-md scale-[1.01]" : "border-slate-100 hover:border-slate-200 bg-white shadow-sm";
                 
+                // Độc lập icon hình ảnh hoặc placeholder
+                const imgHtml = med.image 
+                    ? `<img src="${med.image}" alt="${med.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-100 shadow-sm shrink-0">`
+                    : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
+
                 const medHtml = `
-                    <div onclick="selectMedicine(${index})" class="p-3.5 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex flex-col justify-between ${borderClass}">
-                        <div>
+                    <div onclick="selectMedicine(${index})" class="p-3 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex gap-3 items-center ${borderClass}">
+                        ${imgHtml}
+                        <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-start gap-1">
-                                <h3 class="text-sm font-black text-slate-800 leading-snug">${med.name}</h3>
-                                <span class="text-[10px] font-bold text-sky-600 bg-sky-100/60 px-1.5 py-0.5 rounded-md">Xem</span>
+                                <h3 class="text-sm font-black text-slate-800 leading-snug truncate">${med.name}</h3>
+                                <span class="text-[10px] font-bold text-sky-600 bg-sky-100/60 px-1.5 py-0.5 rounded-md shrink-0">Xem</span>
                             </div>
-                            <p class="text-[11px] text-slate-400 font-bold mt-1.5 line-clamp-3">${med.congDung.replace(/<[^>]*>/g, '')}</p>
+                            <p class="text-[11px] text-slate-400 font-bold mt-0.5 line-clamp-1">${med.congDung.replace(/<[^>]*>/g, '')}</p>
                         </div>
                     </div>
                 `;
@@ -536,7 +561,7 @@
         function enableAddMode() {
             isAddMode = true;
             isEditMode = false;
-            renderMedicinesList(); // Bỏ chọn các thẻ thuốc đang active
+            renderMedicinesList(); 
             renderMedicineDetail();
 
             if (window.innerWidth < 768) {
@@ -576,7 +601,6 @@
                 // Lưu vào LocalStorage
                 localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
                 
-                // Trở về thuốc đầu tiên trong danh mục sau khi xóa
                 activeMedicineIndex = 0;
                 isEditMode = false;
                 isAddMode = false;
@@ -631,6 +655,7 @@
             if (catIndex === -1) return;
 
             const name = document.getElementById("edit-name").value.trim();
+            const image = document.getElementById("edit-image").value.trim();
             const congDung = document.getElementById("edit-congdung").value.trim();
             const lieuLuong = document.getElementById("edit-lieuluong").value.trim();
             
@@ -649,6 +674,7 @@
                 // Thêm thuốc mới
                 const newMedicine = {
                     name: name,
+                    image: image,
                     congDung: congDung,
                     lieuLuong: lieuLuong,
                     truongHop: truongHop,
@@ -663,6 +689,7 @@
                 if (!med) return;
 
                 med.name = name;
+                med.image = image;
                 med.congDung = congDung;
                 med.lieuLuong = lieuLuong;
                 med.truongHop = truongHop;
@@ -691,6 +718,7 @@
             if (isEditMode || isAddMode) {
                 // ======= GIAO DIỆN FORM CHỈNH SỬA / THÊM MỚI =======
                 let name = "";
+                let image = "";
                 let congDung = "";
                 let lieuLuong = "";
                 let truongHopStr = "";
@@ -700,6 +728,7 @@
                     const med = cat.medicines[activeMedicineIndex];
                     if (!med) return;
                     name = med.name;
+                    image = med.image || "";
                     congDung = med.congDung;
                     lieuLuong = med.lieuLuong;
                     truongHopStr = med.truongHop.join(', ');
@@ -724,6 +753,12 @@
                     <div class="space-y-1.5">
                         <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Tên thuốc (Bắt buộc)</label>
                         <input id="edit-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-bold text-slate-800 text-sm" value="${name}" placeholder="Ví dụ: Decolgen ND">
+                    </div>
+
+                    <!-- Đường dẫn hình ảnh thuốc (URL) -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-black text-slate-500 uppercase tracking-wider block">Đường dẫn hình ảnh thuốc (URL)</label>
+                        <input id="edit-image" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-semibold text-slate-700 text-xs" value="${image}" placeholder="Dán link ảnh từ web (Ví dụ: https://...)">
                     </div>
 
                     <!-- Trường hợp sử dụng -->
@@ -775,6 +810,15 @@
                     return;
                 }
 
+                // Cấu trúc khối hình ảnh của thuốc (nếu có ảnh sẽ hiển thị khung nổi bật)
+                const detailImageHtml = med.image
+                    ? `
+                    <div class="flex justify-center my-2 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
+                        <img src="${med.image}" alt="${med.name}" class="w-full max-w-[220px] h-36 object-cover rounded-xl shadow-md border border-slate-200/40">
+                    </div>
+                    `
+                    : "";
+
                 let truongHopHtml = "";
                 med.truongHop.forEach(th => {
                     truongHopHtml += `<span class="bg-slate-100 text-slate-700 font-bold text-[11px] px-2.5 py-1 rounded-full border border-slate-200">${th}</span>`;
@@ -804,6 +848,9 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Khối hiển thị hình ảnh lớn -->
+                    ${detailImageHtml}
 
                     <!-- Các trường hợp sử dụng cụ thể -->
                     <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
