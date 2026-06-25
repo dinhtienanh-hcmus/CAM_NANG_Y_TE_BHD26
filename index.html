@@ -75,7 +75,7 @@
                     MÙA HÈ XANH 2026
                 </div>
 
-                <!-- ================= THANH TÌM KIẾM TRÊN BÌA (PC) ================= -->
+                <!-- ================= THANH TÌM KIẾM THÔNG MINH + GỢI Ý ================= -->
                 <div class="mt-4 bg-white text-slate-800 p-3 rounded-2xl shadow-md flex flex-col gap-2 relative border border-sky-100 z-35">
                     <div class="flex items-center gap-2.5">
                         <span class="text-base shrink-0">🔍</span>
@@ -137,11 +137,8 @@
                 <button id="mobile-back-btn" onclick="handleMobileBack()" class="bg-slate-100 text-slate-700 py-1.5 px-3 rounded-xl text-xs font-bold transition">
                     ← Quay lại
                 </button>
-                <span class="text-[10px] font-black text-slate-400 tracking-wider uppercase">Cẩm Nang Y Tế MHX</span>
-                <!-- Nút khóa Quản trị viên trên di động -->
-                <button id="admin-lock-btn-mobile" onclick="toggleAdminPanel()" class="p-1 px-2 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold transition">
-                    🔓
-                </button>
+                <span class="text-[10px] font-black text-slate-400 tracking-wider uppercase">CẨM NANG Y TẾ</span>
+                <div class="w-16"></div>
             </div>
 
             <!-- Wrapper cuộn động chứa nội dung chính -->
@@ -180,12 +177,15 @@
     <!-- HỆ THỐNG XỬ LÝ DỮ LIỆU ĐỘNG -->
     <script>
         const ADMIN_PASSCODE = "HCMUS2026";
-        const CLOUD_STORAGE_URL = "https://kvdb.io/A8oR29i9N6Yn3tN4vY781f/hcmus_mhx2026_db";
+        
+        // ================= CHỈ CẦN DÁN LINK FIREBASE CỦA BẠN VÀO ĐÂY =================
+        // Nhớ dán đúng link có đuôi ".json" ở cuối đường dẫn
+        const CLOUD_STORAGE_URL = "https://cam-nang-y-te-mhx-default-rtdb.asia-southeast1.firebasedatabase.app/handbook_db.json";
 
         const DEFAULT_DATABASE = [
             {
                 id: "01",
-                title: "Họ sốt, giảm đau",
+                title: "Hạ sốt, giảm đau",
                 desc: "Hạ sốt, giảm đau nhẹ đến vừa (đau đầu, đau răng, đau mỏi cơ, sốt do cảm cúm...).",
                 icon: "💊",
                 color: "from-amber-400 to-orange-500",
@@ -509,7 +509,7 @@
 
         let isAdmin = localStorage.getItem('hcmus_admin_active') === 'true';
 
-        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (PC & MOBILE)
+        // CHUYỂN PANEL TRẠNG THÁI BÊN PHẢI (KÈM KHÓA CUỘN THÔNG MINH CHO TRANG CHỦ)
         function setRightPanelState(state) {
             rightPanelState = state;
             
@@ -527,9 +527,10 @@
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (ĐÃ THÊM HEADER CHỐNG CACHE VÀ AWAIT ĐỂ ĐỒNG BỘ CHUẨN)
+        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (CHỐNG CACHE VÀ PHỤ THUỘC TRỰC TIẾP VÀO FIREBASE)
         async function fetchDatabaseFromCloud() {
             try {
+                // Tải dữ liệu từ Firebase Realtime Database
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
                     cache: "no-store",
                     headers: {
@@ -539,24 +540,25 @@
                 });
                 if (response.ok) {
                     const cloudData = await response.json();
+                    // Firebase trả về null nếu dữ liệu trống, chỉ gán khi có dữ liệu thật
                     if (cloudData && Array.isArray(cloudData) && cloudData.length >= 8) {
                         database = cloudData;
                         localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
                     }
                 }
             } catch (error) {
-                console.warn("Lỗi đám mây, sử dụng local database", error);
+                console.warn("Lỗi đồng bộ Firebase, sử dụng dữ liệu cục bộ.", error);
             } finally {
                 setupResponsiveLayout();
             }
         }
 
-        // ĐỒNG BỘ ĐÁM MÂY VÀ CHỜ PHẢN HỒI THỰC TẾ (BẬT TRẠNG THÁI CHỜ LƯU THẬT SỰ)
+        // ĐỒNG BỘ LÊN CLOUD VỚI PHƯƠNG THỨC PUT CHUẨN CỦA FIREBASE REST API
         async function syncDatabaseToCloud() {
             localStorage.setItem('hcmus_medical_handbook_db', JSON.stringify(database));
             try {
                 const response = await fetch(CLOUD_STORAGE_URL, {
-                    method: 'POST',
+                    method: 'PUT', // Firebase REST API sử dụng PUT để ghi đè toàn bộ JSON
                     headers: { 
                         'Content-Type': 'application/json',
                         'Cache-Control': 'no-cache'
@@ -564,12 +566,12 @@
                     body: JSON.stringify(database)
                 });
                 if (response.ok) {
-                    console.log("Đồng bộ đám mây thành công.");
+                    console.log("Đồng bộ Firebase thành công.");
                     return true;
                 }
                 return false;
             } catch (err) {
-                console.error("Lỗi đồng bộ đám mây:", err);
+                console.error("Lỗi đồng bộ Firebase:", err);
                 return false;
             }
         }
@@ -913,7 +915,7 @@
                                     ${titleForm}
                                 </h2>
                                 <p class="text-[10px] text-amber-700 font-bold mt-1 leading-snug">
-                                    Sử dụng các nút định dạng nhanh phía trên để soạn thảo thuận tiện.
+                                    Bôi đen văn bản và nhấn các nút định dạng B hoặc I để in đậm, in nghiêng dễ dàng.
                                 </p>
                             </div>
 
@@ -1080,7 +1082,7 @@
             renderDynamicRightPanel();
         }
 
-        // LƯU SỬA ĐỒNG BỘ DANH MỤC LÊN ĐÁM MÂY (CHỜ PHẢN HỒI THẬT SỰ CỦA SERVER)
+        // LƯU SỬA ĐỒNG BỘ DANH MỤC LÊN ĐÁM MÂY (CHỜ PHẢN HỒI THỰC TẾ CỦA SERVER)
         async function saveCategoryEdits() {
             const cat = database.find(c => c.id === activeCategoryId);
             if (!cat) return;
@@ -1093,7 +1095,7 @@
                 return;
             }
 
-            // Đổi trạng thái nút bấm
+            // Đổi trạng thái nút bấm thành chờ
             const saveBtn = document.querySelector("button[onclick='saveCategoryEdits()']");
             if (saveBtn) {
                 saveBtn.disabled = true;
@@ -1292,7 +1294,7 @@
                 renderMenu();
                 renderDynamicRightPanel();
             } else {
-                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt Động để nhận mật mã xác thực.");
+                alert("Mật mã không đúng! Vui lòng liên hệ Ban Hoạt ĐỘng để nhận mật mã xác thực.");
             }
         }
 
