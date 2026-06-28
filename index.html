@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (LẤP ĐẦY TRÊN DI ĐỘNG) ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
             <!-- Header di động -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
@@ -165,8 +165,9 @@
                 </div>
             </div>
 
-            <!-- Wrapper cuộn động chứa nội dung chính -->
+            <!-- Wrapper cuộn động chứa nội dung chính (8 Ô vuông hoặc Chi tiết) -->
             <div id="dynamic-content-wrapper" class="flex-1 flex flex-col p-4 md:p-6 overflow-y-auto">
+                <!-- Hiển thị Loading Skeleton khi tải -->
                 <div class="w-full h-full flex flex-col justify-between space-y-4 m-auto">
                     <div class="shimmer h-12 rounded-3xl w-full"></div>
                     <div class="grid grid-cols-2 gap-4 flex-1">
@@ -214,7 +215,7 @@
                 textBg: "bg-amber-50",
                 textColor: "text-amber-800",
                 badgeBorder: "border-amber-200",
-                bannerImage: "nhom1_banner.png", // Bản đồ PC tự vẽ
+                bannerImage: "nhom1_banner.svg", 
                 medicines: [
                     {
                         name: "Paracetamol (500mg)",
@@ -240,7 +241,7 @@
                 textBg: "bg-emerald-50",
                 textColor: "text-emerald-800",
                 badgeBorder: "border-emerald-200",
-                bannerImage: "nhom2_banner.png",
+                bannerImage: "nhom2_banner.svg",
                 medicines: [
                     {
                         name: "Berberin (10mg & 50mg)",
@@ -302,7 +303,7 @@
                 textBg: "bg-sky-50",
                 textColor: "text-sky-800",
                 badgeBorder: "border-sky-200",
-                bannerImage: "nhom3_banner.png",
+                bannerImage: "nhom3_banner.svg",
                 medicines: [
                     {
                         name: "Oxy già",
@@ -350,7 +351,7 @@
                 textBg: "bg-purple-50",
                 textColor: "text-purple-800",
                 badgeBorder: "border-purple-200",
-                bannerImage: "nhom4_banner.png",
+                bannerImage: "nhom4_banner.svg",
                 medicines: [
                     {
                         name: "Certirizin 10mg",
@@ -361,7 +362,7 @@
                         khuyenCao: [
                             "<b>Thời điểm thích hợp:</b> Nên uống vào buổi tối trước khi đi ngủ.",
                             "<b>Chống chỉ định:</b> Người mẫn cảm thành phần thuốc, người suy thận giai đoạn cuối.",
-                            "<b>Tác dụng phụ:</b> Gây ngủ gà nhẹ, mệt mỏi, khô miệng. Thận trọng khi lái xe.",
+                            "<b>Tác dụng phó:</b> Gây ngủ gà nhẹ, mệt mỏi, khô miệng. Thận trọng khi lái xe.",
                             "<b>Cấm kết hợp:</b> Tuyệt đối không uống rượu bia khi đang dùng thuốc."
                         ]
                     }
@@ -376,7 +377,7 @@
                 textBg: "bg-orange-50",
                 textColor: "text-orange-800",
                 badgeBorder: "border-orange-200",
-                bannerImage: "nhom5_banner.png",
+                bannerImage: "nhom5_banner.svg",
                 medicines: [
                     {
                         name: "Vitamin C (500mg & 1000mg)",
@@ -411,7 +412,7 @@
                 textBg: "bg-teal-50",
                 textColor: "text-teal-800",
                 badgeBorder: "border-teal-200",
-                bannerImage: "nhom6_banner.png",
+                bannerImage: "nhom6_banner.svg",
                 medicines: [
                     {
                         name: "Viên ngậm Tyrotab",
@@ -456,7 +457,7 @@
                 textBg: "bg-pink-50",
                 textColor: "text-pink-800",
                 badgeBorder: "border-pink-200",
-                bannerImage: "nhom7_banner.png",
+                bannerImage: "nhom7_banner.svg",
                 medicines: [
                     {
                         name: "Thuốc trị ghẻ, lở loét (DEP)",
@@ -490,7 +491,7 @@
                 textBg: "bg-emerald-50",
                 textColor: "text-emerald-800",
                 badgeBorder: "border-emerald-200",
-                bannerImage: "nhom8_banner.png",
+                bannerImage: "nhom8_banner.svg",
                 medicines: [
                     {
                         name: "Băng keo cá nhân (Urgo)",
@@ -526,20 +527,19 @@
             }
         ];
 
-        // Gán cấu hình tên ảnh theo hệ số thứ tự bạn đã sắp xếp
-        // Gán cấu hình tên ảnh theo định dạng .svg của bạn
+        // Sơ đồ map tên tệp .svg chính xác của bạn
         const IMAGE_MAPPING = {
-    "01": { pcCard: "3.svg", mobCard: "11.svg", pcBanner: "19.svg", mobBanner: "27.svg" },
-    "02": { pcCard: "4.svg", mobCard: "12.svg", pcBanner: "20.svg", mobBanner: "28.svg" },
-    "03": { pcCard: "5.svg", mobCard: "13.svg", pcBanner: "21.svg", mobBanner: "29.svg" },
-    "04": { pcCard: "6.svg", mobCard: "14.svg", pcBanner: "22.svg", mobBanner: "30.svg" },
-    "05": { pcCard: "7.svg", mobCard: "15.svg", pcBanner: "23.svg", mobBanner: "31.svg" },
-    "06": { pcCard: "8.svg", mobCard: "16.svg", pcBanner: "24.svg", mobBanner: "32.svg" },
-    "07": { pcCard: "9.svg", mobCard: "17.svg", pcBanner: "25.svg", mobBanner: "33.svg" },
-    "08": { pcCard: "10.svg", mobCard: "18.svg", pcBanner: "26.svg", mobBanner: "34.svg" }
-};
+            "01": { pcCard: "3.svg", mobCard: "11.svg", pcBanner: "19.svg", mobBanner: "27.svg" },
+            "02": { pcCard: "4.svg", mobCard: "12.svg", pcBanner: "20.svg", mobBanner: "28.svg" },
+            "03": { pcCard: "5.svg", mobCard: "13.svg", pcBanner: "21.svg", mobBanner: "29.svg" },
+            "04": { pcCard: "6.svg", mobCard: "14.svg", pcBanner: "22.svg", mobBanner: "30.svg" },
+            "05": { pcCard: "7.svg", mobCard: "15.svg", pcBanner: "23.svg", mobBanner: "31.svg" },
+            "06": { pcCard: "8.svg", mobCard: "16.svg", pcBanner: "24.svg", mobBanner: "32.svg" },
+            "07": { pcCard: "9.svg", mobCard: "17.svg", pcBanner: "25.svg", mobBanner: "33.svg" },
+            "08": { pcCard: "10.svg", mobCard: "18.svg", pcBanner: "26.svg", mobBanner: "34.svg" }
+        };
 
-        // Đồng bộ dữ liệu hình ảnh vào cấu trúc database khi tải trang
+        // Đồng bộ các thuộc tính ảnh .svg vào database để tránh lệch hiển thị
         function applyImageMapping() {
             database.forEach(cat => {
                 const map = IMAGE_MAPPING[cat.id];
@@ -570,7 +570,7 @@
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG
+        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (ĐÃ THÊM HEADER CHỐNG CACHE VÀ AWAIT ĐỂ ĐỒNG BỘ CHUẨN)
         async function fetchDatabaseFromCloud() {
             try {
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
@@ -590,7 +590,7 @@
             } catch (error) {
                 console.warn("Lỗi đồng bộ Firebase, sử dụng dữ liệu cục bộ.", error);
             } finally {
-                applyImageMapping(); // Áp dụng sơ đồ ảnh sau khi tải DB
+                applyImageMapping(); // Áp dụng sơ đồ tệp .svg vào database trước khi vẽ
                 setupResponsiveLayout();
             }
         }
@@ -721,16 +721,17 @@
             }
         }
 
-        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI THEO TRẠNG THÁI MỚI (TỐI ƯU HÓA HÌNH ẢNH DANH MỤC THIẾT KẾ RIÊNG)
+        // VẼ DỮ LIỆU ĐỘNG CỘT PHẢI (ĐÃ CHUYỂN SANG PC 4 CỘT - 2 HÀNG ĐỂ TRÁNH DẸT ẢNH)
         function renderDynamicRightPanel() {
             const wrapper = document.getElementById("dynamic-content-wrapper");
             if (!wrapper) return;
             wrapper.innerHTML = "";
 
             if (rightPanelState === "home") {
-                // Khóa hoàn toàn cuộn dọc trên PC và di động để 8 danh mục hiển thị khít màn hình
+                // Khóa cuộn dọc trang chủ trên máy tính để 8 ô khít tịt, không gây tràn màn hình
                 wrapper.className = "flex-1 flex flex-col p-3 md:p-4 justify-between overflow-y-hidden";
             } else {
+                // Cho phép cuộn tự do khi xem danh sách thuốc/chi tiết thuốc
                 wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
             }
 
@@ -739,7 +740,6 @@
                 let filteredHtml = "";
                 
                 if (searchQuery.trim() !== "") {
-                    // Chế độ hiển thị kết quả tìm kiếm (Mở lại cuộn cho kết quả tìm kiếm dài)
                     wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
 
                     let matches = [];
@@ -760,14 +760,14 @@
                                 : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0">💊</div>`;
 
                             matchCards += `
-                                <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer w-full">
+                                <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer">
                                     ${imgHtml}
                                     <div class="flex-1 min-w-0">
                                         <div class="flex justify-between items-center">
                                             <h4 class="text-sm font-black text-slate-800 truncate leading-snug">${item.med.name}</h4>
                                             <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full shrink-0">${item.cat.title}</span>
                                         </div>
-                                        <p class="text-[11px] text-slate-400 font-bold mt-0.5 line-clamp-1">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
+                                        <p class="text-[11px] text-slate-400 font-bold line-clamp-1 mt-0.5">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
                                     </div>
                                 </div>
                             `;
@@ -792,7 +792,6 @@
                         </div>
                     `;
                 } else {
-                    // Hiển thị 8 danh mục nhóm thuốc bằng 100% hình ảnh thiết kế riêng của bạn
                     let categoryCards = "";
                     database.forEach(cat => {
                         let glowColor = "rgba(14, 165, 233, 0.15)"; 
@@ -801,7 +800,7 @@
                         else if (cat.id === "04") glowColor = "rgba(139, 92, 246, 0.2)";
                         else if (cat.id === "07") glowColor = "rgba(236, 72, 153, 0.2)";
 
-                        // Phân tách ảnh bìa (PC dùng từ 3.png - 10.png, Mobile dùng từ 11.png - 18.png)
+                        // Phân tách ảnh bìa (PC dùng 3.svg - 10.svg, Mobile dùng 11.svg - 18.svg)
                         const isPC = window.innerWidth >= 768;
                         const cardBackgroundImg = isPC ? cat.pcCardImg : cat.mobCardImg;
 
@@ -818,8 +817,10 @@
                         `;
                     });
 
+                    // CHUYỂN SANG PC 4 CỘT - 2 HÀNG (grid-cols-2 md:grid-cols-4)
+                    // Thiết lập này giúp các tấm ảnh 450x360 px của bạn hiển thị chuẩn tỉ lệ, không bao giờ bị cắt xén!
                     filteredHtml = `
-                        <div class="grid grid-cols-2 gap-2 md:gap-3 h-full w-full fade-slide-in">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 h-full w-full fade-slide-in">
                             ${categoryCards}
                         </div>
                     `;
@@ -837,7 +838,7 @@
                     cat.medicines.forEach((med, index) => {
                         const imgHtml = med.image 
                             ? `<img src="${med.image}" alt="${med.name}" class="w-12 h-12 rounded-xl object-cover border border-slate-100 shadow-sm shrink-0">`
-                            : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0">💊</div>`;
+                            : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
 
                         medicinesCards += `
                             <div onclick="selectMedicine(${index})" class="p-3 bg-white hover:bg-slate-50 active:scale-98 transition rounded-2xl border border-slate-150 shadow-sm flex gap-3 items-center cursor-pointer w-full">
@@ -891,6 +892,10 @@
                                 <input id="edit-cat-title" type="text" class="w-full px-3 py-1.5 rounded-xl border border-slate-300 focus:outline-none text-xs font-bold" value="${cat.title}">
                             </div>
                             <div class="space-y-1">
+                                <label class="text-[10px] font-black text-white block">Đường dẫn ảnh Banner nhóm (Ví dụ: nhom1_banner.svg hoặc URL)</label>
+                                <input id="edit-cat-banner" type="text" class="w-full px-3 py-1.5 rounded-xl border border-slate-300 focus:outline-none text-xs font-bold" value="${cat.bannerImage || ''}">
+                            </div>
+                            <div class="space-y-1">
                                 <label class="text-[10px] font-black text-white block">Ghi chú / Mô tả nhóm</label>
                                 <textarea id="edit-cat-desc" rows="2" class="w-full px-3 py-1.5 rounded-xl border border-slate-300 focus:outline-none text-xs font-bold leading-normal">${cat.desc}</textarea>
                             </div>
@@ -901,7 +906,6 @@
                         </div>
                     `;
                 } else {
-                    // Sử dụng ảnh thiết kế tiêu đề riêng biệt cho PC (19.png - 26.png) và Mobile (27.png - 34.png)
                     const isPC = window.innerWidth >= 768;
                     const activeBannerImg = isPC ? cat.pcBannerImg : cat.mobBannerImg;
 
@@ -920,7 +924,6 @@
                             </div>
                         `;
                     } else {
-                        // Fallback gradient mặc định nếu không nạp được hình ảnh thiết kế
                         bannerClass = `p-4 md:p-5 text-white relative bg-gradient-to-br ${cat.color} rounded-[2rem] shadow-sm`;
                         bannerStyle = "";
                         bannerContentHtml = `
@@ -1281,7 +1284,7 @@
             const mobInput = document.getElementById("mobile-search-input");
             if (mobInput) mobInput.value = "";
             const clearBtn = document.getElementById("mobile-clear-btn");
-            if (clearBtn) classList.add("hidden");
+            if (clearBtn) clearBtn.classList.add("hidden");
             
             clearGlobalSearch();
         }
