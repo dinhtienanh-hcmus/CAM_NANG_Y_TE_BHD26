@@ -50,7 +50,7 @@
     <!-- CONTAINER CHÍNH -->
     <div class="w-full h-screen md:h-[92vh] md:max-w-7xl bg-white/95 backdrop-blur-md md:rounded-[2.5rem] md:shadow-2xl overflow-hidden flex flex-col md:flex-row border-0 md:border-8 border-white transition-all duration-500">
         
-        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH ================= -->
+        <!-- ================= CỘT TRÁI: BÌA SỔ TAY VÀ THANH TÌM KIẾM CỐ ĐỊNH (ẨN TRÊN DI ĐỘNG) ================= -->
         <div class="hidden md:flex w-full md:w-[40%] bg-gradient-to-b from-[#7dd3fc] via-[#38bdf8] to-[#bae6fd] p-6 flex-col justify-between relative shrink-0 overflow-y-auto border-r border-white/40">
             <!-- Mặt trời vẽ tay SVG -->
             <div class="absolute top-4 right-4 w-14 h-14 animate-pulse">
@@ -104,7 +104,7 @@
                         <!-- Tình nguyện viên nữ -->
                         <path d="M130 150 C130 110 150 100 170 100 L170 150 Z" fill="#2563eb" />
                         <circle cx="150" cy="80" r="18" fill="#fecdd3" />
-                        <path d="M132 75 Q150 58 168 75 Z" fill="#1e293b" />
+                        <path h="M132 75 Q150 58 168 75 Z" fill="#1e293b" />
                         <path d="M130 85 Q150 90 170 85" stroke="#be123c" stroke-width="4" fill="none" />
                         <!-- Hòm thuốc sơ cứu -->
                         <rect x="75" y="95" width="50" height="40" rx="8" fill="white" stroke="#94a3b8" stroke-width="2" />
@@ -142,6 +142,27 @@
                 <button id="admin-lock-btn-mobile" onclick="toggleAdminPanel()" class="p-1 px-2 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold transition">
                     🔓
                 </button>
+            </div>
+
+            <!-- BANNER & Ô TÌM KIẾM CỐ ĐỊNH CHUYÊN BIỆT CHO MOBILE -->
+            <div id="mobile-home-header" class="block md:hidden p-4 pb-0 shrink-0">
+                <div class="bg-gradient-to-r from-sky-400 to-sky-500 p-4 rounded-2xl text-white relative shadow-sm mb-3">
+                    <div class="absolute top-3 right-4 w-10 h-10">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="25" fill="#fcd34d" />
+                            <path d="M50 15 L50 5 M50 85 L50 95" stroke="#f59e0b" stroke-width="8" />
+                        </svg>
+                    </div>
+                    <span class="text-[8px] font-black bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-wider">HCMUS • BAN HOẠT ĐỘNG</span>
+                    <h2 class="text-base font-black mt-1 leading-tight">CẨM NANG Y TẾ ĐIỆN TỬ</h2>
+                    <p class="text-[9px] opacity-95">Mùa Hè Xanh 2026 • Tra cứu nhanh - Sử dụng đúng</p>
+                </div>
+
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-150 flex items-center gap-2.5 relative z-30">
+                    <span class="text-sm shrink-0">🔍</span>
+                    <input id="mobile-search-input" type="text" oninput="handleMobileSearch(this.value)" placeholder="Tìm nhanh tên thuốc, công dụng..." class="w-full bg-transparent focus:outline-none text-slate-700 text-xs font-bold placeholder-slate-400">
+                    <button id="mobile-clear-btn" onclick="clearMobileSearch()" class="hidden text-[9px] text-red-500 font-black bg-red-50 px-2 py-0.5 rounded-md shrink-0">Xóa</button>
+                </div>
             </div>
 
             <!-- Wrapper cuộn động chứa nội dung chính -->
@@ -547,7 +568,7 @@
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (ĐÃ THÊM HEADER CHỐNG CACHE VÀ AWAIT ĐỂ ĐỒNG BỘ CHUẨN)
+        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG
         async function fetchDatabaseFromCloud() {
             try {
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
@@ -743,7 +764,7 @@
                                             <h4 class="text-sm font-black text-slate-800 truncate leading-snug">${item.med.name}</h4>
                                             <span class="text-[9px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full shrink-0">${item.cat.title}</span>
                                         </div>
-                                        <p class="text-[11px] text-slate-400 font-bold line-clamp-1 mt-0.5">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
+                                        <p class="text-[11px] text-slate-400 font-bold mt-0.5 line-clamp-1">${item.med.congDung.replace(/<[^>]*>/g, '')}</p>
                                     </div>
                                 </div>
                             `;
@@ -1442,7 +1463,7 @@
                 med.name = name;
                 med.image = image;
                 med.congDung = congDung;
-                med.lieuLuong = lieuLuong;
+                med.lieuLuong = lieuUniform;
                 med.truongHop = truongHop;
                 med.khuyenCao = khuyenCao;
             }
