@@ -104,7 +104,7 @@
                         <!-- Tình nguyện viên nữ -->
                         <path d="M130 150 C130 110 150 100 170 100 L170 150 Z" fill="#2563eb" />
                         <circle cx="150" cy="80" r="18" fill="#fecdd3" />
-                        <path h="M132 75 Q150 58 168 75 Z" fill="#1e293b" />
+                        <path d="M132 75 Q150 58 168 75 Z" fill="#1e293b" />
                         <path d="M130 85 Q150 90 170 85" stroke="#be123c" stroke-width="4" fill="none" />
                         <!-- Hòm thuốc sơ cứu -->
                         <rect x="75" y="95" width="50" height="40" rx="8" fill="white" stroke="#94a3b8" stroke-width="2" />
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG (LẤP ĐẦY TRÊN DI ĐỘNG) ================= -->
+        <!-- ================= CỘT PHẢI: VÙNG TRA CỨU ĐỘNG ================= -->
         <div id="col-dynamic" class="flex-1 flex flex-col bg-slate-50/50 overflow-hidden">
             <!-- Header di động -->
             <div class="p-3 border-b border-slate-100 bg-white flex md:hidden justify-between items-center shrink-0">
@@ -248,7 +248,7 @@
                         truongHop: ["Tiêu chảy cấp", "Đau bụng đi ngoài", "Viêm đường ruột, trực khuẩn", "Viêm ống mật"],
                         lieuLuong: "<b>Berberin 10mg:</b> 4 – 6 viên/lần, ngày uống 2 lần.<br><b>Berberin 50mg:</b> 1 – 2 viên/lần, ngày uống 2 lần.",
                         khuyenCao: [
-                            "<b>Cách dùng tốt nhất:</b> Nên uống sau khi ăn no (sáng và tối). Trường hợp khẩn cấp uống ngay khi đau bụng.",
+                            "<b>Cách dùng tốt nhất:</b> Nên uống sau khi ăn no (sáng and tối). Trường hợp khẩn cấp uống ngay khi đau bụng.",
                             "<b>Giới hạn tự điều trị:</b> Chỉ dùng ngắn ngày. Sau 2 ngày không đỡ phải đi khám bác sĩ ngay.",
                             "<b>Tương tác thuốc:</b> Uống cách xa các loại thuốc khác từ 1 - 2 giờ. Không dùng chung với cyclosporine, lovastatin...",
                             "<b>Kiêng khem:</b> Không uống rượu bia, hút thuốc lá trong quá trình dùng thuốc."
@@ -568,7 +568,7 @@
             renderDynamicRightPanel();
         }
 
-        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG
+        // TẢI DỮ LIỆU ĐÁM MÂY KHI MỞ TRANG (ĐÃ THÊM HEADER CHỐNG CACHE VÀ AWAIT ĐỂ ĐỒNG BỘ CHUẨN)
         async function fetchDatabaseFromCloud() {
             try {
                 const response = await fetch(`${CLOUD_STORAGE_URL}?t=${Date.now()}`, {
@@ -737,13 +737,13 @@
                 let filteredHtml = "";
                 
                 if (searchQuery.trim() !== "") {
-                    // Chế độ hiển thị kết quả tìm kiếm (Mở lại cuộn cho kết quả tìm kiếm dài)
                     wrapper.className = "flex-1 flex flex-col p-4 md:p-6 overflow-y-auto";
 
                     let matches = [];
                     database.forEach(cat => {
                         cat.medicines.forEach((med, mIdx) => {
-                            if (med.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+                            if (med.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                med.congDung.toLowerCase().includes(searchQuery.toLowerCase())) {
                                 matches.push({ cat, med, mIdx });
                             }
                         });
@@ -754,7 +754,7 @@
                         matches.forEach(item => {
                             const imgHtml = item.med.image 
                                 ? `<img src="${item.med.image}" alt="${item.med.name}" class="w-12 h-12 rounded-xl object-cover shadow-sm shrink-0">`
-                                : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0 border border-slate-200">💊</div>`;
+                                : `<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shrink-0">💊</div>`;
 
                             matchCards += `
                                 <div onclick="selectMedicineFromSearch('${item.cat.id}', ${item.mIdx})" class="p-3 bg-white hover:bg-sky-50 active:scale-98 transition rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3 cursor-pointer">
@@ -789,7 +789,6 @@
                         </div>
                     `;
                 } else {
-                    // Hiển thị 8 danh mục nhóm thuốc bằng 100% hình ảnh thiết kế riêng của bạn
                     let categoryCards = "";
                     database.forEach(cat => {
                         let glowColor = "rgba(14, 165, 233, 0.15)"; 
@@ -798,7 +797,6 @@
                         else if (cat.id === "04") glowColor = "rgba(139, 92, 246, 0.2)";
                         else if (cat.id === "07") glowColor = "rgba(236, 72, 153, 0.2)";
 
-                        // Phân tách ảnh bìa (PC dùng 3.svg - 10.svg, Mobile dùng 11.svg - 18.svg)
                         const isPC = window.innerWidth >= 768;
                         const cardBackgroundImg = isPC ? cat.pcCardImg : cat.mobCardImg;
 
@@ -815,7 +813,6 @@
                         `;
                     });
 
-                    // Khôi phục lưới 2 cột - 4 hàng (grid-cols-2) cho cả PC lẫn Mobile theo đúng ý bạn!
                     filteredHtml = `
                         <div class="grid grid-cols-2 gap-2 md:gap-3.5 h-full w-full fade-slide-in">
                             ${categoryCards}
@@ -903,7 +900,6 @@
                         </div>
                     `;
                 } else {
-                    // Sử dụng ảnh thiết kế tiêu đề riêng biệt cho PC (19.svg - 26.svg) và Mobile (27.svg - 34.svg)
                     const isPC = window.innerWidth >= 768;
                     const activeBannerImg = isPC ? cat.pcBannerImg : cat.mobBannerImg;
 
@@ -1463,7 +1459,7 @@
                 med.name = name;
                 med.image = image;
                 med.congDung = congDung;
-                med.lieuLuong = lieuUniform;
+                med.lieuLuong = lieuLuong;
                 med.truongHop = truongHop;
                 med.khuyenCao = khuyenCao;
             }
